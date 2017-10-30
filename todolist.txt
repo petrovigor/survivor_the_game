@@ -1,0 +1,74 @@
+
+
+
+
+
+shots, enemies, powerups, levels, move type, melee
+
+
+
+
+
+FATAL WHEN CALLS 'proj->add .........'
+
+!upd:  fatal when access VECTOR variable
+
+I DONT KNOW WHERE IS A FUCKING CODE ERROR !!!!!!!!!!!!!!
+
+[*] create projectile and set it XY, ANGLE, DAMAGE etc
+
+add physics manager;
+process collisions;
+enemies ai;
+enemies attacks;
+more weapons;
+add hero abilities;
+
+-------------------------------------------
+
+rewrite void PHYSICS_MANAGER::deleteOldCollisions()
+
+rewrite:
+	COLLISION(GO, GO) -> COLLISION(GO, MISSILE);
+
+	case of i-> pen();
+	in physics::processNewCollisions();
+
+-----------------------------------------
+
+rewrite:
+colors of game objects and background
+
+* add menu
+* spells
+* pause
+* restart
+* waves
+* other game objects like barrels, explosives
+* weapon weight; ? game balance
+* powerups
+* levels? (maps)
+
+spell ideas:
+  time slow;
+  lightning strike (massive damage to few enemies);
+    or chain lightning;
+  shield(main ability);
+
+  blink
+
+  ABILITIES CIRCLE (like dishonored)
+
+weapon ideas:
+  sword/knife;
+  hook? lol
+
+hero ideas (roles):
+  assasin
+  mage
+  tank
+
+enemy ideas:
+  *add enemy sprites
+  spider, little spider;
+  spider queen (spawn more little spiders);

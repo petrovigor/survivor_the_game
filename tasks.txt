@@ -1,0 +1,73 @@
+============================================================
+==== Important gameplay tasks:
+
+[*] add bonuses
+[*] rewrite not-seen render
+[*] rewrite WEAPON class
+		missile-collision-action
+		explosion(aoe dmg)
+		bash, knockback etc
+[*] enemies must patrol all map
+	not only window rect borders
+[+] rewrite camera engine
+	add class CAMERA
+	make project backup
+[*] add melee weapons to player
+	hands, knife, baseball-bat, saw
+[*] rewrite drawFrame function:
+	SelectObject( select same pens and brushes ) only one time;
+	and draw one-typed objects only with Ellipse or Rectangle funcs.
+[*] add weapon property - missilies count at attack
+[+] enemies if patroling and see each other when it is going to kill player
+	then go kill player too.
+	neutral people must do same thing.
+[*] make bullets to delete when distance between it and player greater then maximal
+    not then collises program window rect
+[+] add precision of weapons
+[*] rewrite:
+	consider player general precision when shooting
+	player pre. + weapon pre. = X(var)
+	player's vibe like movement or jumps and shoots must affects on this value
+[+] wave algorythm to find player w/o vision or known x/y
+[*] add check for neares side of block
+[*] destroying missiles by blocks instant when shooting:
+	when player or enemy attacks with missile compute coords
+	of its destroing point, not when its moving
+	becase when missile speed is too fast it can move throw
+	blocks at its angles
+[+] use random height of blocks. diffrent factor of distance.
+[+] include neutral citizients people
+[*] cars
+[*] write enemies vision visualisation algorithm
+[+] enemies turn facing to its target position
+[+] rewrite enemies' vibe (walking, attack, searching way etc)
+[+] add shells of bullets
+[*] rewrite: system borders
+[*] add blood on blocks // physics
+[*] include sounds of shots and damage, shells, deaths etc
+[+] rewrite enemies role/current target algorithm
+[*] rewrite rectCollision() function
+[?] rewrite enemies way searching:
+	potential target
+	and temp tx/ty
+[*] rewrite: move process function code from enemyManager.cpp to enemy.cpp
+[+] rewrite: enemies move: enemy must collide with blocks sides
+	now it locked in its rects
+[*] victims bleeding leaves blood steps(circles)
+[*] enemy' attacks
+[*] make enemies inner power(damageResistance) to set randomly
+
+==== Add fun abilities:
+[+] teleportation
+	[*] show new position coords ellipse
+	[*] way to cancel casting
+[*] invisibility (switch type)
+[*] time slow (channeling type)
+[*] shield (channeling type)
+[?] attack magic: fireballs, lightning, shockwave
+[?] hypnosis
+[?] telekenesis
+[*] intuition
+	[*] include noise visualisation (shots and walking, jumps etc)
+	[*] include enemies vision visualisation
+============================================================
