@@ -1,0 +1,62 @@
+
+
+
+player movement
+3d imitation
+crossway generator by player near going
+
+==========================================================================
+
+check timer.h
+flashes
+
+
+maze generator?
+roads, road generator
+
+enemies, AI
+
+trees
+
+
+
+
+city generator (roads+blocks)
+
+ =================================================
+
+
+ FLUSHING blocks & roads / crossways by far distance
+
+ last target: mouse right-click places block with presuming for collide with player/roads
+
+
+ ==========================================================
+
+  Interesting Ideas:
+   * Crack proection on the block's wall.
+   * Skill Tree
+   * Sound Engine
+   * Shake Camera
+
+
+   * DELETE NOT CROSSWAYS
+   *DELETE ROADS
+   and if crossways have no more roads -> delete it
+
+   *WHEN ROAD CREATES, check presume rectangle collision
+
+
+
+   * когда перекресток распускается из-за рядом находящегося игрока, при создании одной из четырех возможных дорог,
+   проверять, не будет созданный после перекресток находится слишком близко к уже существующим перекресткам.
+
+
+
+
+
+
+
+
+
+
