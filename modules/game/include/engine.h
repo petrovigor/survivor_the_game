@@ -42,7 +42,7 @@ private:
 	double timeFactor;
 
 	friend LRESULT __stdcall WindProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	friend void drawFrame();
+	void drawFrame();
 
 public:
 	ENGINE();

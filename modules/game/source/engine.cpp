@@ -64,7 +64,7 @@ LRESULT __stdcall WindProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 	case WM_PAINT:
 		BeginPaint(hWnd, &ps);
-		drawFrame();
+		pointer->drawFrame();
 		EndPaint(hWnd, &ps);
 		break;
 
@@ -120,7 +120,7 @@ LRESULT __stdcall WindProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	return 0;
 }
 
-void drawFrame(void) {
+void ENGINE::drawFrame(void) {
 	bhdc = CreateCompatibleDC(hdc);
 	GetClientRect(hWnd, &clientRect);
 	buff = CreateCompatibleBitmap(hdc, clientRect.right, clientRect.bottom);
@@ -372,7 +372,7 @@ void ENGINE::mainLoop(void) {
 				strcat_s(debugTxt, 80, intStr);
 			}
 			
-			SetWindowText(hWnd, debugTxt);
+			SetWindowTextA(hWnd, debugTxt);
 			sec = 0;
 			fps = 0;
 		}

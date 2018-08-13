@@ -1,6 +1,9 @@
 #ifndef __CROSSWAY_H
 #define __CROSSWAY_H
 
+#define _CRT_SECURE_NO_WARNINGS       1
+#define _CRT_NON_CONFORMING_SWPRINTFS 1
+
 #include <Windows.h>
 #include <vector>
 #include "road.h"

@@ -15,7 +15,7 @@
 #ifndef __DEFINES_H
 #define __DEFINES_H
 
-#define CLASS_NAME "className"
+#define CLASS_NAME L"className"
 #define FPS 80
 #define SLEEP_MS 1000/FPS
 
