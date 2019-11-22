@@ -97,9 +97,9 @@ LRESULT __stdcall WindProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		break;
 
 	case WM_CREATE:
-		brushWhite = CreateSolidBrush(RGB(0,0,0));
-		brushBlack = CreateSolidBrush(RGB(255,255,255));
-		penBlack = CreatePen(PS_INSIDEFRAME,1,RGB(255,255,255));
+		brushWhite = CreateSolidBrush(RGB(255,255,255));
+		brushBlack = CreateSolidBrush(RGB(0,0,0));
+		penBlack = CreatePen(PS_INSIDEFRAME,1,RGB(0,0,0));
 
 		hdc = GetDC(hWnd);
 		break;
@@ -227,158 +227,159 @@ void ENGINE::mainLoop(void) {
 			} else {
 				return;
 			}
-		}
-
-		if(ATTACH_CAMERA_TO_CURSOR) {
-			newCursorX = cursor.getX() - physicsMan.getCameraOffsetX();
-			newCursorY = cursor.getY() - physicsMan.getCameraOffsetY();
 		} else {
-			newCursorX = cursor.getX();
-			newCursorY = cursor.getY();
-		}
 
-		fps++;
-		timer.update();
-		deltaTime = timer.getDelta();
+		  if(ATTACH_CAMERA_TO_CURSOR) {
+			  newCursorX = cursor.getX() - physicsMan.getCameraOffsetX();
+			  newCursorY = cursor.getY() - physicsMan.getCameraOffsetY();
+		  } else {
+			  newCursorX = cursor.getX();
+			  newCursorY = cursor.getY();
+		  }
 
-		if(keys.isPressed('1') && !player.isReloading()) {
-			player.setWeapon(weaponMan.getWeaponById(WEAPON_PISTOL));
-		} else if(keys.isPressed('2') && !player.isReloading()) {
-			player.setWeapon(weaponMan.getWeaponById(WEAPON_MACHINEGUN));
-	    } else if(keys.isPressed('3') && !player.isReloading()) {
-			player.setWeapon(weaponMan.getWeaponById(WEAPON_ASSAULT_RIFLE));
-	    } else if(keys.isPressed('4') && !player.isReloading()) {
-			player.setWeapon(weaponMan.getWeaponById(WEAPON_PUNISHER));
-	    } else if(keys.isPressed('5') && !player.isReloading()) {
-			player.setWeapon(weaponMan.getWeaponById(WEAPON_SHOTGUN));
-	    }
+		  fps++;
+		  timer.update();
+		  deltaTime = timer.getDelta();
 
-		if(keys.isPressed('R') && !player.isReloading()) {
-			player.denyShooting();
-			player.startReloading();
-			eventMan.addEvent(EVENT_TYPE_SIMPLE, EVENT_ACTION_RELOADING, player.getCurrentWeapon()->getReloadTime());
-		}
+		  if(keys.isPressed('1') && !player.isReloading()) {
+			  player.setWeapon(weaponMan.getWeaponById(WEAPON_PISTOL));
+		  } else if(keys.isPressed('2') && !player.isReloading()) {
+			  player.setWeapon(weaponMan.getWeaponById(WEAPON_MACHINEGUN));
+	      } else if(keys.isPressed('3') && !player.isReloading()) {
+			  player.setWeapon(weaponMan.getWeaponById(WEAPON_ASSAULT_RIFLE));
+	      } else if(keys.isPressed('4') && !player.isReloading()) {
+			  player.setWeapon(weaponMan.getWeaponById(WEAPON_PUNISHER));
+	      } else if(keys.isPressed('5') && !player.isReloading()) {
+			  player.setWeapon(weaponMan.getWeaponById(WEAPON_SHOTGUN));
+	      }
 
-		if(keys.isRMBpressed()) {
-			if(!player.isCasting()) {
-				if(player.isAllowedCasting()) {
-					// start targeting ability
-					player.setCastingFlag(true);
-					player.getCurrentAbility()->startTargeting();
-				}
-			}
-		} else {
-			if(player.isCasting()) {
-				player.setCastingFlag(false);
-				player.getCurrentAbility()->endTargeting();
-				abilityMan.endCasting(player.getCurrentAbility(), newCursorX, newCursorY/*newCursorX, newCursorY*/);
-			}
-		}
+		  if(keys.isPressed('R') && !player.isReloading()) {
+			  player.denyShooting();
+			  player.startReloading();
+			  eventMan.addEvent(EVENT_TYPE_SIMPLE, EVENT_ACTION_RELOADING, player.getCurrentWeapon()->getReloadTime());
+		  }
 
-		if(keys.isLMBpressed() && player.isAllowedAttack() && !player.isReloading()) {
-			if(player.getCurrentWeapon()->getAmmo() <= 0 && player.getCurrentWeapon()->getMaxAmmo()!=-1) {
-				player.denyShooting();
-				player.startReloading();
-				eventMan.addEvent(EVENT_TYPE_SIMPLE, EVENT_ACTION_RELOADING, player.getCurrentWeapon()->getReloadTime());
-			} else {
-				// *переписать алгоритм стрельбы. именно выстрела
-				double angle = abc(player.getX(), player.getY(), newCursorX, newCursorY);
-				double x = player.getX() + player.getSize() * cos(angle)/* + physicsMan.getCameraOffsetX()*/;
-				double y = player.getY() + player.getSize() * sin(angle)/* + physicsMan.getCameraOffsetY()*/;
+		  if(keys.isRMBpressed()) {
+			  if(!player.isCasting()) {
+				  if(player.isAllowedCasting()) {
+					  // start targeting ability
+					  player.setCastingFlag(true);
+					  player.getCurrentAbility()->startTargeting();
+				  }
+			  }
+		  } else {
+			  if(player.isCasting()) {
+				  player.setCastingFlag(false);
+				  player.getCurrentAbility()->endTargeting();
+				  abilityMan.endCasting(player.getCurrentAbility(), newCursorX, newCursorY/*newCursorX, newCursorY*/);
+			  }
+		  }
 
-				player.attack(x,y,newCursorX, newCursorY, 0, 0/*&missileBrush,&missilePen*/);
+		  if(keys.isLMBpressed() && player.isAllowedAttack() && !player.isReloading()) {
+			  if(player.getCurrentWeapon()->getAmmo() <= 0 && player.getCurrentWeapon()->getMaxAmmo()!=-1) {
+				  player.denyShooting();
+				  player.startReloading();
+				  eventMan.addEvent(EVENT_TYPE_SIMPLE, EVENT_ACTION_RELOADING, player.getCurrentWeapon()->getReloadTime());
+			  } else {
+				  // *переписать алгоритм стрельбы. именно выстрела
+				  double angle = abc(player.getX(), player.getY(), newCursorX, newCursorY);
+				  double x = player.getX() + player.getSize() * cos(angle)/* + physicsMan.getCameraOffsetX()*/;
+				  double y = player.getY() + player.getSize() * sin(angle)/* + physicsMan.getCameraOffsetY()*/;
 
-				if(!DEBUGVAR_AEZAKMI) {
-					physicsMan.createNoise(x,y,player.getCurrentWeapon()->getWeaponNoiseRadius());
-				}
+				  player.attack(x,y,newCursorX, newCursorY, 0, 0/*&missileBrush,&missilePen*/);
 
-				eventMan.addEvent(EVENT_TYPE_SIMPLE, EVENT_ACTION_ALLOW_SHOOTING, player.getCurrentWeapon()->getWaitingTime());
-				fxMan.addShell(x,y, angle + 90*DEGTORAD);
-				fxMan.addFlash(x, y, 40.0, 0.1, FX_VISUAL_TYPE_ELLIPSE);
-			}
-		}
+				  if(!DEBUGVAR_AEZAKMI) {
+					  physicsMan.createNoise(x,y,player.getCurrentWeapon()->getWeaponNoiseRadius());
+				  }
 
-		if(player.isReloading()) {
-			player.incAngle();
-			player.incReloadingTime(deltaTime);
-		}
+				  eventMan.addEvent(EVENT_TYPE_SIMPLE, EVENT_ACTION_ALLOW_SHOOTING, player.getCurrentWeapon()->getWaitingTime());
+				  fxMan.addShell(x,y, angle + 90*DEGTORAD);
+				  fxMan.addFlash(x, y, 40.0, 0.1, FX_VISUAL_TYPE_ELLIPSE);
+			  }
+		  }
 
-		eventMan.updateEvents(deltaTime);
-		abilityMan.updateAbilitiesProcess(deltaTime);
-		fxMan.updateFXs(deltaTime);
-		physicsMan.processNoises(deltaTime);
-		physicsMan.moveAll(deltaTime,keys.getPlayerDirection());
-		physicsMan.processCollisions();
-		physicsMan.cleanUpMissiles();
-		physicsMan.removeNoises();
-		physicsMan.deposeGameObjectsFromCenter();
-		enemyMan.removeDeadEnemies();
+		  if(player.isReloading()) {
+			  player.incAngle();
+			  player.incReloadingTime(deltaTime);
+		  }
 
-		sec+=deltaTime;
+		  eventMan.updateEvents(deltaTime);
+		  abilityMan.updateAbilitiesProcess(deltaTime);
+		  fxMan.updateFXs(deltaTime);
+		  physicsMan.processNoises(deltaTime);
+		  physicsMan.moveAll(deltaTime,keys.getPlayerDirection());
+		  physicsMan.processCollisions();
+		  physicsMan.cleanUpMissiles();
+		  physicsMan.removeNoises();
+		  physicsMan.deposeGameObjectsFromCenter();
+		  enemyMan.removeDeadEnemies();
 
-		//debug:
-		if(sec>=1.0) {
-			strcpy_s(debugTxt, 80, "");
+		  sec+=deltaTime;
 
-			//strcpy_s(debugTxt, 80, "ev=");
-			//_itoa_s(eventMan.getEventCount(), intStr, 10);
-			//strcat_s(debugTxt, 80, intStr);
+		  //debug:
+		  if(sec>=1.0) {
+			  strcpy_s(debugTxt, 80, "");
 
-			strcat_s(debugTxt, 80, "|fps=");
-			_itoa_s(fps, intStr, 10);
-			strcat_s(debugTxt, 80, intStr);
+			  //strcpy_s(debugTxt, 80, "ev=");
+			  //_itoa_s(eventMan.getEventCount(), intStr, 10);
+			  //strcat_s(debugTxt, 80, intStr);
 
-			strcat_s(debugTxt, 80, "|w=");
-			_itoa_s(player.getCurrentWeapon()->getMissilesCountPerAttack(), intStr, 10);
-			strcat_s(debugTxt, 80, intStr);
+			  strcat_s(debugTxt, 80, "|fps=");
+			  _itoa_s(fps, intStr, 10);
+			  strcat_s(debugTxt, 80, intStr);
 
-			strcat_s(debugTxt, 80, "|m=");
-			_itoa_s(mMan.getCount(), intStr, 10);
-			strcat_s(debugTxt, 80, intStr);
+			  strcat_s(debugTxt, 80, "|w=");
+			  _itoa_s(player.getCurrentWeapon()->getMissilesCountPerAttack(), intStr, 10);
+			  strcat_s(debugTxt, 80, intStr);
 
-			strcat_s(debugTxt, 80, "|a=");
-			_itoa_s(player.getCurrentWeapon()->getAmmo(), intStr, 10);
-			strcat_s(debugTxt, 80, intStr);
+			  strcat_s(debugTxt, 80, "|m=");
+			  _itoa_s(mMan.getCount(), intStr, 10);
+			  strcat_s(debugTxt, 80, intStr);
 
-			strcat_s(debugTxt, 80, "/");
-			_itoa_s(player.getCurrentWeapon()->getMaxAmmo(), intStr, 10);
-			strcat_s(debugTxt, 80, intStr);
+			  strcat_s(debugTxt, 80, "|a=");
+			  _itoa_s(player.getCurrentWeapon()->getAmmo(), intStr, 10);
+			  strcat_s(debugTxt, 80, intStr);
 
-			if(DEBUGVAR_INCLUDE_ENEMIES) {
-				strcat_s(debugTxt, 80, "|e=");
-				_itoa_s(enemyMan.getCount(), intStr, 10);
-				strcat_s(debugTxt, 80, intStr);
-			}
+			  strcat_s(debugTxt, 80, "/");
+			  _itoa_s(player.getCurrentWeapon()->getMaxAmmo(), intStr, 10);
+			  strcat_s(debugTxt, 80, intStr);
 
-			strcat_s(debugTxt, 80, "|c=");
-			_itoa_s(physicsMan.getCollisionsCount(), intStr, 10);
-			strcat_s(debugTxt, 80, intStr);
+			  if(DEBUGVAR_INCLUDE_ENEMIES) {
+				  strcat_s(debugTxt, 80, "|e=");
+				  _itoa_s(enemyMan.getCount(), intStr, 10);
+				  strcat_s(debugTxt, 80, intStr);
+			  }
 
-			if(DEBUGVAR_INCLUDE_BLOCKS) {
-				strcat_s(debugTxt, 80, "|b=");
-				_itoa_s(physicsMan.getBlocksCount(), intStr, 10);
-				strcat_s(debugTxt, 80, intStr);
-			}
+			  strcat_s(debugTxt, 80, "|c=");
+			  _itoa_s(physicsMan.getCollisionsCount(), intStr, 10);
+			  strcat_s(debugTxt, 80, intStr);
 
-			if(DEBUGVAR_INCLUDE_ROADS) {
-				strcat_s(debugTxt, 80, "|r=");
-				_itoa_s(physicsMan.getRoadsCount(), intStr, 10);
-				strcat_s(debugTxt, 80, intStr);
-			}
+			  if(DEBUGVAR_INCLUDE_BLOCKS) {
+				  strcat_s(debugTxt, 80, "|b=");
+				  _itoa_s(physicsMan.getBlocksCount(), intStr, 10);
+				  strcat_s(debugTxt, 80, intStr);
+			  }
 
-			if(DEBUGVAR_INCLUDE_SHELLS) {
-				strcat_s(debugTxt, 80, "|sh=");
-				_itoa_s(physicsMan.getShellsCount(), intStr, 10);
-				strcat_s(debugTxt, 80, intStr);
-			}
+			  if(DEBUGVAR_INCLUDE_ROADS) {
+				  strcat_s(debugTxt, 80, "|r=");
+				  _itoa_s(physicsMan.getRoadsCount(), intStr, 10);
+				  strcat_s(debugTxt, 80, intStr);
+			  }
+
+			  if(DEBUGVAR_INCLUDE_SHELLS) {
+				  strcat_s(debugTxt, 80, "|sh=");
+				  _itoa_s(physicsMan.getShellsCount(), intStr, 10);
+				  strcat_s(debugTxt, 80, intStr);
+			  }
 			
-			SetWindowTextA(hWnd, debugTxt);
-			sec = 0;
-			fps = 0;
-		}
+			  SetWindowTextA(hWnd, debugTxt);
+			  sec = 0;
+			  fps = 0;
+		  }
 
-		drawFrame();
-		Sleep(SLEEP_MS);
+		  drawFrame();
+		  //Sleep(SLEEP_MS);
+    }
 	}
 }
 
