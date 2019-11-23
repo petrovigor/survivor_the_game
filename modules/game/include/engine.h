@@ -1,7 +1,31 @@
+#pragma once
+
+#include <memory>
+#include "window.h"
+
+class Engine {
+private:
+  std::unique_ptr<Window>         window;
+  std::unique_ptr<WindowCallback> callback;
+
+public:
+	Engine();
+  ~Engine();
+
+	void initWindow(HINSTANCE hInstance, int nCmdShow);
+	void mainLoop();
+
+  void closeApp() {
+    callback->OnDestroy( );
+  }
+
+};
 
 
-#ifndef __ENGINE_H
-#define __ENGINE_H
+
+#if 0
+
+#pragma once
 
 #include <windows.h>
 #include <time.h>
@@ -22,8 +46,14 @@
 #include "abilityManager.h" //ability.h
 #include "camera.h"
 
-class ENGINE {
+
+#include <memory>
+#include "window.h"
+
+class Engine {
 private:
+  std::unique_ptr<Window> window;
+
 	CURSOR cursor;
 	TIMER timer;
 	EVENT_MANAGER eventMan;
@@ -40,12 +70,11 @@ private:
 
 	bool debugMode;
 	double timeFactor;
-
-	friend LRESULT __stdcall WindProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	void drawFrame();
 
 public:
-	ENGINE();
+	Engine();
+  ~Engine();
 
 	void initWindow(HINSTANCE hInstance, int nCmdShow);
 	void restart(void);
@@ -55,4 +84,6 @@ public:
 	//void switchDebugMode(void) {debugMode=!debugMode;}
 };
 
-#endif
+
+#endif //0
+

@@ -15,7 +15,7 @@ private:
 	HPEN *enemypenptr;
 	HBRUSH *mbr;//missile brush and pen
 	HPEN *mpn;
-
+  
 public:
 	ENEMY_MANAGER() {
 		enemyMultiplier = 0;

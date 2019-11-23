@@ -1,20 +1,38 @@
-#if NEW_GEN
-
+#include <iostream>
 #include "engine.h"
 
-bool Engine::Init() {
-	return InitWindow(WINDOW_CLASS, WINDOW_NAME, WS_OVERLAPPEDWINDOW, 0, 0, 640, 480, true);
+Engine::Engine() { }
+Engine::~Engine() { }
+
+void Engine::initWindow(HINSTANCE hInstance, int nCmdShow) {
+  callback = std::make_unique<WindowCallback>( );
+  callback->SetEngine( this );
+
+  window = std::make_unique<Window>( );
+  window->SetCallback( callback.get() );
+  window->createWindow( 640, 480 );
 }
 
-void Engine::Run() {
-
+void Engine::mainLoop(void) {
+	MSG msg;
+	while(true) {
+		if(PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
+			if(GetMessage(&msg, NULL, 0, 0)) {
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			} else {
+				break;
+			}
+		}
+	}
 }
 
-#else
 
+#if 0
+
+#include <iostream>
 #include "engine.h"
 
-static ENGINE *pointer;
 static HWND hWnd;
 static RECT clientRect;
 static HDC hdc;
@@ -32,95 +50,14 @@ static HPEN penWhite;
 double mouseX, mouseY;
 POINT mousePoint;
 
-ENGINE::ENGINE() {
-	pointer = this;
+Engine::Engine() {
 	timeFactor = 1.0;
 	debugMode = false;
 }
 
-LRESULT __stdcall WindProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	double cx = RESOLUTION_X / 2;
-	double cy = RESOLUTION_Y / 2;
-	double dx,dy;
+Engine::~Engine() { }
 
-	switch(msg) {
-	case WM_MOUSEMOVE:
-		pointer->cursor.move(LOWORD(lParam), HIWORD(lParam));
-
-		if(ATTACH_CAMERA_TO_CURSOR) {
-			//dx = dbc(cx, 
-			dx = (cx - pointer->cursor.getX())  /CAMERA_DISTANCE_RATE   /*/3*/;
-			dy = (cy - pointer->cursor.getY())  /CAMERA_DISTANCE_RATE/*/3*/;
-
-			pointer->camera.setXY(dx, dy);
-			pointer->physicsMan.setCameraOffsetValue(dx, dy);
-			//pointer->physicsMan.deposeGameObjectsFromCenter();
-			pointer->player.faceTo(pointer->cursor.getX() - dx, pointer->cursor.getY() - dy);
-		} else {
-			pointer->player.faceTo(LOWORD(lParam), HIWORD(lParam));
-		}
-
-		break;
-
-	case WM_PAINT:
-		BeginPaint(hWnd, &ps);
-		pointer->drawFrame();
-		EndPaint(hWnd, &ps);
-		break;
-
-	case WM_RBUTTONDOWN:
-		pointer->keys.rightMouseButtonDown();
-		break;
-
-	case WM_RBUTTONUP:
-		pointer->keys.rightMouseButtonUp();
-		break;
-
-	case WM_LBUTTONDOWN:
-		pointer->keys.leftMouseButtonDown();
-		break;
-
-	case WM_LBUTTONUP:
-		pointer->keys.leftMouseButtonUp();
-		break;
-
-	case WM_KEYDOWN:
-		if(wParam == 27) {
-			PostMessage(hWnd, WM_QUIT, 0, 0);
-		}
-
-		pointer->keys.keyDown(toupper(LOWORD(wParam)));
-		break;
-
-	case WM_KEYUP:
-		pointer->keys.keyUp(toupper(LOWORD(wParam)));
-		break;
-
-	case WM_CREATE:
-		brushWhite = CreateSolidBrush(RGB(255,255,255));
-		brushBlack = CreateSolidBrush(RGB(0,0,0));
-		penBlack = CreatePen(PS_INSIDEFRAME,1,RGB(0,0,0));
-
-		hdc = GetDC(hWnd);
-		break;
-
-	case WM_DESTROY:
-		if(brushWhite) DeleteObject(brushWhite);
-		if(brushBlack) DeleteObject(brushBlack);
-		if(penBlack) DeleteObject(penBlack);
-
-		ReleaseDC(hWnd, hdc);
-		PostQuitMessage(0);
-		break;
-
-	default:
-		return DefWindowProc(hWnd, msg, wParam, lParam);
-	}
-
-	return 0;
-}
-
-void ENGINE::drawFrame(void) {
+void Engine::drawFrame() {
 	bhdc = CreateCompatibleDC(hdc);
 	GetClientRect(hWnd, &clientRect);
 	buff = CreateCompatibleBitmap(hdc, clientRect.right, clientRect.bottom);
@@ -133,24 +70,24 @@ void ENGINE::drawFrame(void) {
 	SelectObject(bhdc, penBlack);
 
 	if(DEBUGVAR_SHOW_NOISES) {
-		pointer->physicsMan.drawNoises(bhdc);
+		physicsMan.drawNoises(bhdc);
 	}
 
-	pointer->physicsMan.drawRoads(bhdc);
-	pointer->physicsMan.drawBlocks(bhdc);
-	pointer->mMan.draw(bhdc);
-	pointer->player.draw(bhdc);
-	pointer->enemyMan.draw(bhdc);
-	pointer->fxMan.draw(bhdc);
-	pointer->cursor.draw(bhdc);
+	physicsMan.drawRoads(bhdc);
+	physicsMan.drawBlocks(bhdc);
+	mMan.draw(bhdc);
+	player.draw(bhdc);
+	enemyMan.draw(bhdc);
+	fxMan.draw(bhdc);
+	cursor.draw(bhdc);
 
 	if(DEBUGVAR_SHOW_SHADOWS) {
 		//SelectObject(bhdc, standardPen);
 		//SelectObject(bhdc, standardBrush);
 
-		pointer->physicsMan.computeShadows(bhdc,
-			pointer->player.getX()/*pointer->cursor.getX() + pointer->physicsMan.getCameraOffsetX()*/,
-			pointer->player.getY()/*pointer->cursor.getY() + pointer->physicsMan.getCameraOffsetY()*/);
+		physicsMan.computeShadows(bhdc,
+			player.getX()/*pointer->cursor.getX() + pointer->physicsMan.getCameraOffsetX()*/,
+			player.getY()/*pointer->cursor.getY() + pointer->physicsMan.getCameraOffsetY()*/);
 	}
 
 	BitBlt(hdc, 0, 0, clientRect.right, clientRect.bottom, bhdc, 0, 0, SRCCOPY);
@@ -158,29 +95,15 @@ void ENGINE::drawFrame(void) {
 	DeleteObject(buff);
 }
 
-void ENGINE::initWindow(HINSTANCE hInstance, int nCmdShow) {
-	WNDCLASS wc = {CS_OWNDC, WindProc, NULL, NULL, hInstance, LoadIcon(NULL, IDI_APPLICATION), LoadCursor(NULL, IDC_ARROW), NULL, NULL, CLASS_NAME};
-	RegisterClass(&wc);
-
-	int height, width, left, top;
-	height = RESOLUTION_Y + GetSystemMetrics(SM_CYCAPTION) + ((GetSystemMetrics(SM_CYBORDER) + GetSystemMetrics(SM_CXEDGE)) << 1) + 3;
-	width = RESOLUTION_X + ((GetSystemMetrics(SM_CXBORDER) + GetSystemMetrics(SM_CXEDGE)) << 1) + 3;
-	left = (GetSystemMetrics(SM_CXSCREEN) - width) >> 1;
-	top = (GetSystemMetrics(SM_CYSCREEN) - height) >> 1;
-
-	hWnd = CreateWindow(CLASS_NAME, NULL, WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX, left, top, width, height, NULL, NULL, hInstance, NULL);
-	ShowWindow(hWnd, nCmdShow);
+void Engine::initWindow(HINSTANCE hInstance, int nCmdShow) {
+  window = std::make_unique<Window>( );
+  window->createWindow( 640, 480 );
 }
 
-void ENGINE::restart(void) {
-	//enemyMan.resetEnemyMultiplier();
-	//eventMan.removeEvents();
-	//physicsMan.removeBlocks();
-
+void Engine::restart(void) {
 	eventMan.addEvent(EVENT_TYPE_INFINITE, EVENT_ACTION_SPAWN_ENEMY, 3); //1.5
 	eventMan.addEvent(EVENT_TYPE_INFINITE, EVENT_ACTION_INCREASE_ENEMY_MULTIPLIER, 30.0);
-	
-	//physicsMan.placeBlock(20,120,150,80,&standardPen);
+
 	if(DEBUGVAR_INCLUDE_BLOCKS) {
 		physicsMan.placeBlock(320,120,200,20);
 		physicsMan.placeBlock(50,200,25,50);
@@ -189,10 +112,9 @@ void ENGINE::restart(void) {
 		physicsMan.placeBlock(600,420,30,80);
 		physicsMan.placeBlock(550,300,200,100);
 	}
-	//abilityMan.createAbility(ABILITY_ID_BLINK, ABILITY_CAST_TYPE_POINT, ABILITY_TARGET_TYPE_NONE, 0, 0, 0.3);
 }
 
-void ENGINE::mainLoop(void) {
+void Engine::mainLoop(void) {
 	srand((unsigned)time(NULL));
 
 	timer.init();
@@ -383,4 +305,5 @@ void ENGINE::mainLoop(void) {
 	}
 }
 
-#endif
+
+#endif //0

@@ -1,7 +1,14 @@
 #include "engine.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-	ENGINE engine;
+	Engine engine;
+
+  if( true ) {
+
+    AllocConsole( );
+    freopen("CONOUT$", "w", stdout);
+
+  }
 
 	engine.initWindow(hInstance, nCmdShow);
 	engine.mainLoop();
