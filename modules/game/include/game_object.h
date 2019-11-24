@@ -1,10 +1,11 @@
-#ifndef __GAME_OBJECT_H
-#define __GAME_OBJECT_H
+#pragma once
 
+#include <Windows.h>
 #include <math.h>
 
-// abstract game object class
-class GAME_OBJECT {
+#include <memory>
+
+class GameObject {
 protected:
 	bool alive;
 	double x, y;
@@ -18,14 +19,23 @@ protected:
 	double cameraOffsetX, cameraOffsetY;//*
 
 public:
-	GAME_OBJECT() {
+	GameObject() {
 		x = y = size = maxSize = angle = speed = oldX = oldY = 0.0;
 		cameraOffsetX = cameraOffsetY = 0.0;
 		alive = true;
 		height = 1.0;
 	}
+  virtual ~GameObject() {};
 
-	GAME_OBJECT *itSelf(void) {return this;}
+  GameObject(int _x, int _y, int _size, int _speed, int _angle)
+    : x(_x)
+    , y(_y)
+    , size(_size)
+    , speed(_speed)
+    , angle(_angle)
+  { }
+
+	GameObject *itSelf(void) {return this;}
 
 	double getX(void) {return x;}
 	double getY(void) {return y;}
@@ -38,20 +48,10 @@ public:
 	void setHeight(double h) {height=h;}
 	void setCameraOffset(double X,double Y){cameraOffsetX=X;cameraOffsetY=Y;}
 
-	//void hit(double damage) {
-	//	hp -= damage;
-	//	if(hp <= 0.0) {
-	//		kill();
-	//	}
-	//}
-
 	void backupXY(void) {oldX = x; oldY = y;}
 	void restoreXY(void) {x = oldX; y = oldY;}
 
-	inline double distance(GAME_OBJECT *obj) {
-		//obj->setXY(0., 10.0);
-		//setXY(-20., 110.0);
-
+	double distance(GameObject *obj) {
 		double x1 = obj->getX();
 		double y1 = obj->getY();
 		double x2 = x;
@@ -61,29 +61,23 @@ public:
 		double d2=y2-y1;
 		double result = sqrt(pow(x - obj->getX(), 2.0) + pow(y - obj->getY(), 2.0));
 
-		//MessageBox(0, 0, 0, 0);
-
 		return result;
 	}
 
-	inline double getAngleAt(GAME_OBJECT *obj) {
-		//double result;
-
-		//result = atan2(obj->y - y, obj->x - x);
-
+	double getAngleAt(GameObject *obj) {
 		return(atan2(obj->y - y, obj->x - x));
-		//result = atan2
 	}
 
-	//virtual void heal() = 0;
+  void draw(HDC hdc) {
+    
+  }
 
-	virtual void draw(HDC hbdc) = 0;
+	//virtual void draw(HDC hbdc) = 0;
 	virtual void takeDamage(double damage) {};
-	//virtual void attack(double x, double y) {};
-
-    virtual ~GAME_OBJECT() {}; // ????????????
-	//virtual void draw(HDC bhdc) = 0;
-	//double setCollisionRadius(void) {return collisionRadius;}
 };
 
-#endif
+#if 0
+std::shared_ptr<GameObject> createGameObject(int x, int y, int size, int speed, int angle) {
+  return std::make_shared<GameObject>( x, y, size, speed, size );
+}
+#endif //0

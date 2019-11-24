@@ -35,7 +35,7 @@ bool PHYSICS_MANAGER::checkForPlacementCollision(double X,double Y,double W,doub
 	return free;
 }
 
-bool PHYSICS_MANAGER::checkForPlacementCollision(GAME_OBJECT *go) {
+bool PHYSICS_MANAGER::checkForPlacementCollision(GameObject *go) {
 	const bool checkForBlocksCollision = true;
 	
 	if(go!=playerPtr) {
@@ -137,7 +137,7 @@ bool PHYSICS_MANAGER::isPointFree(double X, double Y, double R = 0) {
 	return r;
 }
 
-bool PHYSICS_MANAGER::isVision(GAME_OBJECT *A, GAME_OBJECT *B) {
+bool PHYSICS_MANAGER::isVision(GameObject *A, GameObject *B) {
 	double ax = A->getX();
 	double ay = A->getY();
 	double bx = B->getX();
@@ -152,7 +152,7 @@ bool PHYSICS_MANAGER::isVision(GAME_OBJECT *A, GAME_OBJECT *B) {
 	return false;
 }
 
-int PHYSICS_MANAGER::isVisionSmart(GAME_OBJECT *A, GAME_OBJECT *B, double *coords, int *count) {
+int PHYSICS_MANAGER::isVisionSmart(GameObject *A, GameObject *B, double *coords, int *count) {
 	//bool vis = true;
 
 	int r = -1;
@@ -584,23 +584,23 @@ void PHYSICS_MANAGER::deposeGameObjectsFromCenter(/*double offsetX, double offse
 	//offsetFromCenterX = offsetX;
 	//offsetFromCenterY = offsetY;
 	
-	double offsetX = offsetFromCenterX,
-		   offsetY = offsetFromCenterY;
+	double offsetX1 = offsetFromCenterX,
+		     offsetY1 = offsetFromCenterY;
 
 	for(std::list<BLOCK>::iterator it=blocksList.begin(); it!=blocksList.end(); ++it) {
-		it->setCameraOffset(offsetX,offsetY);
+		it->setCameraOffset(offsetX1,offsetY1);
 	}
 	for(std::list<ENEMY>::iterator it=enemiesList->begin(); it!=enemiesList->end(); ++it) {
-		it->setCameraOffset(offsetX,offsetY);
+		it->setCameraOffset(offsetX1,offsetY1);
 	}
 	for(std::list<MISSILE>::iterator it=missilesList->begin(); it!=missilesList->end(); ++it) {
-		it->setCameraOffset(offsetX,offsetY);
+		it->setCameraOffset(offsetX1,offsetY1);
 	}
 	for(std::vector<NOISE>::iterator it=noisesVector.begin(); it!=noisesVector.end(); ++it) {
-		it->setCameraOffset(offsetX,offsetY);
+		it->setCameraOffset(offsetX1,offsetY1);
 	}
-	fxPtr->setCameraOffset(offsetX,offsetY);
-	playerPtr->setCameraOffset(offsetX,offsetY);
+	fxPtr->setCameraOffset(offsetX1,offsetY1);
+	playerPtr->setCameraOffset(offsetX1,offsetY1);
 }
 
 void PHYSICS_MANAGER::deposeGameObjects(double X, double Y) {
@@ -939,7 +939,7 @@ void PHYSICS_MANAGER::correctPlayerPlacement(const int playerDir, double deltaTi
 	}
 }
 
-//inline bool isCollision(GAME_OBJECT *go1, GAME_OBJECT *go2) {
+//inline bool isCollision(GameObject *go1, GameObject *go2) {
 //	if(dbo(go1->itSelf(),go2->itSelf())<go1->getSize()+go2->getSize()) {
 //		return true;
 //	}
@@ -961,7 +961,7 @@ void PHYSICS_MANAGER::correctPlayerPlacement(const int playerDir, double deltaTi
 //}
 
 //check if collision exists in list
-bool PHYSICS_MANAGER::checkIfCollisionExists(const GAME_OBJECT *obj, const MISSILE *proj) {
+bool PHYSICS_MANAGER::checkIfCollisionExists(const GameObject *obj, const MISSILE *proj) {
 	for (std::list<COLLISION>::iterator idxColl = collisionsList.begin(); idxColl != collisionsList.end(); ++idxColl) {
 		if (idxColl->getSecondObjectPtr() == proj && idxColl->getFirstObjectPtr() == obj) {
 			//check existed

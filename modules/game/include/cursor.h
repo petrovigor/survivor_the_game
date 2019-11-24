@@ -1,10 +1,9 @@
-#ifndef __CURSOR_H
-#define __CURSOR_H
+#pragma once
 
 #include "defines.h"
-#include "gameObject.h"
+#include "game_object.h"
 
-class CURSOR : public GAME_OBJECT {
+class CURSOR : public GameObject {
 public:
 	CURSOR() {
 		size = CURSOR_SIZE;
@@ -13,5 +12,3 @@ public:
 	void move(double newX, double newY) {x = newX; y = newY;}
 	void draw(HDC bhdc);
 };
-
-#endif

@@ -11,12 +11,12 @@
 class EVENT_MANAGER {
 private:
 	std::vector<EVENT> eventList;
-	PLAYER *playerPtr;
+	Player *playerPtr;
 	ENEMY_MANAGER *enemyManPtr;
 	PHYSICS_MANAGER *phy;
 
 public:
-	void initEventManager(PLAYER *newPlayerPtr, ENEMY_MANAGER *newEnemyManagerPtr, PHYSICS_MANAGER *pt) {playerPtr = newPlayerPtr; enemyManPtr = newEnemyManagerPtr; phy=pt;}
+	void initEventManager(Player *newPlayerPtr, ENEMY_MANAGER *newEnemyManagerPtr, PHYSICS_MANAGER *pt) {playerPtr = newPlayerPtr; enemyManPtr = newEnemyManagerPtr; phy=pt;}
 
 	void addEvent(const int newEventType, const int newEventAction, double newLastingTime) {
 		eventList.push_back(EVENT(newEventType, newEventAction, newLastingTime));

@@ -1,5 +1,4 @@
-#ifndef __MISSILE_MANAGER_H
-#define __MISSILE_MANAGER_H
+#pragma once
 
 #include <list>
 #include "defines.h"
@@ -11,8 +10,9 @@ private:
 	std::list<MISSILE> mList;
 
 public:
-	void addMissile(double newX, double newY, double newAngle, double newSpeed, double newDamage, const int newVisualType, const int newTargetType, double newMissileSize, int newPenCount, HBRUSH *newBrush, HPEN *newPen) {
-		mList.push_back(MISSILE(newX, newY, newSpeed, newDamage, newAngle/*abc(newX, newY, x2, y2)*/, newVisualType, newTargetType, newMissileSize, newPenCount, newBrush, newPen));
+	void addMissile(double newX, double newY, double newAngle, double newSpeed, double newDamage, const int newVisualType, const int newTargetType, double newMissileSize, int newPenCount, HBRUSH *newBrush = 0, HPEN *newPen = 0) {
+		//mList.push_back(MISSILE(newX, newY, newSpeed, newDamage, newAngle/*abc(newX, newY, x2, y2)*/, newVisualType, newTargetType, newMissileSize, newPenCount, newBrush, newPen));
+    mList.push_back(MISSILE(newX, newY, newSpeed, newDamage, newAngle/*abc(newX, newY, x2, y2)*/, newVisualType, newTargetType, newMissileSize, newPenCount, nullptr, nullptr));
 	}
 
 	void draw(HDC bhdc) {
@@ -25,5 +25,3 @@ public:
 
 	int getCount(void) {return mList.size();}
 };
-
-#endif

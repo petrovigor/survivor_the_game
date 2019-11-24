@@ -13,7 +13,7 @@
 
 class PHYSICS_MANAGER {
 private:
-	PLAYER *playerPtr;
+	Player *playerPtr;
 	FX_MANAGER *fxPtr;
 
 	HPEN *penPtr;
@@ -33,12 +33,12 @@ private:
 	void checkCollisions(void);
 	void processNewCollisions(void);
 	void deleteOldCollisions(void);
-	bool checkIfCollisionExists(const GAME_OBJECT *f, const MISSILE *s);
+	bool checkIfCollisionExists(const GameObject *f, const MISSILE *s);
 
 	double offsetFromCenterY,offsetFromCenterX;
 
 public:
-	void init(std::list<ENEMY> *e, std::list<MISSILE> *m, PLAYER *p, FX_MANAGER *f, HPEN *ptr, HPEN *newNoisePenPtr, HPEN *newRoadPenPtr) {
+	void init(std::list<ENEMY> *e, std::list<MISSILE> *m, Player *p, FX_MANAGER *f, HPEN *ptr, HPEN *newNoisePenPtr, HPEN *newRoadPenPtr) {
 		playerPtr = p;
 		enemiesList = e;
 		missilesList = m;
@@ -84,7 +84,7 @@ public:
 
 	void drawRoads(HDC bhdc) {
 		for(std::list<ROAD>::iterator i=roadsList.begin(); i!=roadsList.end(); ++i) {
-			i->draw(bhdc);
+			//i->draw(bhdc);
 		}
 	}
 
@@ -118,7 +118,7 @@ public:
 	void deposeGameObjects(double offsetX, double offsetY);
 	
 	
-	void deposeGameObjectsFromCenter();
+	void deposeGameObjectsFromCenter(/*double offx, double offy*/);
 
 
 	bool checkForPlacementCollision(double,double,double,double);
@@ -127,7 +127,7 @@ public:
 	void processEnemies(double deltaTime);
 	void moveMissiles(double deltaTime);
 	void moveAll(double deltaTime, const int playerDir);
-	bool checkForPlacementCollision(GAME_OBJECT *go);
+	bool checkForPlacementCollision(GameObject *go);
 	bool isPointFree(double X, double Y, double R);
 	//bool checkCoordsForPlacementCollision(double X, double Y);
 
@@ -137,8 +137,8 @@ public:
 		if(DEBUGVAR_INCLUDE_BLOCKS) blocksList.push_back(BLOCK(newX,newY,newW,newH,penPtr));
 	}
 
-	int isVisionSmart(GAME_OBJECT *A, GAME_OBJECT *B, double *coords, int *count);
-	bool isVision(GAME_OBJECT *A, GAME_OBJECT *B);
+	int isVisionSmart(GameObject *A, GameObject *B, double *coords, int *count);
+	bool isVision(GameObject *A, GameObject *B);
 
 	void drawBlocks(HDC bhdc) {
 		for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {

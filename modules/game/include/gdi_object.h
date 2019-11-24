@@ -1,3 +1,5 @@
+#if 0
+
 #pragma once
 
 namespace gdi_traits {
@@ -18,3 +20,5 @@ namespace gdi_traits {
   };
 
 } //namespace gdi_traits
+
+#endif //0

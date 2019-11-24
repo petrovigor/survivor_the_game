@@ -9,7 +9,7 @@ class ENEMY_MANAGER {
 private:
 	int enemyMultiplier;
 	std::list<ENEMY> list;
-	PLAYER *playerPtr;
+	Player *playerPtr;
 	MISSILE_MANAGER *missileMan;
 	HBRUSH *enemybrushptr;//enemy brush and pen
 	HPEN *enemypenptr;
@@ -32,7 +32,7 @@ public:
 				list.push_back(ENEMY(newX, newY, newSpeed, newHP, newAttackType, newMovingType, newRole, newVisualType, enemybrushptr, enemypenptr, missileMan));
 	}
 
-	void init(PLAYER *ptr, MISSILE_MANAGER *mm, HBRUSH *newEnemyBrush, HPEN *newEnemyPen, HBRUSH *newMissileBrush, HPEN *newMissilePen) {playerPtr = ptr; missileMan = mm; enemybrushptr = newEnemyBrush; enemypenptr = newEnemyPen; mbr = newMissileBrush; mpn = newMissilePen;}
+	void init(Player *ptr, MISSILE_MANAGER *mm, HBRUSH *newEnemyBrush, HPEN *newEnemyPen, HBRUSH *newMissileBrush, HPEN *newMissilePen) {playerPtr = ptr; missileMan = mm; enemybrushptr = newEnemyBrush; enemypenptr = newEnemyPen; mbr = newMissileBrush; mpn = newMissilePen;}
 
 	void draw(HDC bhdc) {
 		for(std::list<ENEMY>::iterator i=list.begin(); i!=list.end(); ++i) {

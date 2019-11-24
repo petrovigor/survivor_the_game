@@ -1,4 +1,5 @@
 #include "base_window.h"
+#include "defines.h"
 #include <stdexcept>
 #include <iostream> //debug
 
@@ -34,25 +35,28 @@ LRESULT __stdcall BaseWindow::WindProc(HWND hWnd, UINT msg, WPARAM wParam, LPARA
   }
 
   if(wptr) {
-    return wptr->WindProc(msg, wParam, lParam);
+    return wptr->WindProc( msg, wParam, lParam );
   } else {
-    return DefWindowProc(hWnd, msg, wParam, lParam);
+    return DefWindowProc( hWnd, msg, wParam, lParam );
   }
 }
 
-bool BaseWindow::createWindow(int W, int H) {
-	const WNDCLASS wc = { CS_OWNDC, WindProc, NULL, NULL, 0, LoadIcon(NULL, IDI_APPLICATION), LoadCursor(NULL, IDC_ARROW), NULL, NULL, L"MyGreatClassName" };
+bool BaseWindow::createWindow( int W, int H ) {
+	const WNDCLASS wc = { CS_OWNDC, WindProc, NULL, NULL, 0, LoadIcon(NULL, IDI_APPLICATION), LoadCursor(NULL, IDC_ARROW), NULL, NULL, CLASS_NAME };
 	RegisterClass(&wc);
 
 	int height, width, left, top;
-	height = W + GetSystemMetrics(SM_CYCAPTION) + ((GetSystemMetrics(SM_CYBORDER) + GetSystemMetrics(SM_CXEDGE)) << 1) + 3;
-	width = H + ((GetSystemMetrics(SM_CXBORDER) + GetSystemMetrics(SM_CXEDGE)) << 1) + 3;
+	width = W + ( (GetSystemMetrics(SM_CXBORDER) + GetSystemMetrics(SM_CXEDGE) ) << 1) + 3;
+	height = H + GetSystemMetrics(SM_CYCAPTION) + ( (GetSystemMetrics(SM_CYBORDER) + GetSystemMetrics(SM_CXEDGE) ) << 1) + 3;
 	left = (GetSystemMetrics(SM_CXSCREEN) - width) >> 1;
 	top = (GetSystemMetrics(SM_CYSCREEN) - height) >> 1;
 
-	HWND hWnd = CreateWindow(L"MyGreatClassName", NULL, WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX, left, top, width, height, NULL, NULL, 0, (void*)this);
-	ShowWindow(hWnd, SW_SHOW);
+	HWND hWnd = CreateWindow( CLASS_NAME, NULL, WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX, left, top, width, height, NULL, NULL, 0, (void*)this );
+  if( !hWnd ) {
+    return false;
+  }
 
+	ShowWindow( hWnd, SW_SHOW );
   return (bool)hWnd;
 }
 

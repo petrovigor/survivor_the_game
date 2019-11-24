@@ -1,4 +1,5 @@
 #include "engine.h"
+#include "defines.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	Engine engine;
@@ -10,7 +11,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
   }
 
-	engine.initWindow(hInstance, nCmdShow);
+	engine.initWindow(RESOLUTION_X, RESOLUTION_Y);
 	engine.mainLoop();
 
 	return 0;

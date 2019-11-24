@@ -1,27 +1,24 @@
-//sorted.
+#pragma once
 
-#ifndef __COLLISION_H
-#define __COLLISION_H
-
-#include "gameObject.h"
+#include "game_object.h"
 #include "missile.h"
 
 class COLLISION {
 private:
-	GAME_OBJECT *f;
+	GameObject *f;
 	MISSILE *s;
 	bool isNew;
 	bool check;
 
 public:
-	explicit COLLISION(GAME_OBJECT *_f, MISSILE *_s) {
+	explicit COLLISION(GameObject *_f, MISSILE *_s) {
 		f = _f;
 		s = _s;
 		isNew = true;
 		check = false;
 	}
 
-	GAME_OBJECT *getFirstObjectPtr(void) {return f;}
+	GameObject *getFirstObjectPtr(void) {return f;}
 	MISSILE *getSecondObjectPtr(void) {return s;}
 
 	bool isCheck(void) {return check;}
@@ -30,5 +27,3 @@ public:
 	void checkNextTime(void) {check = true;}
 	void uncheck(void) {check = false;}
 };
-
-#endif

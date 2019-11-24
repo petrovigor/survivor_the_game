@@ -1,5 +1,4 @@
-#ifndef __CAMERA_H
-#define __CAMERA_H
+#pragma once
 
 class CAMERA {
 private:
@@ -19,5 +18,3 @@ public:
 
 	~CAMERA() {};
 };
-
-#endif

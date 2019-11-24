@@ -64,7 +64,7 @@ void BLOCK::offset(std::list<ENEMY>::iterator it) {
 	it->setXY(X,Y);
 }
 
-bool BLOCK::isGOinBlock(GAME_OBJECT *go) {
+bool BLOCK::isGOinBlock(GameObject *go) {
 	// check for 8 points of circle?
 	double X = go->getX();
 	double Y = go->getY();

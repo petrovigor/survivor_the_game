@@ -1,15 +1,14 @@
-#ifndef __PLAYER_H
-#define __PLAYER_H
+#pragma once
 
 #include <windows.h>
 #include "defines.h"
-#include "gameObject.h"
+#include "game_object.h"
 #include "weapon.h"
 #include "weaponManager.h"
 #include "ability.h"
 //#include "physicsManager.h"
 
-class PLAYER:public GAME_OBJECT {
+class Player final : public GameObject {
 private:
 	//PHYSICS_MANAGER *phyManPtr;
 	WEAPON_MANAGER *weaponManPtr;
@@ -28,7 +27,11 @@ private:
 	bool allowCastingSpells;
 
 public:
-	PLAYER() {
+  Player(int _x, int _y, int _size, int _speed)
+    : GameObject(_x, _y, _size, _speed, 0)
+  { }
+
+	Player() {
 		alive = true;
 		casting = false;
 		x = RESOLUTION_X/2;
@@ -40,7 +43,7 @@ public:
 		allowCastingSpells = true;
 	}
 
-	//void shootAt(GAME_OBJECT *obj);
+	//void shootAt(GameObject *obj);
 
 	void faceTo(double X, double Y) {angle = abc(x,y,X,Y);}
 	void allowShooting(void) {allowedAttack = true;}
@@ -76,5 +79,3 @@ public:
 	WEAPON* getCurrentWeapon(void) {return weapon;}
 	ABILITY* getCurrentAbility(void) {return ability;}
 };
-
-#endif

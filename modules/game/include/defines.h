@@ -15,9 +15,9 @@
 #ifndef __DEFINES_H
 #define __DEFINES_H
 
-#define CLASS_NAME L"className"
-#define FPS 80
-#define SLEEP_MS 1000/FPS
+#define CLASS_NAME L"classGeneratorName"
+//#define FPS 80
+//#define SLEEP_MS 1000/FPS
 
 #define RESOLUTION_X 1024//640
 #define RESOLUTION_Y 768//480

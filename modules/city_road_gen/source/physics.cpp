@@ -462,7 +462,7 @@ void e4_physics::deleteFarBlocks(void) {
 bool e4_physics::presumeCollisionRectangle(float x, float y, float hw, float hh) {
 	// check if player not collides with rectangle
 
-	const float px = 320.0f; // PLAYER ALWAYS
+	const float px = 320.0f; // Player ALWAYS
 	const float py = 240.0f; // AT MAP CENTER
 	const float pr = ptrPlayer->getRadius();
 

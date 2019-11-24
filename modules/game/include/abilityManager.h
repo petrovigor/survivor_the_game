@@ -1,5 +1,4 @@
-#ifndef __ABILITY_MANAGER_H
-#define __ABILITY_MANAGER_H
+#pragma once
 
 #include <vector>
 #include "ability.h"
@@ -9,11 +8,11 @@ private:
 	std::vector<ABILITY> list;
 	PHYSICS_MANAGER *physicsManager;
 	EVENT_MANAGER *eventMan;
-	PLAYER *playerPtr;
+	Player *playerPtr;
 	FX_MANAGER *fx;
 
 public:
-	void init(PHYSICS_MANAGER* ptr, PLAYER *newPlayerPtr, EVENT_MANAGER *eventManPtr, FX_MANAGER *fxManPtr) {
+	void init(PHYSICS_MANAGER* ptr, Player *newPlayerPtr, EVENT_MANAGER *eventManPtr, FX_MANAGER *fxManPtr) {
 		physicsManager=ptr;
 		playerPtr=newPlayerPtr;
 		eventMan=eventManPtr;
@@ -85,5 +84,3 @@ public:
 		}
 	}
 };
-
-#endif

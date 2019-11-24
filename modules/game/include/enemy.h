@@ -4,7 +4,7 @@
 #include <Windows.h>
 #include <math.h>
 #include "misc.h"
-#include "gameObject.h"
+#include "game_object.h"
 #include "missileManager.h"
 
 const int ENEMY_ROLE_NEUTRAL = 0,
@@ -26,7 +26,7 @@ const int ENEMY_MOVING_TYPE_NONE = 0,
 const int ENEMY_VISUAL_TYPE_SQUARE = 0,
 	      ENEMY_VISUAL_TYPE_ELLIPSE = 1;
 
-class ENEMY :public GAME_OBJECT{
+class ENEMY :public GameObject{
 private:
 	//bool flag;
 	//double size;

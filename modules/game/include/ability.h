@@ -1,5 +1,4 @@
-#ifndef __ABILITY_H
-#define __ABILITY_H
+#pragma once
 
 const int ABILITY_CAST_TYPE_INSTANT = 0,
 		  ABILITY_CAST_TYPE_SWITCH = 1,
@@ -69,5 +68,3 @@ public:
 	bool isCasting(void) {return casting;}
 	bool isTargeting(void) {return targeting;}
 };
-
-#endif

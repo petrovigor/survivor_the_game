@@ -19,12 +19,14 @@ public:
   BaseWindow();
   BaseWindow(int width, int height);
   virtual ~BaseWindow();
-
+  
   bool createWindow(int width, int height);
   void destroyWindow();
 
+  HWND getHWND() const noexcept { return _hWnd; }
+
 protected:
-  HWND _hWnd;
+  HWND    _hWnd;
 
 private:
   static LRESULT __stdcall WindProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);

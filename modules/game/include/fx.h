@@ -2,6 +2,7 @@
 #define __FX_H
 
 #include <math.h>
+#include <Windows.h>
 
 const int FX_VISUAL_TYPE_NONE = 0,
 	      FX_VISUAL_TYPE_ELLIPSE = 1,

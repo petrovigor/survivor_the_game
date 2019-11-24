@@ -3,7 +3,7 @@
 #include "player.h"
 #include "weaponManager.h"
 //
-//PLAYER::PLAYER() {
+//Player::Player() {
 //	//COLOR red(255, 0, 0);
 //
 //	//WEAPON pistol(WEAPON_ATTACK_TYPE_PROJECTILES, MISSILE_VISUAL_TYPE_ELLIPSE,
@@ -13,7 +13,7 @@
 //
 //}
 
-void PLAYER::draw(HDC bhdc) {
+void Player::draw(HDC bhdc) {
 	//SelectObject(bhdc, *brPtr);
 	//SelectObject(bhdc, *pPtr);
 
@@ -38,7 +38,7 @@ void PLAYER::draw(HDC bhdc) {
 	}
 }
 
-void PLAYER::attack(double fromX, double fromY, double toX, double toY,HBRUSH *b,HPEN *p) {
+void Player::attack(double fromX, double fromY, double toX, double toY,HBRUSH *b,HPEN *p) {
 	if(allowedAttack) {
 		denyShooting();
 
@@ -49,7 +49,7 @@ void PLAYER::attack(double fromX, double fromY, double toX, double toY,HBRUSH *b
 	}
 }
 
-void PLAYER::move(double deltaTime, const int direction) {
+void Player::move(double deltaTime, const int direction) {
 	//reloading cursor
 	//--------------------
 	backupXY();
@@ -87,7 +87,7 @@ void PLAYER::move(double deltaTime, const int direction) {
 	//if(y > RESOLUTION_Y/*-playerSize*/) y = RESOLUTION_Y/*-playerSize*/;
 }
 
-//void PLAYER::shootAt(GAME_OBJECT *obj) {
+//void Player::shootAt(GameObject *obj) {
 //	if(allowedAttack) {
 //		
 //		//weapon->shoot(getAngleAt(obj), x, y);

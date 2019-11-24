@@ -3,7 +3,7 @@
 
 #include <windows.h>
 #include <math.h>
-#include "gameObject.h"
+#include "game_object.h"
 
 const int MISSILE_VISUAL_TYPE_ELLIPSE = 0,
 	      MISSILE_VISUAL_TYPE_SQUARE = 1;
@@ -11,7 +11,7 @@ const int MISSILE_VISUAL_TYPE_ELLIPSE = 0,
 const int MISSILE_TARGET_TYPE_ENEMIES = 0,
 	      MISSILE_TARGET_TYPE_HERO = 1;
 
-class MISSILE:public GAME_OBJECT {
+class MISSILE:public GameObject {
 private:
 	//double angle;
 	bool flag;

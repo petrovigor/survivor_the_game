@@ -1,5 +1,4 @@
-#ifndef __BLOCK_H
-#define __BLOCK_H
+#pragma once
 
 #include <windows.h>
 #include <math.h>
@@ -84,7 +83,7 @@ public:
 	}
 
 	bool isCoordInBlock(double x, double y, double r);
-	bool isGOinBlock(GAME_OBJECT *go);
+	bool isGOinBlock(GameObject *go);
 	void draw(HDC bhdc);
 
 	bool checkForIntersection(double aX,double aY,double bX,double bY) {
@@ -174,5 +173,3 @@ public:
 	double getX(void) {return x;}
 	double getY(void) {return y;}
 };
-
-#endif

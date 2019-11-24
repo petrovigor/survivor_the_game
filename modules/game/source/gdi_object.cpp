@@ -1,3 +1,5 @@
+#if 0
+
 #include "gdi_object.h"
 
 namespace gdi_traits {
@@ -21,3 +23,5 @@ namespace gdi_traits {
   }
 
 } //namespace gdi_traits
+
+#endif //
