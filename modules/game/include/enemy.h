@@ -28,10 +28,6 @@ const int ENEMY_VISUAL_TYPE_SQUARE = 0,
 
 class ENEMY :public GameObject{
 private:
-	//bool flag;
-	//double size;
-	//double speed;
-	
 	double hp;
 	double hpMax;
 	double attackRange;
@@ -42,33 +38,28 @@ private:
 	int role;
 	int r, g, b;
 	bool canAttack;
-	double attackTime; //время, которое осталось до перезарядки атаки
-	double reloadingTime; //время перезарядки оружия
+	double attackTime;
+	double reloadingTime;
 	MISSILE_MANAGER *mMan;
 	HBRUSH *enemyBrush;
 	HPEN *enemyPen;
-	bool playerSpotted;//vision
+	bool playerSpotted;
 	bool vis;
 	double toX, toY;
-	bool computeTo; //
+	bool computeTo;
 	double px[40];
 	double py[40];
 	double PX,PY;
 	bool running;
 
 	double damageResistance;
-	//inner power of enemies in percentage (1.00 - no slow when damaged).
 	double woundedTime;
 	bool wounded;
-
-	//double lastSpottedPlayerX;
-	//double lastSpottedPlayerY;
 
 public:
 	ENEMY(double newX, double newY, double newSpeed, double newHP,
 		const int newAttackType, const int newMovingType, const int newRole, const int newVisualType, HBRUSH *newEnemyBrush, HPEN *newEnemyPen, MISSILE_MANAGER *newMMAN)
 	{
-		//flag = true;
 		x = toX = newX;
 		y = toY = newY;
 		size = ENEMY_SIZE;
@@ -90,9 +81,6 @@ public:
 		damageResistance = 0.25;
 		woundedTime = 0.0;
 		wounded = false;
-
-		//toX = x;
-		//toY = y;
 		currentTarget = ENEMY_CURRENT_TARGET_PATROL;
 
 		for(int i=0;i<4;i++) {px[i]=newX; py[i]=newY;}
@@ -140,24 +128,8 @@ public:
 	double getCoordX(int index) {return px[index];}
 	double getCoordY(int index) {return py[index];}
 
-	//void ENEMY::computeTargetXY(void) {
-	//	double _x,_y;
-	//	//do {
-	//		_x=rand()%RESOLUTION_X;
-	//		_y=rand()%RESOLUTION_Y;
-	//	//} while(!(isPointFree(_x,_y,getSize())));
-	//	setTo(_x,_y);
-	//}
-
 	void draw(HDC bhdc);
 	bool checkForVisibility(void);
-
-	//void hit(double damage) {
-	//	hp -= damage;
-	//	if(hp <= 0.0) {
-	//		kill();
-	//	}
-	//}
 	
 	void depose(double X, double Y) {
 		x = x + X;
@@ -181,14 +153,11 @@ public:
 	void correct(double deltaTime, double px, double py, double angle);
 
 	void takeDamage(double damage) {
-		//decrease hp
 		if(!DEBUGVAR_INVULNERABLE_ENEMIES) {
 			hp -= damage;
 		}
 		
 		if (hp <= 0) {
-			//flag it, if it's dead
-			//hp = 0;
 			kill();
 		} else {
 			Wound(WEAPON_BASE_WOUND_TIME);
@@ -231,7 +200,7 @@ public:
 
 	void run(void) {running=true; speed=ENEMY_FAST_SPEED;}
 	void walk(void) {running=false; speed=ENEMY_NORMAL_SPEED;}
-	
+
 	bool isWounded(void) {return wounded;}
 	void Wound(double time)	{
 		wounded = true; woundedTime = time;
@@ -250,7 +219,7 @@ public:
 
 	void setCurrentTarget(const int t) {
 		currentTarget=t;
-		if(t==ENEMY_CURRENT_TARGET_SEARCH_PLAYER || /*CHECK*/t==ENEMY_CURRENT_TARGET_ATTACK_PLAYER) {
+		if(t==ENEMY_CURRENT_TARGET_SEARCH_PLAYER || t==ENEMY_CURRENT_TARGET_ATTACK_PLAYER) {
 			computeTo=false;
 		}
 

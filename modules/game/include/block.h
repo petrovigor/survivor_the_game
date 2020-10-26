@@ -5,7 +5,6 @@
 #include <list>
 #include "enemy.h"
 #include "defines.h"
-//#include "gameObject.h"
 #include "misc.h"
 
 class BLOCK {
@@ -16,10 +15,8 @@ private:
 	double x,y,w,h;
 	double bx[4],by[4];
 
-	//bool flag;
 	HPEN *penPtr;
-	//double height;
-	double cameraOffsetX, cameraOffsetY;//*
+	double cameraOffsetX, cameraOffsetY;
 
 public:
 	BLOCK(double newX, double newY, double newW, double newH, HPEN *newPenPtr) {
@@ -75,11 +72,11 @@ public:
 		double cy = RESOLUTION_Y/2;
 
 		for(int i=0;i<4;i++) {
-			bx[i]=cx+X  ;//bx[i]+X;
-			by[i]=cy+Y  ;//by[i]+Y;
+			bx[i]=cx+X;
+			by[i]=cy+Y;
 		}
-		x=cx+X;  //x+X;
-		y=cy+Y; //y+Y;
+		x=cx+X;
+		y=cy+Y;
 	}
 
 	bool isCoordInBlock(double x, double y, double r);
@@ -97,19 +94,19 @@ public:
 		return(false);
 	}
 
-	/*inline */int checkForIntersection(double aX,double aY,double bX,double bY,double *coords,int *count) {
+	int checkForIntersection(double aX,double aY,double bX,double bY,double *coords,int *count) {
 		int intersected = -1;
 
 		for(int i=0; i<4; i++) {
 			int j=i+1;
 			if(j>3) j=0;
 
-			if(isIntersection(aX,aY,bX,bY,bx[i],by[i],bx[j],by[j]/*,coords,count)*/)) {
+			if(isIntersection(aX,aY,bX,bY,bx[i],by[i],bx[j],by[j])) {
 
 				if(*count*4+3 < DEBUGVAR_INTERSECTS_COUNT_MAX) {
 
 					coords[(*count)*4      ] = bx[i];
-					coords[(*count)*4   +1 ] = by[i]; // fatal error here
+					coords[(*count)*4   +1 ] = by[i];
 					coords[(*count)*4   +2 ] = bx[j];
 					coords[(*count)*4   +3 ] = by[j];
 					*count=*count+1;
@@ -117,7 +114,6 @@ public:
 					intersected = i;
 
 				}
-				//return i;
 			}
 		}
 
@@ -130,18 +126,16 @@ public:
 	void computeShadows(HDC bhdc, double X, double Y) {
 		if(DEBUGVAR_SHOW_SHADOWS) {
 			double nx[4], ny[4];
-			//const double distFactor = 1.0;
-			
 			for(int i=0; i<4; i++) {
 				double a = abc(X, Y, bx[i], by[i]);
-				double d = dbc(X, Y, bx[i], by[i])*height/*distFactor*/;
+				double d = dbc(X, Y, bx[i], by[i])*height;
 				nx[i] = bx[i] + d * cos(a);
 				ny[i] = by[i] + d * sin(a);
 			}
 
 			for(int i=0; i<4; i++) {
 				double a = abc(X, Y, bx[i], by[i]);
-				double d = dbc(X, Y, bx[i], by[i])*height/*distFactor*/;
+				double d = dbc(X, Y, bx[i], by[i])*height;
 
 				MoveToEx(bhdc, bx[i]+cameraOffsetX, by[i]+cameraOffsetY, 0);
 				LineTo(bhdc, bx[i] + d * cos(a)+cameraOffsetX, by[i] + d * sin(a)+cameraOffsetY);

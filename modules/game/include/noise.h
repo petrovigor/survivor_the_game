@@ -3,7 +3,7 @@
 
 #include <windows.h>
 
-const int NOISE_SPEED = 1200;//1200
+const int NOISE_SPEED = 1200;
 
 class NOISE {
 private:
@@ -12,7 +12,7 @@ private:
 	int radiusTemp;
 	int radiusMax;
 	bool toDelete;
-	double cameraOffsetX, cameraOffsetY;//*
+	double cameraOffsetX, cameraOffsetY;
 
 
 public:
