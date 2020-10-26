@@ -11,16 +11,16 @@ private:
 	std::list<ENEMY> list;
 	Player *playerPtr;
 	MISSILE_MANAGER *missileMan;
-	HBRUSH *enemybrushptr;//enemy brush and pen
+	HBRUSH *enemybrushptr;
 	HPEN *enemypenptr;
-	HBRUSH *mbr;//missile brush and pen
+	HBRUSH *mbr;
 	HPEN *mpn;
-  
+
 public:
 	ENEMY_MANAGER() {
 		enemyMultiplier = 0;
 	}
-	
+
 	void process(double);
 
 	void resetEnemyMultiplier() {enemyMultiplier = 0;}
@@ -47,12 +47,6 @@ public:
 			i->move(deltaTime, playerPtr->getX(), playerPtr->getY());
 		}
 	}
-
-	//void correctPosition() {
-	//	for(std::list<ENEMY>::iterator i=list.begin(); i!=list.end(); ++i) {
-	//		i->correct();//(deltaTime, playerPtr->getX(), playerPtr->getY());
-	//	}
-	//}
 
 	void removeDeadEnemies(void) {
 		std::list<ENEMY>::iterator i = list.begin();

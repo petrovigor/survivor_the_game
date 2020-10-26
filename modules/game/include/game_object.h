@@ -16,7 +16,7 @@ protected:
 	double angle;
 	double height;
 
-	double cameraOffsetX, cameraOffsetY;//*
+	double cameraOffsetX, cameraOffsetY;
 
 public:
 	GameObject() {
@@ -40,8 +40,8 @@ public:
 	double getX(void) {return x;}
 	double getY(void) {return y;}
 	void setXY(double newX, double newY) {x = newX; y = newY;}
-	void setSpeed(double newSpeed) {speed = newSpeed;}//unused
-	double getSpeed(void) {return speed;}//unused
+	void setSpeed(double newSpeed) {speed = newSpeed;}
+	double getSpeed(void) {return speed;}
 	double getSize(void) {return size;}
 	void setSize(double value) {size=value;}
 	double getAngle(void) {return angle;}
@@ -71,13 +71,6 @@ public:
   void draw(HDC hdc) {
     
   }
-
-	//virtual void draw(HDC hbdc) = 0;
+	
 	virtual void takeDamage(double damage) {};
 };
-
-#if 0
-std::shared_ptr<GameObject> createGameObject(int x, int y, int size, int speed, int angle) {
-  return std::make_shared<GameObject>( x, y, size, speed, size );
-}
-#endif //0

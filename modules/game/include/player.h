@@ -6,11 +6,9 @@
 #include "weapon.h"
 #include "weaponManager.h"
 #include "ability.h"
-//#include "physicsManager.h"
 
 class Player final : public GameObject {
 private:
-	//PHYSICS_MANAGER *phyManPtr;
 	WEAPON_MANAGER *weaponManPtr;
 	ABILITY *ability;
 	WEAPON *weapon;
@@ -43,8 +41,6 @@ public:
 		allowCastingSpells = true;
 	}
 
-	//void shootAt(GameObject *obj);
-
 	void faceTo(double X, double Y) {angle = abc(x,y,X,Y);}
 	void allowShooting(void) {allowedAttack = true;}
 	void allowCasting(void) {allowCastingSpells = true;}
@@ -55,14 +51,10 @@ public:
 
 	void draw(HDC bhdc);
 	void move(double deltaTime, int direction);
-	void init(WEAPON_MANAGER *weaponMan/*, PHYSICS_MANAGER *pmPtr*/, HBRUSH *br, HPEN *pen, HPEN *newReloadingPPtr) {/*phyManPtr = pmPtr;*/ weaponManPtr = weaponMan; brPtr=br; pPtr=pen; reloadingPPtr=newReloadingPPtr;}
+	void init(WEAPON_MANAGER *weaponMan, HBRUSH *br, HPEN *pen, HPEN *newReloadingPPtr) {weaponManPtr = weaponMan; brPtr=br; pPtr=pen; reloadingPPtr=newReloadingPPtr;}
 
 	bool isCasting(void) {return casting;}
 	void setCastingFlag(bool flag) {casting=flag;}
-
-	//void makeAttackPosition(void) {
-	//	shieldHolding=false;
-	//}
 
 	void attack(double fromX, double fromY, double toX, double toY,HBRUSH *b,HPEN *p);
 
@@ -70,10 +62,9 @@ public:
 	double getReloadingPerc(void) {return reloadingTime/weapon->getReloadTime();}
 	void incAngle() {reloadingAngle = 270.0 + (360.0 * getReloadingPerc());}
 	void startReloading(void) {reloading = true; reloadingTime = 0.0; reloadingAngle = 270.0;}
-	void finishReloading(void) {reloading = false; /*reloadingTime = weapon->getReloadTime();*/}
+	void finishReloading(void) {reloading = false; }
 	bool isReloading(void) {return reloading;}
 
-	//void dropWeapons(void) {weaponManPtr->dropWeapons();}
 	void setWeapon(WEAPON *whichWeapon) {weapon = whichWeapon;}
 	void setAbility(ABILITY *whichAbility) {ability = whichAbility;}
 	WEAPON* getCurrentWeapon(void) {return weapon;}
