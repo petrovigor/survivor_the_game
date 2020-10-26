@@ -1,5 +1,4 @@
-#ifndef __PHYSICS_MANAGER_H
-#define __PHYSICS_MANAGER_H
+#pragma once
 
 #include <list>
 #include "enemy.h"
@@ -164,5 +163,3 @@ public:
 	int getRoadsCount(void) {return roadsList.size();}
 	int getShellsCount(void) {return fxPtr->getShellsList()->size();}
 };
-
-#endif

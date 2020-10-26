@@ -1,5 +1,4 @@
-#ifndef __EVENT_MANAGER_H
-#define __EVENT_MANAGER_H
+#pragma once
 
 #include <windows.h>
 #include <vector>
@@ -55,5 +54,3 @@ public:
 	void increaseEnemyMultiplier(void);
 	void allowCasting(void);
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef __WEAPON_MANAGER_H
-#define __WEAPON_MANAGER_H
+#pragma once
 
 #include <vector>
 #include "weapon.h"
@@ -31,5 +30,3 @@ public:
 		return &weaponList[id];
 	}
 };
-
-#endif

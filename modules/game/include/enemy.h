@@ -1,5 +1,4 @@
-#ifndef __ENEMY_H
-#define __ENEMY_H
+#pragma once
 
 #include <Windows.h>
 #include <math.h>
@@ -230,5 +229,3 @@ public:
 		}
 	}
 };
-
-#endif

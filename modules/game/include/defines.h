@@ -1,5 +1,4 @@
-#ifndef __DEFINES_H
-#define __DEFINES_H
+#pragma once
 
 #define CLASS_NAME L"classGeneratorName"
 
@@ -58,5 +57,3 @@ const double FAR_DISTANCE = 900.0;
 
 #define DEGTORAD (_PI/180.0)
 #define DEBUGVAR_UNLIMITED_AMMO -1
-
-#endif

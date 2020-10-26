@@ -1,5 +1,4 @@
-#ifndef __ENEMY_MANAGER_H
-#define __ENEMY_MANAGER_H
+#pragma once
 
 #include <list>
 #include "player.h"
@@ -67,5 +66,3 @@ public:
 		return list.size();
 	}
 };
-
-#endif

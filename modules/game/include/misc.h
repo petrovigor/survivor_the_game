@@ -1,5 +1,4 @@
-#ifndef __MISC_H
-#define __MISC_H
+#pragma once
 
 #include <math.h>
 #include "defines.h"
@@ -41,5 +40,3 @@ inline double dbo(GameObject *f, GameObject *s) {
 inline double dbc(double x1, double y1, double x2, double y2) {
 	return sqrt(pow(x2-x1,2.0)+pow(y2-y1,2.0));
 }
-
-#endif
