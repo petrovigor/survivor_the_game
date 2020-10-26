@@ -16,8 +16,8 @@ private:
 	bool casting;
 	bool reloading;
 
-	double reloadingTime;
-	double reloadingAngle;
+	float reloadingTime;
+	float reloadingAngle;
 
 	HBRUSH *brPtr;
 	HPEN *pPtr;
@@ -41,7 +41,7 @@ public:
 		allowCastingSpells = true;
 	}
 
-	void faceTo(double X, double Y) {angle = abc(x,y,X,Y);}
+	void faceTo(float X, float Y) {angle = abc(x,y,X,Y);}
 	void allowShooting(void) {allowedAttack = true;}
 	void allowCasting(void) {allowCastingSpells = true;}
 	void denyShooting(void) {allowedAttack = false;}
@@ -50,16 +50,16 @@ public:
 	bool isAllowedCasting(void) {return allowCastingSpells;}
 
 	void draw(HDC bhdc);
-	void move(double deltaTime, int direction);
+	void move(float deltaTime, int direction);
 	void init(WEAPON_MANAGER *weaponMan, HBRUSH *br, HPEN *pen, HPEN *newReloadingPPtr) {weaponManPtr = weaponMan; brPtr=br; pPtr=pen; reloadingPPtr=newReloadingPPtr;}
 
 	bool isCasting(void) {return casting;}
 	void setCastingFlag(bool flag) {casting=flag;}
 
-	void attack(double fromX, double fromY, double toX, double toY,HBRUSH *b,HPEN *p);
+	void attack(float fromX, float fromY, float toX, float toY,HBRUSH *b,HPEN *p);
 
-	void incReloadingTime(double deltaTime) {reloadingTime += deltaTime;}
-	double getReloadingPerc(void) {return reloadingTime/weapon->getReloadTime();}
+	void incReloadingTime(float deltaTime) {reloadingTime += deltaTime;}
+	float getReloadingPerc(void) {return reloadingTime/weapon->getReloadTime();}
 	void incAngle() {reloadingAngle = 270.0 + (360.0 * getReloadingPerc());}
 	void startReloading(void) {reloading = true; reloadingTime = 0.0; reloadingAngle = 270.0;}
 	void finishReloading(void) {reloading = false; }

@@ -34,7 +34,7 @@ private:
 	void deleteOldCollisions(void);
 	bool checkIfCollisionExists(const GameObject *f, const MISSILE *s);
 
-	double offsetFromCenterY,offsetFromCenterX;
+	float offsetFromCenterY,offsetFromCenterX;
 
 public:
 	void init(std::list<ENEMY> *e, std::list<MISSILE> *m, Player *p, FX_MANAGER *f, HPEN *ptr, HPEN *newNoisePenPtr, HPEN *newRoadPenPtr) {
@@ -59,21 +59,21 @@ public:
 
 	std::list<BLOCK> *getBlocksListPtr() {return &blocksList;}
 
-	bool col(double,double,double,double,double,double,double,double);
+	bool col(float,float,float,float,float,float,float,float);
 
-	void createRoad(double ax,double ay,double bx,double by,double cx,double cy,double dx,double dy) {
+	void createRoad(float ax,float ay,float bx,float by,float cx,float cy,float dx,float dy) {
 		if(DEBUGVAR_INCLUDE_ROADS) roadsList.push_back(ROAD(ax,ay,bx,by,cx,cy,dx,dy,roadPenPtr));
 	}
 
-	void setCameraOffsetValue(double X, double Y);
-	double getCameraOffsetX() {return offsetFromCenterX;}
-	double getCameraOffsetY() {return offsetFromCenterY;}
+	void setCameraOffsetValue(float X, float Y);
+	float getCameraOffsetX() {return offsetFromCenterX;}
+	float getCameraOffsetY() {return offsetFromCenterY;}
 
 	void createNoise(int newX, int newY, int newRadius) {
 		noisesVector.push_back(NOISE(newX,newY,newRadius,noisePenPtr));
 	}
 
-	void processNoises(double deltaTime);
+	void processNoises(float deltaTime);
 
 	void drawNoises(HDC bhdc) {
 		for(std::vector<NOISE>::iterator i=noisesVector.begin(); i!=noisesVector.end(); ++i) {
@@ -86,7 +86,7 @@ public:
 		}
 	}
 
-	void deposeNoises(double X, double Y) {
+	void deposeNoises(float X, float Y) {
 		for(std::vector<NOISE>::iterator i=noisesVector.begin(); i!=noisesVector.end(); ++i) {
 			i->depose(X, Y);
 		}
@@ -94,7 +94,7 @@ public:
 
 	void removeNoises();
 
-	void setGOheight(double h) {
+	void setGOheight(float h) {
 		playerPtr->setHeight(h);
 		for(std::list<MISSILE>::iterator i=missilesList->begin(); i!=missilesList->end(); ++i) {
 			i->setHeight(h);
@@ -108,32 +108,32 @@ public:
 	}
 
 	void computeRandomPointToPatrol(std::list<ENEMY>::iterator);
-	void enemyMoveTo(std::list<ENEMY>::iterator,double,double,double);
+	void enemyMoveTo(std::list<ENEMY>::iterator,float,float,float);
 	void placeBlockByPlayerDirection(const int);
 	void placeRoadByPlayerDirection(const int);
-	void removeFarBlocks(double,double,double);
-	void deposeGameObjects(double offsetX, double offsetY);
+	void removeFarBlocks(float,float,float);
+	void deposeGameObjects(float offsetX, float offsetY);
 	
 	
 	void deposeGameObjectsFromCenter();
 
 
-	bool checkForPlacementCollision(double,double,double,double);
-	void correctPlayerPlacement(const int playerDir, double deltaTime);
-	void movePlayer(double deltaTime, const int playerDir);
-	void processEnemies(double deltaTime);
-	void moveMissiles(double deltaTime);
-	void moveAll(double deltaTime, const int playerDir);
+	bool checkForPlacementCollision(float,float,float,float);
+	void correctPlayerPlacement(const int playerDir, float deltaTime);
+	void movePlayer(float deltaTime, const int playerDir);
+	void processEnemies(float deltaTime);
+	void moveMissiles(float deltaTime);
+	void moveAll(float deltaTime, const int playerDir);
 	bool checkForPlacementCollision(GameObject *go);
-	bool isPointFree(double X, double Y, double R);
+	bool isPointFree(float X, float Y, float R);
 
 	void removeBlocks() {blocksList.clear();}
 
-	void placeBlock(double newX, double newY, double newW, double newH) {
+	void placeBlock(float newX, float newY, float newW, float newH) {
 		if(DEBUGVAR_INCLUDE_BLOCKS) blocksList.push_back(BLOCK(newX,newY,newW,newH,penPtr));
 	}
 
-	int isVisionSmart(GameObject *A, GameObject *B, double *coords, int *count);
+	int isVisionSmart(GameObject *A, GameObject *B, float *coords, int *count);
 	bool isVision(GameObject *A, GameObject *B);
 
 	void drawBlocks(HDC bhdc) {
@@ -142,7 +142,7 @@ public:
 		}
 	}
 
-	void computeShadows(HDC bhdc, double x, double y) {
+	void computeShadows(HDC bhdc, float x, float y) {
 		for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
 			i->computeShadows(bhdc, x, y);
 		}

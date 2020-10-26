@@ -32,8 +32,8 @@
 #define MAXIMAL_BLOCKS_AT_MAP 15
 #define MAXIMAL_ENEMIES_AT_MAP 40
 
-const double PLAYER_OUT_OF_MAP_SAFE_OFFSET = 200;
-const double FAR_DISTANCE = 900.0;
+const float PLAYER_OUT_OF_MAP_SAFE_OFFSET = 200;
+const float FAR_DISTANCE = 900.0;
 
 #define CURSOR_SIZE 6.0
 #define ENEMY_SIZE 12.0

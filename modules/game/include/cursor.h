@@ -9,6 +9,6 @@ public:
 		size = CURSOR_SIZE;
 	}
 
-	void move(double newX, double newY) {x = newX; y = newY;}
+	void move(float newX, float newY) {x = newX; y = newY;}
 	void draw(HDC bhdc);
 };

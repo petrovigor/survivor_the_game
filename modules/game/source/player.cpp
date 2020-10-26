@@ -17,16 +17,16 @@ void Player::draw(HDC bhdc) {
 	//SelectObject(bhdc, *brPtr);
 	//SelectObject(bhdc, *pPtr);
 
-	const double s = size * height;
+	const float s = size * height;
 
-	double newX = x + cameraOffsetX;
-	double newY = y + cameraOffsetY;
+	float newX = x + cameraOffsetX;
+	float newY = y + cameraOffsetY;
 
 	Ellipse(bhdc, newX-s, newY-s, newX+s, newY+s);
 
-	double X = x + size * cos(angle) +cameraOffsetX;
-	double Y = y + size * sin(angle) +cameraOffsetY;
-	double sz = size/3;
+	float X = x + size * cos(angle) +cameraOffsetX;
+	float Y = y + size * sin(angle) +cameraOffsetY;
+	float sz = size/3;
 
 	Ellipse(bhdc, X-sz, Y-sz, X+sz, Y+sz);
 
@@ -38,24 +38,24 @@ void Player::draw(HDC bhdc) {
 	}
 }
 
-void Player::attack(double fromX, double fromY, double toX, double toY,HBRUSH *b,HPEN *p) {
+void Player::attack(float fromX, float fromY, float toX, float toY,HBRUSH *b,HPEN *p) {
 	if(allowedAttack) {
 		denyShooting();
 
-		//double fromX = x + size/2 * cos(angle);
-		//double fromY = y + size/2 * sin(angle);
+		//float fromX = x + size/2 * cos(angle);
+		//float fromY = y + size/2 * sin(angle);
 
 		weapon->attack(fromX,fromY,toX,toY,b,p);
 	}
 }
 
-void Player::move(double deltaTime, const int direction) {
+void Player::move(float deltaTime, const int direction) {
 	//reloading cursor
 	//--------------------
 	backupXY();
 
-	double dist = speed * deltaTime;
-	double proection = dist / sqrt(double(2));
+	float dist = speed * deltaTime;
+	float proection = dist / sqrt(float(2));
 
 	if(direction == PLAYER_DIRECTION_N) {
 		y -= dist;
@@ -79,7 +79,7 @@ void Player::move(double deltaTime, const int direction) {
 		y += proection;
 	}
 
-	//double playerSize = PLAYER_SIZE;
+	//float playerSize = PLAYER_SIZE;
 
 	//if(x < PLAYER_SIZE) x = PLAYER_SIZE;
 	//if(y < PLAYER_SIZE) y = PLAYER_SIZE;

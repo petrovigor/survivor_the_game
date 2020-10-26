@@ -11,21 +11,21 @@ class BLOCK {
 private:
 	bool toDeleteVar;
 	bool vis[4];
-	double height;
-	double x,y,w,h;
-	double bx[4],by[4];
+	float height;
+	float x,y,w,h;
+	float bx[4],by[4];
 
 	HPEN *penPtr;
-	double cameraOffsetX, cameraOffsetY;
+	float cameraOffsetX, cameraOffsetY;
 
 public:
-	BLOCK(double newX, double newY, double newW, double newH, HPEN *newPenPtr) {
+	BLOCK(float newX, float newY, float newW, float newH, HPEN *newPenPtr) {
 		toDeleteVar=false;
 
 		height = (rand()%75+25)/100.0;
 
 		penPtr=newPenPtr;
-		double _x,_y;
+		float _x,_y;
 		vis[0]=vis[1]=vis[2]=vis[3]=true;
 
 		_x=newX+newW/2*cos(_PI);
@@ -53,12 +53,12 @@ public:
 	bool isToDelete(void) {return toDeleteVar;}
 
 	bool checkForVisibility(void);
-	void setCameraOffset(double X,double Y){cameraOffsetX=X;cameraOffsetY=Y;}
-	bool rectCollision(double,double,double,double);
+	void setCameraOffset(float X,float Y){cameraOffsetX=X;cameraOffsetY=Y;}
+	bool rectCollision(float,float,float,float);
 
 	void offset(std::list<ENEMY>::iterator it);
 
-	void depose(double X, double Y) {
+	void depose(float X, float Y) {
 		for(int i=0;i<4;i++) {
 			bx[i]=bx[i]+X;
 			by[i]=by[i]+Y;
@@ -67,9 +67,9 @@ public:
 		y=y+Y;
 	}
 
-	void deposeByCenter(double X, double Y) {
-		double cx = RESOLUTION_X/2;
-		double cy = RESOLUTION_Y/2;
+	void deposeByCenter(float X, float Y) {
+		float cx = RESOLUTION_X/2;
+		float cy = RESOLUTION_Y/2;
 
 		for(int i=0;i<4;i++) {
 			bx[i]=cx+X;
@@ -79,11 +79,11 @@ public:
 		y=cy+Y;
 	}
 
-	bool isCoordInBlock(double x, double y, double r);
+	bool isCoordInBlock(float x, float y, float r);
 	bool isGOinBlock(GameObject *go);
 	void draw(HDC bhdc);
 
-	bool checkForIntersection(double aX,double aY,double bX,double bY) {
+	bool checkForIntersection(float aX,float aY,float bX,float bY) {
 		for(int i=0; i<4; i++) {
 			int j=i+1;
 			if(j>3) j=0;
@@ -94,7 +94,7 @@ public:
 		return(false);
 	}
 
-	int checkForIntersection(double aX,double aY,double bX,double bY,double *coords,int *count) {
+	int checkForIntersection(float aX,float aY,float bX,float bY,float *coords,int *count) {
 		int intersected = -1;
 
 		for(int i=0; i<4; i++) {
@@ -120,21 +120,21 @@ public:
 		return intersected;
 	}
 
-	void setHeight(double h) {height = h;}
+	void setHeight(float h) {height = h;}
 
-	void computeShadows(HDC bhdc, double X, double Y) {
+	void computeShadows(HDC bhdc, float X, float Y) {
 		if(DEBUGVAR_SHOW_SHADOWS) {
-			double nx[4], ny[4];
+			float nx[4], ny[4];
 			for(int i=0; i<4; i++) {
-				double a = abc(X, Y, bx[i], by[i]);
-				double d = dbc(X, Y, bx[i], by[i])*height;
+				float a = abc(X, Y, bx[i], by[i]);
+				float d = dbc(X, Y, bx[i], by[i])*height;
 				nx[i] = bx[i] + d * cos(a);
 				ny[i] = by[i] + d * sin(a);
 			}
 
 			for(int i=0; i<4; i++) {
-				double a = abc(X, Y, bx[i], by[i]);
-				double d = dbc(X, Y, bx[i], by[i])*height;
+				float a = abc(X, Y, bx[i], by[i]);
+				float d = dbc(X, Y, bx[i], by[i])*height;
 
 				MoveToEx(bhdc, bx[i]+cameraOffsetX, by[i]+cameraOffsetY, 0);
 				LineTo(bhdc, bx[i] + d * cos(a)+cameraOffsetX, by[i] + d * sin(a)+cameraOffsetY);
@@ -163,6 +163,6 @@ public:
 		}
 	}
 
-	double getX(void) {return x;}
-	double getY(void) {return y;}
+	float getX(void) {return x;}
+	float getY(void) {return y;}
 };

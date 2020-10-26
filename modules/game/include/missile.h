@@ -13,7 +13,7 @@ const int MISSILE_TARGET_TYPE_ENEMIES = 0,
 class MISSILE:public GameObject {
 private:
 	bool flag;
-	double damage;
+	float damage;
 	int visualType;
 	int targetType;
 	int penCount;
@@ -21,7 +21,7 @@ private:
 	HPEN *pn;
 
 public:
-	MISSILE(double newX, double newY, double newSpeed, double newDamage, double newAngle, const int newVisualType, const int newTargetType, double newMissileSize, int newPenCount, HBRUSH *newBrush, HPEN *newPen) {
+	MISSILE(float newX, float newY, float newSpeed, float newDamage, float newAngle, const int newVisualType, const int newTargetType, float newMissileSize, int newPenCount, HBRUSH *newBrush, HPEN *newPen) {
 		x = newX;
 		y = newY;
 		speed = newSpeed;
@@ -38,7 +38,7 @@ public:
 
 	void draw(HDC bhdc);
 
-	void move(double deltaTime) {
+	void move(float deltaTime) {
 		x+=(speed*deltaTime)*cos(angle);
 		y+=(speed*deltaTime)*sin(angle);
 	}
@@ -54,8 +54,8 @@ public:
 		return !flag;
 	}
 
-	double getX(void) {return x;}
-	double getY(void) {return y;}
-	double getDamage(void) {return damage;}
+	float getX(void) {return x;}
+	float getY(void) {return y;}
+	float getDamage(void) {return damage;}
 	int getTargetType(void) {return targetType;}
 };

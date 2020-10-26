@@ -44,13 +44,13 @@ void Engine::mainLoop(void) {
 	char intStr[5];
 
 	int fps = 0;
-	double sec = 0.0;
-	double deltaTime;
+	float sec = 0.0;
+	float deltaTime;
 
 	player.setWeapon(weaponMan.getWeaponById(WEAPON_PISTOL));
 	player.setAbility(abilityMan.getAbilityById(ABILITY_ID_BLINK));
 
-	double newCursorX = 0.0,
+	float newCursorX = 0.0,
 		   newCursorY = 0.0;
 
 	while(true) {
@@ -115,10 +115,10 @@ void Engine::mainLoop(void) {
 				  player.startReloading();
 				  eventMan.addEvent(EVENT_TYPE_SIMPLE, EVENT_ACTION_RELOADING, player.getCurrentWeapon()->getReloadTime());
 			  } else {
-				  // *переписать алгоритм стрельбы. именно выстрела
-				  double angle = abc(player.getX(), player.getY(), newCursorX, newCursorY);
-				  double x = player.getX() + player.getSize() * cos(angle)/* + physicsMan.getCameraOffsetX()*/;
-				  double y = player.getY() + player.getSize() * sin(angle)/* + physicsMan.getCameraOffsetY()*/;
+				  // *пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+				  float angle = abc(player.getX(), player.getY(), newCursorX, newCursorY);
+				  float x = player.getX() + player.getSize() * cos(angle)/* + physicsMan.getCameraOffsetX()*/;
+				  float y = player.getY() + player.getSize() * sin(angle)/* + physicsMan.getCameraOffsetY()*/;
 
 				  player.attack(x,y,newCursorX, newCursorY, 0, 0/*&missileBrush,&missilePen*/);
 
@@ -279,7 +279,7 @@ static HBRUSH brushBlack;
 static HPEN penBlack;
 static HPEN penWhite;
 
-double mouseX, mouseY;
+float mouseX, mouseY;
 POINT mousePoint;
 
 Engine::Engine() {
@@ -364,13 +364,13 @@ void Engine::mainLoop(void) {
 	char intStr[5];
 
 	int fps = 0;
-	double sec = 0.0;
-	double deltaTime;
+	float sec = 0.0;
+	float deltaTime;
 
 	player.setWeapon(weaponMan.getWeaponById(WEAPON_PISTOL));
 	player.setAbility(abilityMan.getAbilityById(ABILITY_ID_BLINK));
 
-	double newCursorX = 0.0,
+	float newCursorX = 0.0,
 		   newCursorY = 0.0;
 
 	while(true) {
@@ -435,10 +435,10 @@ void Engine::mainLoop(void) {
 				  player.startReloading();
 				  eventMan.addEvent(EVENT_TYPE_SIMPLE, EVENT_ACTION_RELOADING, player.getCurrentWeapon()->getReloadTime());
 			  } else {
-				  // *переписать алгоритм стрельбы. именно выстрела
-				  double angle = abc(player.getX(), player.getY(), newCursorX, newCursorY);
-				  double x = player.getX() + player.getSize() * cos(angle)/* + physicsMan.getCameraOffsetX()*/;
-				  double y = player.getY() + player.getSize() * sin(angle)/* + physicsMan.getCameraOffsetY()*/;
+				  // *пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+				  float angle = abc(player.getX(), player.getY(), newCursorX, newCursorY);
+				  float x = player.getX() + player.getSize() * cos(angle)/* + physicsMan.getCameraOffsetX()*/;
+				  float y = player.getY() + player.getSize() * sin(angle)/* + physicsMan.getCameraOffsetY()*/;
 
 				  player.attack(x,y,newCursorX, newCursorY, 0, 0/*&missileBrush,&missilePen*/);
 

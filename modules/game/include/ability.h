@@ -20,22 +20,22 @@ private:
 	int castType;
 	int targetType;
 
-	double maxCastTime;
-	double castTime;
+	float maxCastTime;
+	float castTime;
 	int manaCost;
 	int cooldown;
 	bool switchFlag;
 
-	double targetX;
-	double targetY;
+	float targetX;
+	float targetY;
 
-	double arg1,arg2,arg3;
+	float arg1,arg2,arg3;
 
 	bool targeting;
 	bool casting;
 
 public:
-	ABILITY(const int newAbilityId, const int newCastType, const int newTargetType, int newManaCost, int newCoolDown, double newCastTime) {
+	ABILITY(const int newAbilityId, const int newCastType, const int newTargetType, int newManaCost, int newCoolDown, float newCastTime) {
 		abilityId = newAbilityId;
 		castType = newCastType;
 		targetType = newTargetType;
@@ -51,19 +51,19 @@ public:
 	~ABILITY() {};
 
 	//write access
-	void startCasting(double x, double y) {casting = true; castTime=0.00; targetX=x; targetY=y;}
-	void increaseCastingTime(double deltaTime) {castTime+=deltaTime;}
+	void startCasting(float x, float y) {casting = true; castTime=0.00; targetX=x; targetY=y;}
+	void increaseCastingTime(float deltaTime) {castTime+=deltaTime;}
 	void CastingEnd(void) {casting = false;}
 	void startTargeting(void) {targeting = true;}
 	void endTargeting(void) {targeting = false;}
 
 	//read access
 	int getAbilityId(void) {return abilityId;}
-	double getCastingTime(void) {return maxCastTime;}
-	double currentCastTime(void) {return castTime;}
+	float getCastingTime(void) {return maxCastTime;}
+	float currentCastTime(void) {return castTime;}
 
-	double getPointX(void) {return targetX;}
-	double getPointY(void) {return targetY;}
+	float getPointX(void) {return targetX;}
+	float getPointY(void) {return targetY;}
 
 	bool isCasting(void) {return casting;}
 	bool isTargeting(void) {return targeting;}

@@ -13,12 +13,12 @@ class EVENT {
 private:
 	int eventType;
 	int eventAction;
-	double lastingTime;
-	double duration;
+	float lastingTime;
+	float duration;
 	bool completed;
 
 public:
-	EVENT(const int newEventType, const int newEventAction, double newLastingTime) {
+	EVENT(const int newEventType, const int newEventAction, float newLastingTime) {
 		completed = false;
 		eventType = newEventType;
 		eventAction = newEventAction;
@@ -27,11 +27,11 @@ public:
 	}
 
 	void completeEvent() {completed = true;}
-	void increaseTime(double delta) {duration += delta;}
+	void increaseTime(float delta) {duration += delta;}
 	void startAgain(void) {duration -= lastingTime;}
 	int getEventType(void) {return eventType;}
 	int getEventAction(void) {return eventAction;}
-	double getLastingTime(void) {return lastingTime;}
-	double getDuration(void) {return duration;}
+	float getLastingTime(void) {return lastingTime;}
+	float getDuration(void) {return duration;}
 	bool isCompleted(void) {return completed;}
 };

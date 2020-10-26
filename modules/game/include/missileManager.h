@@ -10,7 +10,7 @@ private:
 	std::list<MISSILE> mList;
 
 public:
-	void addMissile(double newX, double newY, double newAngle, double newSpeed, double newDamage, const int newVisualType, const int newTargetType, double newMissileSize, int newPenCount, HBRUSH *newBrush = 0, HPEN *newPen = 0) {
+	void addMissile(float newX, float newY, float newAngle, float newSpeed, float newDamage, const int newVisualType, const int newTargetType, float newMissileSize, int newPenCount, HBRUSH *newBrush = 0, HPEN *newPen = 0) {
     mList.push_back(MISSILE(newX, newY, newSpeed, newDamage, newAngle, newVisualType, newTargetType, newMissileSize, newPenCount, nullptr, nullptr));
 	}
 

@@ -2,7 +2,7 @@
 
 class CAMERA {
 private:
-	double x, y;
+	float x, y;
 
 public:
 	CAMERA() {
@@ -10,11 +10,11 @@ public:
 	}
 
 	//write access
-	void setXY(double X, double Y) {x=X; y=Y;}
+	void setXY(float X, float Y) {x=X; y=Y;}
 
 	//read access
-	double getX(void) {return x;}
-	double getY(void) {return y;}
+	float getX(void) {return x;}
+	float getY(void) {return y;}
 
 	~CAMERA() {};
 };

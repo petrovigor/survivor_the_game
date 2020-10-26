@@ -79,9 +79,9 @@ LRESULT BaseWindow::WindProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 
 
 LRESULT __stdcall WindProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	double cx = RESOLUTION_X / 2;
-	double cy = RESOLUTION_Y / 2;
-	double dx,dy;
+	float cx = RESOLUTION_X / 2;
+	float cy = RESOLUTION_Y / 2;
+	float dx,dy;
 
 	switch(msg) {
 	case WM_MOUSEMOVE:
@@ -164,9 +164,9 @@ LRESULT __stdcall WindProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 #endif //0
 
 #if 0
-	double cx = RESOLUTION_X / 2;
-	double cy = RESOLUTION_Y / 2;
-	double dx,dy;
+	float cx = RESOLUTION_X / 2;
+	float cy = RESOLUTION_Y / 2;
+	float dx,dy;
 
 	switch(msg) {
 	case WM_MOUSEMOVE:
@@ -339,9 +339,9 @@ LRESULT BaseWindow::WindProc(UINT msg, WPARAM wParam, LPARAM lParam) {
 
 
 LRESULT __stdcall WindProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	double cx = RESOLUTION_X / 2;
-	double cy = RESOLUTION_Y / 2;
-	double dx,dy;
+	float cx = RESOLUTION_X / 2;
+	float cy = RESOLUTION_Y / 2;
+	float dx,dy;
 
 	switch(msg) {
 	case WM_MOUSEMOVE:
@@ -424,9 +424,9 @@ LRESULT __stdcall WindProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 #endif //0
 
 #if 0
-	double cx = RESOLUTION_X / 2;
-	double cy = RESOLUTION_Y / 2;
-	double dx,dy;
+	float cx = RESOLUTION_X / 2;
+	float cy = RESOLUTION_Y / 2;
+	float dx,dy;
 
 	switch(msg) {
 	case WM_MOUSEMOVE:
