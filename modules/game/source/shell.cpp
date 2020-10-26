@@ -1,6 +1,6 @@
 #include "shell.h"
 
-SHELL::SHELL(double newX, double newY, double newAngle, double newSize, double newSpeed, double newDecreaseSpeed, double newAngleRate) {
+SHELL::SHELL(float newX, float newY, float newAngle, float newSize, float newSpeed, float newDecreaseSpeed, float newAngleRate) {
 	b = true;
 	x = newX;
 	y = newY;
@@ -12,7 +12,7 @@ SHELL::SHELL(double newX, double newY, double newAngle, double newSize, double n
 	angleRate = newAngleRate;
 }
 
-void SHELL::process(double deltaTime) {
+void SHELL::process(float deltaTime) {
 	speed = speed - decreaseSpeed * deltaTime;
 
 	if(speed > 0) {
@@ -24,18 +24,18 @@ void SHELL::process(double deltaTime) {
 	}
 }
 
-void SHELL::setCameraOffset(double offsetX, double offsetY) {
+void SHELL::setCameraOffset(float offsetX, float offsetY) {
 	cameraOffsetX = offsetX;
 	cameraOffsetY = offsetY;
 }
 
 void SHELL::draw(HDC bhdc) {
-	double newX = x + cameraOffsetX;
-	double newY = y + cameraOffsetY;
+	float newX = x + cameraOffsetX;
+	float newY = y + cameraOffsetY;
 	Rectangle(bhdc, newX-size, newY-size, newX+size, newY+size);
 }
 
-void SHELL::depose(double X, double Y) {
+void SHELL::depose(float X, float Y) {
 	x = x + X;
 	y = y + Y;
 }

@@ -26,11 +26,11 @@ void EVENT_MANAGER::spawnEnemy() {
 	}
 
 	for(int i=0;i<n;i++) {
-		double x,y,X,Y;
-		double px=playerPtr->getX(),
+		float x,y,X,Y;
+		float px=playerPtr->getX(),
 			   py=playerPtr->getY();
 
-		double minDist=400.0;
+		float minDist=400.0;
 
 		//do {
 		//	x=rand()%RESOLUTION_X;
@@ -67,7 +67,7 @@ void EVENT_MANAGER::spawnEnemy() {
 //	//int n = rand()%enemyManPtr->getEnemyMultiplier()
 //
 //	int r;
-//	double px = playerPtr->getX(), py = playerPtr->getY();
+//	float px = playerPtr->getX(), py = playerPtr->getY();
 //
 //	// center -> random 4 sides
 //	if( px<RESOLUTION_X-PLAYER_OUT_OF_MAP_SAFE_OFFSET && py<RESOLUTION_Y-PLAYER_OUT_OF_MAP_SAFE_OFFSET && px>PLAYER_OUT_OF_MAP_SAFE_OFFSET && py>PLAYER_OUT_OF_MAP_SAFE_OFFSET ) {
@@ -98,11 +98,11 @@ void EVENT_MANAGER::spawnEnemy() {
 //		}
 //	}
 //
-//	double safeOffset = 0.0; //50
+//	float safeOffset = 0.0; //50
 //
 //	for(int i=0; i<n; i++) {
 //		//int r=rand()%4;
-//		double x, y;
+//		float x, y;
 //
 //		switch(r) {
 //		case SIDE_TOP:
@@ -130,7 +130,7 @@ void EVENT_MANAGER::spawnEnemy() {
 //	}
 //}
 
-void EVENT_MANAGER::updateEvents(double deltaTime) {
+void EVENT_MANAGER::updateEvents(float deltaTime) {
 	for(std::vector<EVENT>::iterator i=eventList.begin(); i!=eventList.end(); ++i) {
 		if(i->getDuration() >= i->getLastingTime()) {
 			execute(*i);

@@ -11,7 +11,7 @@ private:
 	int radiusTemp;
 	int radiusMax;
 	bool toDelete;
-	double cameraOffsetX, cameraOffsetY;
+	float cameraOffsetX, cameraOffsetY;
 
 
 public:
@@ -24,10 +24,10 @@ public:
 		ptr = newPtr;
 	}
 
-	void increaseNoiseRadius(double);
+	void increaseNoiseRadius(float);
 	void draw(HDC);
-	void depose(double, double);
-	void setCameraOffset(double X,double Y){cameraOffsetX=X;cameraOffsetY=Y;}
+	void depose(float, float);
+	void setCameraOffset(float X,float Y){cameraOffsetX=X;cameraOffsetY=Y;}
 	void markAsUnused(void) {toDelete = true;}
 	bool isToDelete(void) {return toDelete;}
 	int getX(void) {return x;}

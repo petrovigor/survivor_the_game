@@ -30,9 +30,9 @@ void BLOCK::draw(HDC bhdc) {
 }
 
 void BLOCK::offset(std::list<ENEMY>::iterator it) {
-	double X=it->getX();
-	double Y=it->getY();
-	double S=it->getSize();
+	float X=it->getX();
+	float Y=it->getY();
+	float S=it->getSize();
 
 	if( X+S > x-w/2 && X-S > x+w/2 && Y+S > y-h/2 && Y-S > y+h/2 ) {
 		//X = x-w/2-S;
@@ -66,19 +66,19 @@ void BLOCK::offset(std::list<ENEMY>::iterator it) {
 
 bool BLOCK::isGOinBlock(GameObject *go) {
 	// check for 8 points of circle?
-	double X = go->getX();
-	double Y = go->getY();
+	float X = go->getX();
+	float Y = go->getY();
 
 	return X-go->getSize()<x+w/2 && Y-go->getSize()<y+h/2 && X+go->getSize()>x-w/2 && Y+go->getSize()>y-h/2;
 
 	//return false;
 }
 
-bool BLOCK::rectCollision(double X, double Y, double W, double H) {
+bool BLOCK::rectCollision(float X, float Y, float W, float H) {
 	return X-W<x+w/2 && Y-H<y+h/2 && X+W>x-w/2 && Y+H>y-h/2;
 }
 
-bool BLOCK::isCoordInBlock(double X, double Y, double R) {
+bool BLOCK::isCoordInBlock(float X, float Y, float R) {
 	return X-R<x+w/2
 		&& Y-R<y+h/2
 		&& X+R>x-w/2
@@ -87,12 +87,12 @@ bool BLOCK::isCoordInBlock(double X, double Y, double R) {
 
 //void BLOCK::draw(HDC bhdc) {
 //	SelectObject(bhdc, *penPtr);
-//	//double xx[4],yy[4];
+//	//float xx[4],yy[4];
 //
 //	//xx[0]=x1; yy[0]=y1; xx[1]=x2; yy[1]=y2;
 //	//xx[2]=x3; yy[2]=y3; xx[3]=x4; yy[3]=y4;
 //
-//	//double _x, _y;
+//	//float _x, _y;
 //
 //	//_x = x + ((w/2)*height) * cos(_PI);
 //	//_y = y + ((w/2)*height) * sin(_PI);

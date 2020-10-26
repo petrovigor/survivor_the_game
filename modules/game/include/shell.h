@@ -6,24 +6,24 @@
 class SHELL {
 private:
 	bool b;
-	double x,y;
-	double angle;
-	double size;
-	double speed;
-	double decreaseSpeed;
-	double drawAngle;
-	double angleRate;
-	double cameraOffsetX;
-	double cameraOffsetY;
+	float x,y;
+	float angle;
+	float size;
+	float speed;
+	float decreaseSpeed;
+	float drawAngle;
+	float angleRate;
+	float cameraOffsetX;
+	float cameraOffsetY;
 
 public:
-	SHELL(double, double, double, double, double, double, double);
+	SHELL(float, float, float, float, float, float, float);
 
-	void process(double);
+	void process(float);
 	void draw(HDC);
-	void depose(double, double);
+	void depose(float, float);
 	bool is(void) {return b;}
-	void setCameraOffset(double, double);
+	void setCameraOffset(float, float);
 
 	~SHELL() {};
 };

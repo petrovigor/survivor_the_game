@@ -1,7 +1,7 @@
 #include "missile.h"
 
 void MISSILE::draw(HDC bhdc) {
-	//const double size = 5.0;
+	//const float size = 5.0;
 	//HPEN pen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
 	//HBRUSH brush = CreateSolidBrush(RGB(255, 255, 255));
 	//SelectObject(bhdc, pen );
@@ -10,9 +10,9 @@ void MISSILE::draw(HDC bhdc) {
 	//SelectObject(bhdc, *br);
 	//SelectObject(bhdc, *pn);
 
-	const double s = size * height;
-	double newX = x+cameraOffsetX;
-	double newY = y+cameraOffsetY;
+	const float s = size * height;
+	float newX = x+cameraOffsetX;
+	float newY = y+cameraOffsetY;
 
 	switch(visualType) {
 	case MISSILE_VISUAL_TYPE_ELLIPSE:

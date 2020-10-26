@@ -41,7 +41,7 @@ private:
 	CAMERA camera;
 
 	bool debugMode;
-	double timeFactor;
+	float timeFactor;
 
 public:
 	Engine();

@@ -17,7 +17,7 @@ private:
 public:
 	void initEventManager(Player *newPlayerPtr, ENEMY_MANAGER *newEnemyManagerPtr, PHYSICS_MANAGER *pt) {playerPtr = newPlayerPtr; enemyManPtr = newEnemyManagerPtr; phy=pt;}
 
-	void addEvent(const int newEventType, const int newEventAction, double newLastingTime) {
+	void addEvent(const int newEventType, const int newEventAction, float newLastingTime) {
 		eventList.push_back(EVENT(newEventType, newEventAction, newLastingTime));
 	}
 
@@ -47,7 +47,7 @@ public:
 		}
 	}
 
-	void updateEvents(double deltaTime);
+	void updateEvents(float deltaTime);
 	void removeEvents(void) {eventList.clear();}
 	int getEventCount(void) {return eventList.size();}
 	void spawnEnemy(void);

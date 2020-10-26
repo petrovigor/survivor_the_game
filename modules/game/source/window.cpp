@@ -27,8 +27,8 @@ void WindowCallback::OnMouseClick(int x, int y, bool click) {
 }
 
 void WindowCallback::OnMouseMove(int x, int y) {
-	double cx = RESOLUTION_X / 2;
-	double cy = RESOLUTION_Y / 2;
+	float cx = RESOLUTION_X / 2;
+	float cy = RESOLUTION_Y / 2;
 
   _engine->getCursor().setXY(x, y);
 

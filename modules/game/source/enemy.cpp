@@ -10,8 +10,8 @@ void ENEMY::draw(HDC bhdc) {
 
 	if(vis) {
 		if(alive) {
-			double newX = x+cameraOffsetX;
-			double newY = y+cameraOffsetY;
+			float newX = x+cameraOffsetX;
+			float newY = y+cameraOffsetY;
 
 			Ellipse(bhdc, newX-size, newY-size, newX+size, newY+size);
 
@@ -38,30 +38,30 @@ void ENEMY::draw(HDC bhdc) {
 				}
 			}
 			
-			double X = x + size * cos(angle) +cameraOffsetX;
-			double Y = y + size * sin(angle) +cameraOffsetY;
-			double sz = size/3;
+			float X = x + size * cos(angle) +cameraOffsetX;
+			float Y = y + size * sin(angle) +cameraOffsetY;
+			float sz = size/3;
 
 			Ellipse(bhdc, X-sz, Y-sz, X+sz, Y+sz);
 		}
 	}
 }
 
-void ENEMY::correct(double deltaTime, double px, double py, double correctionAngle) {
-    double distance = speed * deltaTime;
+void ENEMY::correct(float deltaTime, float px, float py, float correctionAngle) {
+    float distance = speed * deltaTime;
 	faceTo(px, py);
     angle += (DEGTORAD*correctionAngle);
 	x = oldX + distance * cos(angle);
     y = oldY + distance * sin(angle);
 }
 
-void ENEMY::move(double deltaTime, double playerX, double playerY) {
-	//double _x = oldX;
-	//double _y = oldY;
+void ENEMY::move(float deltaTime, float playerX, float playerY) {
+	//float _x = oldX;
+	//float _y = oldY;
 	
 	backupXY();
 
-	double dist = speed * deltaTime;
+	float dist = speed * deltaTime;
 
 	angle = abc(x, y, playerX, playerY);
 

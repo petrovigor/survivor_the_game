@@ -1,6 +1,6 @@
 #include "timer.h"
 
-double TIMER::get(void) {
+float TIMER::get(void) {
 	DWORD_PTR oldMask=SetThreadAffinityMask(GetCurrentThread(),0);
 	LARGE_INTEGER currentTime;
 	QueryPerformanceCounter(&currentTime);
@@ -20,7 +20,7 @@ bool TIMER::init(void) {
 		return false;
 	}
 
-	frequency=(double)li.QuadPart;
+	frequency=(float)li.QuadPart;
 	tickLength=1.0/frequency;
 
 	DWORD_PTR oldMask=SetThreadAffinityMask(GetCurrentThread(),0);

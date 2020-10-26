@@ -4,14 +4,14 @@
 
 class TIMER {
 	LARGE_INTEGER startTime;
-	double current;
-	double last;
-	double frequency;
-	double tickLength;
+	float current;
+	float last;
+	float frequency;
+	float tickLength;
 
 public:
 	bool init();
 	void update();
-	double get();
-	double getDelta() {return current-last;}
+	float get();
+	float getDelta() {return current-last;}
 };

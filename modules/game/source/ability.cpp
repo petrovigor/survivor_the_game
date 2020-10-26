@@ -1,6 +1,6 @@
 //#include "ability.h"
 //
-//bool ABILITY::checkForRequirements(double targetX, double targetY) {
+//bool ABILITY::checkForRequirements(float targetX, float targetY) {
 //	bool result=true;
 //
 //	switch(abilityId) {

@@ -4,14 +4,14 @@
 
 class ROAD {
 private:
-	double ax,ay;
-	double bx,by;
-	double cx,cy;
-	double dx,dy;
+	float ax,ay;
+	float bx,by;
+	float cx,cy;
+	float dx,dy;
 	HPEN *penPtr;
 
 public:
-	ROAD(double AX,double AY,double BX,double BY,double CX,double CY,double DX,double DY,HPEN *p) {
+	ROAD(float AX,float AY,float BX,float BY,float CX,float CY,float DX,float DY,HPEN *p) {
 		ax = AX;
 		ay = AY;
 		bx = BX;
@@ -23,7 +23,7 @@ public:
 		penPtr = p;
 	}
 
-	void depose(double x, double y) {
+	void depose(float x, float y) {
 		ax = ax + x;
 		ay = ay + y;
 		bx = bx + x;

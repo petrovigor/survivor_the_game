@@ -10,14 +10,14 @@ const int FX_VISUAL_TYPE_NONE = 0,
 class FX {
 protected:
 	bool flag;
-	double x, y;
-	double size;
-	double speed;
-	double angle;
-	double duration;
+	float x, y;
+	float size;
+	float speed;
+	float angle;
+	float duration;
 	int visualType;
-	double cameraOffsetX;
-	double cameraOffsetY;
+	float cameraOffsetX;
+	float cameraOffsetY;
 
 public:
 	FX() {
@@ -27,7 +27,7 @@ public:
 		cameraOffsetY=cameraOffsetX=0.0;
 	}
 
-	void setCameraOffset(double X,double Y) {
+	void setCameraOffset(float X,float Y) {
 		cameraOffsetX = X;
 		cameraOffsetY = Y;
 	}
@@ -37,7 +37,7 @@ public:
 
 class FX_FLASH : public FX {
 public:
-	FX_FLASH(double _x, double _y, double newPower, double _lifeTime, const int newVisualType) {
+	FX_FLASH(float _x, float _y, float newPower, float _lifeTime, const int newVisualType) {
 		x = _x;
 		y = _y;
 		size = 0.0;
@@ -49,7 +49,7 @@ public:
 
 	void draw(HDC bhdc);
 
-	void update(double deltaTime) {
+	void update(float deltaTime) {
 		size += speed*deltaTime;
 
 		duration -= deltaTime;
@@ -61,7 +61,7 @@ public:
 
 class FX_BLOOD : public FX {
 public:
-	FX_BLOOD(double newX, double newY, double newAngle, double newRadius, double newSpeed, const int newVisualType) {
+	FX_BLOOD(float newX, float newY, float newAngle, float newRadius, float newSpeed, const int newVisualType) {
 		flag = false;
 		x = newX;
 		y = newY;
@@ -73,12 +73,12 @@ public:
 
 	void draw(HDC bhdc);
 
-	void depose(double X,double Y) {
+	void depose(float X,float Y) {
 		x = x + X;
 		y = y + Y;
 	}
 
-	void update(double deltaTime) {
+	void update(float deltaTime) {
 		size -= 2.0 * deltaTime;
 		speed -= (speed*2) * deltaTime;
 		if(speed < 0) speed=0;

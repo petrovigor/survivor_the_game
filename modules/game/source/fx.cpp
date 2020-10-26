@@ -20,8 +20,8 @@ void FX_FLASH::draw(HDC bhdc) {
 	//SelectObject(bhdc, pen );
 	//SelectObject(bhdc, brush );
 
-	double newX = x+cameraOffsetX;
-	double newY= y+cameraOffsetY;
+	float newX = x+cameraOffsetX;
+	float newY= y+cameraOffsetY;
 
 	switch(visualType) {
 	case FX_VISUAL_TYPE_NONE:
@@ -45,8 +45,8 @@ void FX_BLOOD::draw(HDC bhdc) {
 	//SelectObject(bhdc, pen );
 	//SelectObject(bhdc, brush );
 
-	double newX = x+cameraOffsetX;
-	double newY= y+cameraOffsetY;
+	float newX = x+cameraOffsetX;
+	float newY= y+cameraOffsetY;
 
 	switch(visualType) {
 	case FX_VISUAL_TYPE_NONE:

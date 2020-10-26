@@ -20,12 +20,12 @@ public:
 		enemyMultiplier = 0;
 	}
 
-	void process(double);
+	void process(float);
 
 	void resetEnemyMultiplier() {enemyMultiplier = 0;}
 	int getEnemyMultiplier(void) {return enemyMultiplier;}
 
-	void add(double newX, double newY, double newSpeed, double newHP,
+	void add(float newX, float newY, float newSpeed, float newHP,
 		const int newAttackType, const int newMovingType, const int newRole, const int newVisualType) {
 			if(DEBUGVAR_INCLUDE_ENEMIES && getCount()<MAXIMAL_ENEMIES_AT_MAP)
 				list.push_back(ENEMY(newX, newY, newSpeed, newHP, newAttackType, newMovingType, newRole, newVisualType, enemybrushptr, enemypenptr, missileMan));
@@ -41,7 +41,7 @@ public:
 
 	void increaseMultiplier(void) {enemyMultiplier++;}
 
-	void move(double deltaTime) {
+	void move(float deltaTime) {
 		for(std::list<ENEMY>::iterator i=list.begin(); i!=list.end(); ++i) {
 			i->move(deltaTime, playerPtr->getX(), playerPtr->getY());
 		}

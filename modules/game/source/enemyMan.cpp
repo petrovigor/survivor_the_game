@@ -1,7 +1,7 @@
 #include "enemyManager.h"
 
-void ENEMY_MANAGER::process(double deltaTime) {
-	double x,y,a;
+void ENEMY_MANAGER::process(float deltaTime) {
+	float x,y,a;
 	
 	for(std::list<ENEMY>::iterator it=list.begin(); it!=list.end(); ++it) {
 		switch(it->getAttackType()) {

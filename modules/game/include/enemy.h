@@ -27,9 +27,9 @@ const int ENEMY_VISUAL_TYPE_SQUARE = 0,
 
 class ENEMY :public GameObject{
 private:
-	double hp;
-	double hpMax;
-	double attackRange;
+	float hp;
+	float hpMax;
+	float attackRange;
 	int currentTarget;
 	int attackType;
 	int movingType;
@@ -37,26 +37,26 @@ private:
 	int role;
 	int r, g, b;
 	bool canAttack;
-	double attackTime;
-	double reloadingTime;
+	float attackTime;
+	float reloadingTime;
 	MISSILE_MANAGER *mMan;
 	HBRUSH *enemyBrush;
 	HPEN *enemyPen;
 	bool playerSpotted;
 	bool vis;
-	double toX, toY;
+	float toX, toY;
 	bool computeTo;
-	double px[40];
-	double py[40];
-	double PX,PY;
+	float px[40];
+	float py[40];
+	float PX,PY;
 	bool running;
 
-	double damageResistance;
-	double woundedTime;
+	float damageResistance;
+	float woundedTime;
 	bool wounded;
 
 public:
-	ENEMY(double newX, double newY, double newSpeed, double newHP,
+	ENEMY(float newX, float newY, float newSpeed, float newHP,
 		const int newAttackType, const int newMovingType, const int newRole, const int newVisualType, HBRUSH *newEnemyBrush, HPEN *newEnemyPen, MISSILE_MANAGER *newMMAN)
 	{
 		x = toX = newX;
@@ -114,23 +114,23 @@ public:
 		enemyPen = newEnemyPen;
 	}
 
-	void setPointXY(int index, double x, double y) {
+	void setPointXY(int index, float x, float y) {
 		px[index] = x;
 		py[index] = y;
 	}
 
-	void setPlayerCoords(double px, double py) {
+	void setPlayerCoords(float px, float py) {
 		PX = px;
 		PY = py;
 	}
 
-	double getCoordX(int index) {return px[index];}
-	double getCoordY(int index) {return py[index];}
+	float getCoordX(int index) {return px[index];}
+	float getCoordY(int index) {return py[index];}
 
 	void draw(HDC bhdc);
 	bool checkForVisibility(void);
 	
-	void depose(double X, double Y) {
+	void depose(float X, float Y) {
 		x = x + X;
 		y = y + Y;
 		toX = toX + X;
@@ -145,13 +145,13 @@ public:
 		PY = PY + Y;
 	}
 
-	void faceTo(double x2, double y2) {
+	void faceTo(float x2, float y2) {
 		angle = abc(x, y, x2, y2);
 	}
 
-	void correct(double deltaTime, double px, double py, double angle);
+	void correct(float deltaTime, float px, float py, float angle);
 
-	void takeDamage(double damage) {
+	void takeDamage(float damage) {
 		if(!DEBUGVAR_INVULNERABLE_ENEMIES) {
 			hp -= damage;
 		}
@@ -168,29 +168,29 @@ public:
 		canAttack=false;
 	}
 
-	void reloadingProcess(double deltaTime) {
+	void reloadingProcess(float deltaTime) {
 		attackTime -= deltaTime;
 		if(attackTime<=0.0 ) {
 			canAttack=true;
 		}
 	}
 
-	void setTo(double X,double Y) {
+	void setTo(float X,float Y) {
 		toX=X;toY=Y;
 	}
 
 	void kill(void) {alive = false;}
-	void move(double deltaTime, double playerX, double playerY);
+	void move(float deltaTime, float playerX, float playerY);
 	void removeDeadEnemies(void);
 	bool isAlive(void) {return alive;}
 	int getAttackType(void) {return attackType;}
-	double getAttackRange(void) {return attackRange;}
+	float getAttackRange(void) {return attackRange;}
 	MISSILE_MANAGER* getMissileManagerPtr(void) {return mMan;}
 	bool CanAttack(void) {return canAttack;}
 	bool isPlayerSpotted(void) {return playerSpotted;}
 	int getRole(void) {return role;}
-	double getToX(void) {return toX;}
-	double getToY(void) {return toY;}
+	float getToX(void) {return toX;}
+	float getToY(void) {return toY;}
 	int getCurrentTarget(void) {return currentTarget;}
 
 	bool isComputedTo(void) {return computeTo;}
@@ -201,12 +201,12 @@ public:
 	void walk(void) {running=false; speed=ENEMY_NORMAL_SPEED;}
 
 	bool isWounded(void) {return wounded;}
-	void Wound(double time)	{
+	void Wound(float time)	{
 		wounded = true; woundedTime = time;
 		if(running) speed = ENEMY_FAST_SPEED*damageResistance;
 		else speed=ENEMY_NORMAL_SPEED*damageResistance;
 	}
-	void updateWound(double deltaTime) {
+	void updateWound(float deltaTime) {
 		woundedTime = woundedTime - deltaTime;
 		if(woundedTime <= 0.0) {
 			wounded = false;

@@ -21,7 +21,7 @@ public:
 		createAbility(ABILITY_ID_BLINK, ABILITY_CAST_TYPE_POINT, ABILITY_TARGET_TYPE_NONE, 0, 0, 0.0);
 	}
 
-	inline void createAbility(const int newAbilityId, const int newCastType, const int newTargetType, int newManaCost, int newCoolDown, double newCastTime) {
+	inline void createAbility(const int newAbilityId, const int newCastType, const int newTargetType, int newManaCost, int newCoolDown, float newCastTime) {
 		list.push_back(ABILITY(newAbilityId, newCastType,newTargetType,newManaCost,newCoolDown,newCastTime));
 	}
 
@@ -29,7 +29,7 @@ public:
 		return &list[id];
 	}
 
-	bool checkForRequirements(ABILITY *a, double targetX, double targetY) {
+	bool checkForRequirements(ABILITY *a, float targetX, float targetY) {
 		bool result=true;
 
 		switch(a->getAbilityId()) {
@@ -41,7 +41,7 @@ public:
 		return result;
 	}
 
-	void endCasting(ABILITY *a, double targetX, double targetY) {
+	void endCasting(ABILITY *a, float targetX, float targetY) {
 		switch(a->getAbilityId()) {
 		case ABILITY_ID_BLINK:
 			if(checkForRequirements(a, targetX, targetY)) {
@@ -54,7 +54,7 @@ public:
 		}
 	};
 
-	void updateAbilitiesProcess(double deltaTime) {
+	void updateAbilitiesProcess(float deltaTime) {
 		for(std::vector<ABILITY>::iterator i=list.begin(); i!=list.end(); ++i) {
 			if(i->isTargeting()) {
 				switch(i->getAbilityId()) {
