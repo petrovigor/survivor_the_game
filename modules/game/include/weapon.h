@@ -12,7 +12,7 @@ const int WEAPON_PISTOL = 0,
 const int WEAPON_PENETRATIONS_UNLIMITED = -1;
 
 const int WEAPON_ATTACK_TYPE_PROJECTILES = 0,
-	      WEAPON_ATTACK_TYPE_INSTANT = 1, //laser etc
+	      WEAPON_ATTACK_TYPE_INSTANT = 1,
 		  WEAPON_ATTACK_TYPE_MELEE = 2,
 		  WEAPON_ATTACK_TYPE_POINT = 3;
 
@@ -33,7 +33,6 @@ private:
 	double waitingTime;
 	double missileSize;
 	double noiseRadius;
-	//COLOR *missileColor;
 	MISSILE_MANAGER *ptr;
 
 public:
@@ -53,7 +52,6 @@ public:
 			waitingTime=newWaitingTime;
 			missileSize=newMissileSize;
 			noiseRadius=newNoiseRadius;
-			//missileColor=newMissileColor;
 			ptr=newMissileManagerPtr;
 			penCount=newPenCount;
 	}
@@ -85,7 +83,6 @@ public:
 		}
 	}
 
-	//read access
 	double getWaitingTime(void) {return waitingTime;}
 	int getMissilesCountPerAttack(void) {return missilesCountPerAttack;}
 	double getMissileSpeed(void) {return missileSpeed;}
@@ -99,7 +96,6 @@ public:
 	int getAttackType(void) {return attackType;}
 	double getWeaponNoiseRadius(void) {return noiseRadius;}
 
-	//write access
 	void reloaded(void) {ammo=maxAmmo;}
 };
 

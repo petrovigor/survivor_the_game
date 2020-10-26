@@ -84,7 +84,6 @@ public:
 
 	void drawRoads(HDC bhdc) {
 		for(std::list<ROAD>::iterator i=roadsList.begin(); i!=roadsList.end(); ++i) {
-			//i->draw(bhdc);
 		}
 	}
 
@@ -109,7 +108,6 @@ public:
 		}
 	}
 
-	//void findWayToPlayer(std::list<ENEMY>::iterator,double,double);
 	void computeRandomPointToPatrol(std::list<ENEMY>::iterator);
 	void enemyMoveTo(std::list<ENEMY>::iterator,double,double,double);
 	void placeBlockByPlayerDirection(const int);
@@ -118,7 +116,7 @@ public:
 	void deposeGameObjects(double offsetX, double offsetY);
 	
 	
-	void deposeGameObjectsFromCenter(/*double offx, double offy*/);
+	void deposeGameObjectsFromCenter();
 
 
 	bool checkForPlacementCollision(double,double,double,double);
@@ -129,7 +127,6 @@ public:
 	void moveAll(double deltaTime, const int playerDir);
 	bool checkForPlacementCollision(GameObject *go);
 	bool isPointFree(double X, double Y, double R);
-	//bool checkCoordsForPlacementCollision(double X, double Y);
 
 	void removeBlocks() {blocksList.clear();}
 
@@ -146,15 +143,9 @@ public:
 		}
 	}
 
-	// draw dynamic shadows
 	void computeShadows(HDC bhdc, double x, double y) {
 		for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
-			//first point of block (x1/y1)
-			//MoveToEx(bhdc, playerPtr->getX(), playerPtr->getY(), 0);
-			//LineTo(bhdc, 
-
 			i->computeShadows(bhdc, x, y);
-			//i->computeShadows(bhdc, playerPtr->getX(), playerPtr->getY());
 		}
 	}
 
