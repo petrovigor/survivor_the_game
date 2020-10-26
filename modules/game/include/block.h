@@ -122,7 +122,6 @@ public:
 
 	void setHeight(double h) {height = h;}
 
-	//draw dynamic shadows
 	void computeShadows(HDC bhdc, double X, double Y) {
 		if(DEBUGVAR_SHOW_SHADOWS) {
 			double nx[4], ny[4];
