@@ -9,6 +9,8 @@ private:
 	double bx,by;
 	double cx,cy;
 	double dx,dy;
+
+	//int range;
 	HPEN *penPtr;
 
 public:
@@ -21,6 +23,7 @@ public:
 		cy = CY;
 		dx = DX;
 		dy = DY;
+		//range = 1000;
 		penPtr = p;
 	}
 

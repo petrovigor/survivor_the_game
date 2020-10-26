@@ -4,7 +4,7 @@
 const int EVENT_TYPE_SIMPLE = 0,
 	      EVENT_TYPE_INFINITE = 1;
 
-const int EVENT_ACTION_ALLOW_SHOOTING = 1,
+const int EVENT_ACTION_ALLOW_SHOOTING = 1,//for shots
 	      EVENT_ACTION_RELOADING = 2,
 		  EVENT_ACTION_SPAWN_ENEMY = 3,
 		  EVENT_ACTION_INCREASE_ENEMY_MULTIPLIER = 4,
@@ -14,8 +14,8 @@ class EVENT {
 private:
 	int eventType;
 	int eventAction;
-	double lastingTime;
-	double duration;
+	double lastingTime; //max time
+	double duration; //tmp time
 	bool completed;
 
 public:

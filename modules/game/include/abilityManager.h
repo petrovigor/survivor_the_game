@@ -22,7 +22,7 @@ public:
 	}
 
 	inline void createAbility(const int newAbilityId, const int newCastType, const int newTargetType, int newManaCost, int newCoolDown, double newCastTime) {
-		list.push_back(ABILITY(newAbilityId, newCastType,newTargetType,newManaCost,newCoolDown,newCastTime));
+		list.push_back(ABILITY(newAbilityId, newCastType,newTargetType,newManaCost,newCoolDown,newCastTime/*,physicsManager*/));
 	}
 
 	ABILITY* getAbilityById(const int id) {

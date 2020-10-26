@@ -5,12 +5,17 @@
 #include "fx.h"
 #include "shell.h"
 
+// *переписать всю систему fx сделать абстрактный класс
+
 class FX_MANAGER {
 private:
 	std::list<FX_FLASH> flashes;
 	std::list<FX_BLOOD> bloods;
 	std::list<SHELL> shells;
-	
+	//std::list<FX_SEGMENTS> segs;
+
+	//double cameraOffsetX,cameraOffsetY;
+
 public:
 	std::list<SHELL>* getShellsList(void) {return &shells;}
 
@@ -28,6 +33,7 @@ public:
 		for(std::list<SHELL>::iterator i=shells.begin(); i!=shells.end(); ++i) {
 			i->setCameraOffset(X,Y);
 		}
+		//cameraOffsetX=X;cameraOffsetY=Y;
 	}
 
 	void depose(double X, double Y) {
@@ -73,7 +79,7 @@ public:
 
 				a*=DEGTORAD;
 
-				bloods.push_back(FX_BLOOD(newX, newY, newAngle+a, newRadius, newSpeed, newVisualType));
+				bloods.push_back(FX_BLOOD(newX, newY, newAngle+a, newRadius, newSpeed, newVisualType/*, pptr*/));
 			}
 		}
 	}

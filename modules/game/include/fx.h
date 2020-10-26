@@ -10,7 +10,7 @@ const int FX_VISUAL_TYPE_NONE = 0,
 
 class FX {
 protected:
-	bool flag;
+	bool flag;//true=dead
 	double x, y;
 	double size;
 	double speed;
@@ -34,6 +34,9 @@ public:
 	}
 
 	bool getFlag(void) {return flag;}
+
+	//void draw(HDC bhdc);
+	//void update(double deltaTime);
 };
 
 class FX_FLASH : public FX {
@@ -61,8 +64,11 @@ public:
 };
 
 class FX_BLOOD : public FX {
+//private:
+	//PHYSICS_MANAGER *ptr;
+
 public:
-	FX_BLOOD(double newX, double newY, double newAngle, double newRadius, double newSpeed, const int newVisualType) {
+	FX_BLOOD(double newX, double newY, double newAngle, double newRadius, double newSpeed, const int newVisualType/*, PHYSICS_MANAGER *phyPtr*/) {// double _lifeTime, const int newVisualType) {
 		flag = false;
 		x = newX;
 		y = newY;
@@ -70,6 +76,7 @@ public:
 		size = newRadius;
 		speed = newSpeed;
 		visualType = newVisualType;
+		//ptr=phyPtr;
 	}
 
 	void draw(HDC bhdc);
@@ -87,10 +94,37 @@ public:
 		if(size <= 0.0) {
 			flag = true;
 		} else {
+			//if(ptr->checkForPlacementCollision(x,y,size/2,size/2)) {
 				x += speed*deltaTime * cos(angle);
 				y += speed*deltaTime * sin(angle);
+			//}
 		}
 	}
 };
+
+//class FX_SEGMENTS : public FX {
+//public:
+//	FX_SEGMENTS(double newX, double newY, double newAngle, double newRadius, double newSpeed, const int newVisualType) {// double _lifeTime, const int newVisualType) {
+//		flag = false;
+//		x = newX;
+//		y = newY;
+//		angle = newAngle;
+//		size = newRadius;
+//		speed = newSpeed;
+//		visualType = newVisualType;
+//	}
+//
+//	//void draw(HDC bhdc);
+//
+//	void update(double deltaTime) {
+//		speed-=(speed/10)*deltaTime;
+//		if(speed<=1.0) {
+//			flag = true;
+//		} else {
+//			x += speed*deltaTime * cos(angle);
+//			y += speed*deltaTime * sin(angle);
+//		}
+//	}
+//};
 
 #endif
