@@ -1,5 +1,4 @@
-#ifndef __TIMER_H
-#define __TIMER_H
+#pragma once
 
 #include <windows.h>
 
@@ -16,5 +15,3 @@ public:
 	double get();
 	double getDelta() {return current-last;}
 };
-
-#endif

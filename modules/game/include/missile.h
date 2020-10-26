@@ -1,5 +1,4 @@
-#ifndef __MISSILE_H
-#define __MISSILE_H
+#pragma once
 
 #include <windows.h>
 #include <math.h>
@@ -60,5 +59,3 @@ public:
 	double getDamage(void) {return damage;}
 	int getTargetType(void) {return targetType;}
 };
-
-#endif

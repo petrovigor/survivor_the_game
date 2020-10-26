@@ -1,5 +1,4 @@
-#ifndef __WEAPON_H
-#define __WEAPON_H
+#pragma once
 
 #include "missileManager.h"
 
@@ -98,5 +97,3 @@ public:
 
 	void reloaded(void) {ammo=maxAmmo;}
 };
-
-#endif

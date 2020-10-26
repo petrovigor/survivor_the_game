@@ -1,5 +1,4 @@
-#ifndef __SHELL_H
-#define __SHELL_H
+#pragma once
 
 #include <Windows.h>
 #include "misc.h"
@@ -28,5 +27,3 @@ public:
 
 	~SHELL() {};
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef __ROAD_H
-#define __ROAD_H
+#pragma once
 
 #include <Windows.h>
 
@@ -37,5 +36,3 @@ public:
 
 	void draw(HDC bhdc);
 };
-
-#endif

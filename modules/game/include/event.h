@@ -1,5 +1,4 @@
-#ifndef __EVENT_H
-#define __EVENT_H
+#pragma once
 
 const int EVENT_TYPE_SIMPLE = 0,
 	      EVENT_TYPE_INFINITE = 1;
@@ -36,5 +35,3 @@ public:
 	double getDuration(void) {return duration;}
 	bool isCompleted(void) {return completed;}
 };
-
-#endif

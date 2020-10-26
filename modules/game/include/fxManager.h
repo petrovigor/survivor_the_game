@@ -1,5 +1,4 @@
-#ifndef __FX_MANAGER_H
-#define __FX_MANAGER_H
+#pragma once
 
 #include <list>
 #include "fx.h"
@@ -132,5 +131,3 @@ public:
 		}
 	}
 };
-
-#endif
