@@ -13,11 +13,12 @@ const int MISSILE_TARGET_TYPE_ENEMIES = 0,
 
 class MISSILE:public GameObject {
 private:
+	//double angle;
 	bool flag;
 	double damage;
 	int visualType;
 	int targetType;
-	int penCount;
+	int penCount;//penetrations
 	HBRUSH *br;
 	HPEN *pn;
 
@@ -42,6 +43,9 @@ public:
 	void move(double deltaTime) {
 		x+=(speed*deltaTime)*cos(angle);
 		y+=(speed*deltaTime)*sin(angle);
+		//x = x + (speed*deltaTime) * cos(angle);
+		//y = y + (speed*deltaTime) * sin(angle);
+		//setXY(x, y);
 	}
 
 	void pen(void) {penCount--;}
@@ -58,6 +62,7 @@ public:
 	double getX(void) {return x;}
 	double getY(void) {return y;}
 	double getDamage(void) {return damage;}
+	//double getAngle(void) {return angle;}
 	int getTargetType(void) {return targetType;}
 };
 

@@ -35,7 +35,7 @@ private:
 	bool casting;
 
 public:
-	ABILITY(const int newAbilityId, const int newCastType, const int newTargetType, int newManaCost, int newCoolDown, double newCastTime) {
+	ABILITY(const int newAbilityId, const int newCastType, const int newTargetType, int newManaCost, int newCoolDown, double newCastTime/*, PHYSICS_MANAGER *phyManPtr*/) {
 		abilityId = newAbilityId;
 		castType = newCastType;
 		targetType = newTargetType;

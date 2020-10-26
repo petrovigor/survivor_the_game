@@ -23,6 +23,7 @@ public:
 		rmb = false;
 	}
 
+	//read access
 	int getPlayerDirection();
 
 	bool isLMBpressed(void) {return lmb;}
@@ -32,6 +33,7 @@ public:
 		return keys[c];
 	}
 
+	//write acess
 	void keyDown(const char c) {keys[c] = true;}
 	void keyUp(const char c) {keys[c] = false;}
 
