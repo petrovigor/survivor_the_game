@@ -2,7 +2,7 @@
 
 #include <math.h>
 #include "defines.h"
-#include "gameObject.h"
+#include "game_object.h"
 
 const float _PI = 3.1415926535897932384626;//4338327950288419716939937510582097494459230781640628620899;
 const float ATTACK_RANGE_MELEE = 5.0,
@@ -43,7 +43,7 @@ inline float abc(float x1, float y1, float x2, float y2) {
 }
 
 //distance between objects
-inline float dbo(GAME_OBJECT *f, GAME_OBJECT *s) {
+inline float dbo(GameObject *f, GameObject *s) {
 	float x1=f->getX();
 	float y1=f->getY();
 	float x2=s->getX();
