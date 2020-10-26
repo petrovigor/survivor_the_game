@@ -1,5 +1,4 @@
-#ifndef __NOISE_H
-#define __NOISE_H
+#pragma once
 
 #include <windows.h>
 
@@ -35,5 +34,3 @@ public:
 	int getY(void) {return y;}
 	int getRadius(void) {return radiusTemp;}
 };
-
-#endif

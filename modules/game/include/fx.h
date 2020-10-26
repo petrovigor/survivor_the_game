@@ -1,5 +1,4 @@
-#ifndef __FX_H
-#define __FX_H
+#pragma once
 
 #include <math.h>
 #include <Windows.h>
@@ -92,5 +91,3 @@ public:
 		}
 	}
 };
-
-#endif

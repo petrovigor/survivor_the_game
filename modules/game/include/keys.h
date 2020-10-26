@@ -1,5 +1,4 @@
-#ifndef __KEYS_H
-#define __KEYS_H
+#pragma once
 
 const int KEYS_COUNT = 256;
 const char KEY_MOVE_UP = 'W';
@@ -40,5 +39,3 @@ public:
 	void rightMouseButtonDown(void) {rmb = true;}
 	void rightMouseButtonUp(void) {rmb = false;}
 };
-
-#endif
