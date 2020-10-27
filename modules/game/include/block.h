@@ -11,8 +11,8 @@
 
 class BLOCK : public GameObject {
 private:
-  float w,h;
-	float bx[4],by[4];
+  float w, h;
+	float bx[4], by[4];
 
 public:
 	BLOCK(float newX, float newY, float newW, float newH);

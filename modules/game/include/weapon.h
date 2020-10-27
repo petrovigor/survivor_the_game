@@ -32,12 +32,12 @@
 //	float waitingTime;
 //	float missileSize;
 //	float noiseRadius;
-//	PHYSICS_MANAGER *ptr;
+//	PhysicsManager *ptr;
 //
 //public:
 //	WEAPON(const int newId, const int newAttackType, const int newTargetType, int newMissilesCountPerAttack,
 //		float newWaitingTime, float newMinDamage, float newMaxDamage, float newMissileSpeed,
-//		float newReloadTime, int newMaxAmmo, float newMissileSize, int newPenCount, float newNoiseRadius, PHYSICS_MANAGER *newPhysicsManagerPtr) {
+//		float newReloadTime, int newMaxAmmo, float newMissileSize, int newPenCount, float newNoiseRadius, PhysicsManager *newPhysicsManagerPtr) {
 //			id=newId;
 //			ammo=maxAmmo=newMaxAmmo;
 //			attackType=newAttackType;

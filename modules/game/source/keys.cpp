@@ -10,6 +10,11 @@ Keyboard::Keyboard() {
 	rmb = false;
 }
 
+Keyboard& Keyboard::instance() {
+  static Keyboard instance;
+  return instance;
+}
+
 bool Keyboard::isLMBpressed() const noexcept {
   return lmb;
 }

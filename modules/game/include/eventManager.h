@@ -12,10 +12,10 @@
 //	std::vector<EVENT> eventList;
 //	Player *playerPtr;
 //	ENEMY_MANAGER *enemyManPtr;
-//	PHYSICS_MANAGER *phy;
+//	PhysicsManager *phy;
 //
 //public:
-//	void initEventManager(Player *newPlayerPtr, ENEMY_MANAGER *newEnemyManagerPtr, PHYSICS_MANAGER *pt) {playerPtr = newPlayerPtr; enemyManPtr = newEnemyManagerPtr; phy=pt;}
+//	void initEventManager(Player *newPlayerPtr, ENEMY_MANAGER *newEnemyManagerPtr, PhysicsManager *pt) {playerPtr = newPlayerPtr; enemyManPtr = newEnemyManagerPtr; phy=pt;}
 //
 //	void addEvent(const int newEventType, const int newEventAction, float newLastingTime) {
 //		eventList.push_back(EVENT(newEventType, newEventAction, newLastingTime));

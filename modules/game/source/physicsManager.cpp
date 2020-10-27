@@ -3,39 +3,50 @@
 #include "player.h"
 #include "block.h"
 
-void PHYSICS_MANAGER::updateWorldPhysics(float dt) {
+PhysicsManager& PhysicsManager::instance() {
+  static PhysicsManager instance;
+  return instance;
+}
+
+void PhysicsManager::updateWorldPhysics(float dt) {
   for(auto &go : gos) {
     go->processPhysics(dt);
   }
 }
 
-void PHYSICS_MANAGER::renderWorld(HDC bhdc) {
+void PhysicsManager::renderWorld(HDC bhdc) {
   for(auto &go : gos) {
     go->draw(bhdc);
   }
 }
 
-void PHYSICS_MANAGER::createPlayer(float x, float y) {
+void PhysicsManager::createPlayer(float x, float y) {
   const auto ptr = std::shared_ptr<GameObject>(new Player(x, y, 80.f));
 
   gos.emplace_back( ptr );
-  _player = ptr;
+  //_player = ptr;
 }
 
-void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
+void PhysicsManager::createBlock(float x, float y, float w, float h) {
   const auto ptr = std::shared_ptr<GameObject>(new BLOCK(x, y, w, h));
 
   gos.emplace_back( ptr );
 }
 
-//void PHYSICS_MANAGER::createNPC(float x, float y) {
+void PhysicsManager::deposeObjects(float dx, float dy) {
+  for(auto &go : gos) {
+    go->depose(dx, dy);
+  }
+}
+
+//void PhysicsManager::createNPC(float x, float y) {
 //  const auto ptr = createGameObject( x, y, 15, 20, 0 );
 //
 //  _GameObjects.emplace_back( ptr );
 //  _enemies.emplace_back( ptr );
 //}
 //
-//void PHYSICS_MANAGER::createProjectile(float x, float y) {
+//void PhysicsManager::createProjectile(float x, float y) {
 //  const auto ptr = createGameObject( x, y, 3, 20, 0 );
 //
 //  _GameObjects.emplace_back( ptr );
@@ -43,7 +54,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //}
 
 //
-////bool PHYSICS_MANAGER::checkForPlacementCollision(float X,float Y,float W,float H) {
+////bool PhysicsManager::checkForPlacementCollision(float X,float Y,float W,float H) {
 ////	bool free=true;
 ////
 ////	for(std::list<BLOCK>::iterator it=blocksList.begin(); it!=blocksList.end(); ++it) {
@@ -75,11 +86,11 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 ////	return free;
 ////}
 //
-//void PHYSICS_MANAGER::addMissile(float newX, float newY, float newAngle, float newSpeed, float newDamage, const int newTargetType, float newMissileSize, int newPenCount) {
+//void PhysicsManager::addMissile(float newX, float newY, float newAngle, float newSpeed, float newDamage, const int newTargetType, float newMissileSize, int newPenCount) {
 //  gos.push_back(MISSILE(newX, newY, newSpeed, newDamage, newAngle, newTargetType, newMissileSize, newPenCount, nullptr, nullptr));
 //}
 //
-////bool PHYSICS_MANAGER::checkForPlacementCollision(GameObject *go) {
+////bool PhysicsManager::checkForPlacementCollision(GameObject *go) {
 ////	const bool checkForBlocksCollision = true;
 ////	
 ////	if(go!=playerPtr) {
@@ -109,7 +120,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 ////	return(false);
 ////}
 //
-////void PHYSICS_MANAGER::processNoises(float deltaTime) {
+////void PhysicsManager::processNoises(float deltaTime) {
 ////	for(std::vector<NOISE>::iterator i=noisesVector.begin(); i!=noisesVector.end(); ++i) {
 ////		i->increaseNoiseRadius(deltaTime);
 ////		for(std::list<ENEMY>::iterator j=enemiesList->begin(); j!=enemiesList->end(); ++j) {
@@ -153,11 +164,11 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 ////	}
 ////}
 //
-//void PHYSICS_MANAGER::movePlayer(float deltaTime, const int playerDir) {
+//void PhysicsManager::movePlayer(float deltaTime, const int playerDir) {
 //	playerPtr->move(deltaTime, playerDir);
 //}
 //
-//bool PHYSICS_MANAGER::isPointFree(float X, float Y, float R = 0) {
+//bool PhysicsManager::isPointFree(float X, float Y, float R = 0) {
 //	bool r = true;
 //
 //	for(std::list<ENEMY>::iterator i=enemiesList->begin(); i!=enemiesList->end(); ++i) {
@@ -175,7 +186,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	return r;
 //}
 //
-//bool PHYSICS_MANAGER::isVision(GameObject *A, GameObject *B) {
+//bool PhysicsManager::isVision(GameObject *A, GameObject *B) {
 //	float ax = A->getX();
 //	float ay = A->getY();
 //	float bx = B->getX();
@@ -190,7 +201,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	return false;
 //}
 //
-//int PHYSICS_MANAGER::isVisionSmart(GameObject *A, GameObject *B, float *coords, int *count) {
+//int PhysicsManager::isVisionSmart(GameObject *A, GameObject *B, float *coords, int *count) {
 //	//bool vis = true;
 //
 //	int r = -1;
@@ -216,11 +227,11 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	//return vis;
 //}
 //
-////void PHYSICS_MANAGER::offset(std::list<BLOCK>::iterator it) {
+////void PhysicsManager::offset(std::list<BLOCK>::iterator it) {
 ////
 ////}
 //
-//void PHYSICS_MANAGER::enemyMoveTo(std::list<ENEMY>::iterator it, float deltaTime, float X, float Y) {
+//void PhysicsManager::enemyMoveTo(std::list<ENEMY>::iterator it, float deltaTime, float X, float Y) {
 //
 //	
 //	
@@ -382,7 +393,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //
 //}
 //
-////bool PHYSICS_MANAGER::isRectCollision(float X, float Y, float W, float H) {
+////bool PhysicsManager::isRectCollision(float X, float Y, float W, float H) {
 ////	bool b = false;
 ////	for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
 ////		float x = i->getX();
@@ -398,11 +409,11 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	return X<x+w/2 && Y<y+h/2 && X>x-w/2 && Y>y-h/2;
 //}
 //
-////void PHYSICS_MANAGER::findWayToPlayer(std::list<ENEMY>::iterator it, float px, float py) {
+////void PhysicsManager::findWayToPlayer(std::list<ENEMY>::iterator it, float px, float py) {
 ////
 ////}
 //
-//void PHYSICS_MANAGER::computeRandomPointToPatrol(std::list<ENEMY>::iterator it) {
+//void PhysicsManager::computeRandomPointToPatrol(std::list<ENEMY>::iterator it) {
 //	float _x,_y;
 //	do {
 //		_x=rand()%RESOLUTION_X;
@@ -411,7 +422,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	it->setTo(_x,_y);
 //}
 //
-//void PHYSICS_MANAGER::processEnemies(float deltaTime) {
+//void PhysicsManager::processEnemies(float deltaTime) {
 //	float px = playerPtr->getX(),
 //		   py = playerPtr->getY();
 //
@@ -586,7 +597,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	}
 //}
 //
-//void PHYSICS_MANAGER::removeFarBlocks(float X, float Y, float d) {
+//void PhysicsManager::removeFarBlocks(float X, float Y, float d) {
 //	for(std::list<BLOCK>::iterator it=blocksList.begin(); it!=blocksList.end(); ++it) {
 //		if(dbc(X,Y,it->getX(),it->getY())>d) {
 //			it->toDelete();
@@ -601,7 +612,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	}
 //}
 //
-//void PHYSICS_MANAGER::removeNoises(void) {
+//void PhysicsManager::removeNoises(void) {
 //	std::vector<NOISE>::iterator it=noisesVector.begin();
 //	while(it!=noisesVector.end()) {
 //		if(it->isToDelete()) {
@@ -613,12 +624,12 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	}
 //}
 //
-//void PHYSICS_MANAGER::setCameraOffsetValue(float X, float Y) {
+//void PhysicsManager::setCameraOffsetValue(float X, float Y) {
 //	offsetFromCenterX = X;
 //	offsetFromCenterY = Y;
 //}
 //
-//void PHYSICS_MANAGER::deposeGameObjectsFromCenter(/*float offsetX, float offsetY*/) {
+//void PhysicsManager::deposeGameObjectsFromCenter(/*float offsetX, float offsetY*/) {
 //	//offsetFromCenterX = offsetX;
 //	//offsetFromCenterY = offsetY;
 //	
@@ -644,7 +655,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	playerPtr->setCameraOffset(offsetX1,offsetY1);
 //}
 //
-//void PHYSICS_MANAGER::deposeGameObjects(float X, float Y) {
+//void PhysicsManager::deposeGameObjects(float X, float Y) {
 //	for(std::list<BLOCK>::iterator it=blocksList.begin(); it!=blocksList.end(); ++it) {
 //		it->depose(X, Y);
 //	}
@@ -665,7 +676,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //}
 //
 //// ������� ���������, ������������ �� ���������� ����� ������ � �����������
-//bool PHYSICS_MANAGER::col(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
+//bool PhysicsManager::col(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
 //	float rx[4]={x1,x2,x3,x4};
 //	float ry[4]={y1,y2,y3,y4};
 //
@@ -681,7 +692,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	return false;
 //}
 //
-//void PHYSICS_MANAGER::placeRoadByPlayerDirection(const int playerDir) {
+//void PhysicsManager::placeRoadByPlayerDirection(const int playerDir) {
 //	const float offset = 50.0;
 //	const float maxX = RESOLUTION_X+offset;
 //	const float maxY = RESOLUTION_Y;
@@ -752,7 +763,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	}
 //}
 //
-//void PHYSICS_MANAGER::placeBlockByPlayerDirection(const int playerDir) {
+//void PhysicsManager::placeBlockByPlayerDirection(const int playerDir) {
 //	const float offset = 50.0;
 //	const float maxX = RESOLUTION_X+offset;
 //	const float maxY = RESOLUTION_Y;
@@ -808,7 +819,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	}
 //}
 //
-//void PHYSICS_MANAGER::moveAll(float deltaTime, const int playerDir) {
+//void PhysicsManager::moveAll(float deltaTime, const int playerDir) {
 //	movePlayer(deltaTime, playerDir);
 //
 //	if(checkForPlacementCollision(playerPtr)) {
@@ -884,7 +895,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	//enemyMan.process(deltaTime*timeFactor);
 //}
 //
-//void PHYSICS_MANAGER::correctPlayerPlacement(const int playerDir, float deltaTime) {
+//void PhysicsManager::correctPlayerPlacement(const int playerDir, float deltaTime) {
 //	playerPtr->restoreXY();
 //
 //	switch(playerDir) {
@@ -987,7 +998,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 ////	return false;
 ////}
 ////
-////void PHYSICS_MANAGER::correctEnemies(void) {
+////void PhysicsManager::correctEnemies(void) {
 ////
 ////	for(std::list<ENEMY>::iterator iEnemy=enemiesList->begin(); iEnemy!=enemiesList->end(); ++iEnemy) {
 ////		// collisions with other enemies
@@ -1002,7 +1013,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 ////}
 //
 ////check if collision exists in list
-//bool PHYSICS_MANAGER::checkIfCollisionExists(const GameObject *obj, const MISSILE *proj) {
+//bool PhysicsManager::checkIfCollisionExists(const GameObject *obj, const MISSILE *proj) {
 //	for (std::list<COLLISION>::iterator idxColl = collisionsList.begin(); idxColl != collisionsList.end(); ++idxColl) {
 //		if (idxColl->getSecondObjectPtr() == proj && idxColl->getFirstObjectPtr() == obj) {
 //			//check existed
@@ -1014,7 +1025,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //}
 //
 ////check for new collisions:
-//void PHYSICS_MANAGER::checkCollisions(void) {
+//void PhysicsManager::checkCollisions(void) {
 //	//for(std::list<MISSILE>::iterator idMissile=missilesList->begin(); idMissile!=missilesList->end(); ++idMissile) {
 //	//	switch(idMissile->getTargetType()) {
 //	//		case MISSILE_TARGET_TYPE_ENEMIES:
@@ -1050,7 +1061,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //}
 //
 ////deal damage for enemies etc
-//void PHYSICS_MANAGER::processNewCollisions(void) {
+//void PhysicsManager::processNewCollisions(void) {
 //	for(std::list<COLLISION>::iterator idColl=collisionsList.begin(); idColl!=collisionsList.end(); ++idColl) {
 //		if(idColl->isItNew()) {
 //			//if(rand()%10>2) {
@@ -1079,7 +1090,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //}
 //
 ////delete old collisions
-//void PHYSICS_MANAGER::deleteOldCollisions() {
+//void PhysicsManager::deleteOldCollisions() {
 //  std::list<COLLISION>::iterator idxColl = collisionsList.begin();
 //  while (idxColl != collisionsList.end())
 //  {
@@ -1097,7 +1108,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	  idxColl->uncheck();
 //}
 //
-//void PHYSICS_MANAGER::cleanUpMissiles(void) {
+//void PhysicsManager::cleanUpMissiles(void) {
 //	//for(std::list<MISSILE>::iterator idMissile=missilesList->begin(); idMissile!=missilesList->end(); ++idMissile) {
 //	//	if(idMissile->getPenCount()==0 || idMissile->getX()<0 || idMissile->getY()<0 || idMissile->getX()>RESOLUTION_X || idMissile->getY()>RESOLUTION_Y) {
 //	//		idMissile->setMissileUnused();
@@ -1117,7 +1128,7 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	//}
 //}
 //
-////void PHYSICS_MANAGER::processEnemies(float deltaTime) {
+////void PhysicsManager::processEnemies(float deltaTime) {
 ////	float px = playerPtr->getX(),
 ////		   py = playerPtr->getY();
 ////
@@ -1233,25 +1244,25 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 ////	}
 ////}
 //
-//void PHYSICS_MANAGER::drawBlocks(HDC bhdc) {
+//void PhysicsManager::drawBlocks(HDC bhdc) {
 //	for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
 //		i->draw(bhdc);
 //	}
 //}
 //
-//void PHYSICS_MANAGER::computeShadows(HDC bhdc, float x, float y) {
+//void PhysicsManager::computeShadows(HDC bhdc, float x, float y) {
 //	for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
 //		i->computeShadows(bhdc, x, y);
 //	}
 //}
 //
-//void PHYSICS_MANAGER::processCollisions(void) {
+//void PhysicsManager::processCollisions(void) {
 //	checkCollisions();
 //	processNewCollisions();
 //	deleteOldCollisions();
 //}
 //
-//void PHYSICS_MANAGER::setGOheight(float h) {
+//void PhysicsManager::setGOheight(float h) {
 //	playerPtr->setHeight(h);
 //	//for(std::list<MISSILE>::iterator i=missilesList->begin(); i!=missilesList->end(); ++i) {
 //	//	i->setHeight(h);
@@ -1264,46 +1275,46 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	}
 //}
 //
-//int PHYSICS_MANAGER::getCollisionsCount() {return collisionsList.size();}
-//int PHYSICS_MANAGER::getBlocksCount() {return blocksList.size();}
-//int PHYSICS_MANAGER::getRoadsCount() {return roadsList.size();}
-//int PHYSICS_MANAGER::getShellsCount() {return fxPtr->getShellsList()->size();}
+//int PhysicsManager::getCollisionsCount() {return collisionsList.size();}
+//int PhysicsManager::getBlocksCount() {return blocksList.size();}
+//int PhysicsManager::getRoadsCount() {return roadsList.size();}
+//int PhysicsManager::getShellsCount() {return fxPtr->getShellsList()->size();}
 //
-//void PHYSICS_MANAGER::removeBlocks() {blocksList.clear();}
+//void PhysicsManager::removeBlocks() {blocksList.clear();}
 //
-//void PHYSICS_MANAGER::placeBlock(float newX, float newY, float newW, float newH) {
+//void PhysicsManager::placeBlock(float newX, float newY, float newW, float newH) {
 //	if(DEBUGVAR_INCLUDE_BLOCKS) blocksList.push_back(BLOCK(newX,newY,newW,newH,penPtr));
 //}
 //
-//void PHYSICS_MANAGER::drawNoises(HDC bhdc) {
+//void PhysicsManager::drawNoises(HDC bhdc) {
 //	for(std::vector<NOISE>::iterator i=noisesVector.begin(); i!=noisesVector.end(); ++i) {
 //		i->draw(bhdc);
 //	}
 //}
 //
-//void PHYSICS_MANAGER::drawRoads(HDC bhdc) {
+//void PhysicsManager::drawRoads(HDC bhdc) {
 //	for(std::list<ROAD>::iterator i=roadsList.begin(); i!=roadsList.end(); ++i) {
 //	}
 //}
 //
-//void PHYSICS_MANAGER::deposeNoises(float X, float Y) {
+//void PhysicsManager::deposeNoises(float X, float Y) {
 //	for(std::vector<NOISE>::iterator i=noisesVector.begin(); i!=noisesVector.end(); ++i) {
 //		i->depose(X, Y);
 //	}
 //}
 //
-//float PHYSICS_MANAGER::getCameraOffsetX() {return offsetFromCenterX;}
-//float PHYSICS_MANAGER::getCameraOffsetY() {return offsetFromCenterY;}
+//float PhysicsManager::getCameraOffsetX() {return offsetFromCenterX;}
+//float PhysicsManager::getCameraOffsetY() {return offsetFromCenterY;}
 //
-//void PHYSICS_MANAGER::createNoise(int newX, int newY, int newRadius) {
+//void PhysicsManager::createNoise(int newX, int newY, int newRadius) {
 //	noisesVector.push_back(NOISE(newX,newY,newRadius,noisePenPtr));
 //}
 //
-//void PHYSICS_MANAGER::createRoad(float ax,float ay,float bx,float by,float cx,float cy,float dx,float dy) {
+//void PhysicsManager::createRoad(float ax,float ay,float bx,float by,float cx,float cy,float dx,float dy) {
 //	if(DEBUGVAR_INCLUDE_ROADS) roadsList.push_back(ROAD(ax,ay,bx,by,cx,cy,dx,dy,roadPenPtr));
 //}
 //
-//void PHYSICS_MANAGER::init(std::list<ENEMY> *e, Player *p, FX_MANAGER *f, HPEN *ptr, HPEN *newNoisePenPtr, HPEN *newRoadPenPtr) {
+//void PhysicsManager::init(std::list<ENEMY> *e, Player *p, FX_MANAGER *f, HPEN *ptr, HPEN *newNoisePenPtr, HPEN *newRoadPenPtr) {
 //	playerPtr = p;
 //	enemiesList = e;
 //	fxPtr = f;
@@ -1322,4 +1333,4 @@ void PHYSICS_MANAGER::createBlock(float x, float y, float w, float h) {
 //	dy[3] = 1;
 //}
 //
-//std::list<BLOCK> *PHYSICS_MANAGER::getBlocksListPtr() {return &blocksList;}
+//std::list<BLOCK> *PhysicsManager::getBlocksListPtr() {return &blocksList;}

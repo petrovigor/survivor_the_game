@@ -39,7 +39,7 @@
 //	bool canAttack;
 //	float attackTime;
 //	float reloadingTime;
-//	PHYSICS_MANAGER *mMan;
+//	PhysicsManager *mMan;
 //	HBRUSH *enemyBrush;
 //	HPEN *enemyPen;
 //	bool playerSpotted;
@@ -57,7 +57,7 @@
 //
 //public:
 //	ENEMY(float newX, float newY, float newSpeed, float newHP,
-//		const int newAttackType, const int newMovingType, const int newRole, const int newVisualType, HBRUSH *newEnemyBrush, HPEN *newEnemyPen, PHYSICS_MANAGER *newMMAN)
+//		const int newAttackType, const int newMovingType, const int newRole, const int newVisualType, HBRUSH *newEnemyBrush, HPEN *newEnemyPen, PhysicsManager *newMMAN)
 //	{
 //		x = toX = newX;
 //		y = toY = newY;
@@ -183,7 +183,7 @@
 //	bool isAlive(void) {return alive;}
 //	int getAttackType(void) {return attackType;}
 //	float getAttackRange(void) {return attackRange;}
-//	PHYSICS_MANAGER* getMissileManagerPtr(void) {return mMan;}
+//	PhysicsManager* getMissileManagerPtr(void) {return mMan;}
 //	bool CanAttack(void) {return canAttack;}
 //	bool isPlayerSpotted(void) {return playerSpotted;}
 //	int getRole(void) {return role;}

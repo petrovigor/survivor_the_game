@@ -1,20 +1,16 @@
 #pragma once
 
-#include "singleton.h"
-
 const char KEY_MOVE_UP = 'W';
 const char KEY_MOVE_DOWN = 'S';
 const char KEY_MOVE_LEFT = 'A';
 const char KEY_MOVE_RIGHT = 'D';
 
-class Keyboard : public Singleton<Keyboard> {
-private:
-	bool lmb;
-	bool rmb;
-	bool keys[256];
-
+class Keyboard {
 public:
-	Keyboard();
+  Keyboard(const Keyboard&) = delete;
+  Keyboard& operator= (const Keyboard) = delete;
+
+  static Keyboard& instance();
 
 	bool isLMBpressed() const noexcept;
 	bool isRMBpressed() const noexcept;
@@ -28,4 +24,12 @@ public:
 	void leftMouseButtonUp();
 	void rightMouseButtonDown();
 	void rightMouseButtonUp();
+
+private:
+	Keyboard();
+
+	bool lmb;
+	bool rmb;
+	bool keys[256];
+
 };

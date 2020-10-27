@@ -19,44 +19,20 @@
 
 class GameObject;
 
-class PHYSICS_MANAGER {
-private:
-  std::vector<std::shared_ptr<GameObject>> gos; //strong pointers
-
-  std::vector<std::weak_ptr<GameObject>>   _enemies;
-  std::vector<std::weak_ptr<GameObject>>   _projectiles;
-  std::weak_ptr<GameObject>                _player;
-
-	//Player *playerPtr;
-	//FX_MANAGER *fxPtr;
-
-	//HPEN *penPtr;
-	//HPEN *noisePenPtr;
-	//HPEN *roadPenPtr;
-
-	//int dx[4], dy[4];
-
-
-	//std::list<COLLISION> collisionsList;
-	//std::list<ENEMY> *enemiesList;
-
-	//std::list<ROAD> roadsList;
-	//std::list<BLOCK> blocksList;
-	//std::vector<NOISE> noisesVector;
-
-	//void checkCollisions(void);
-	//void processNewCollisions(void);
-	//void deleteOldCollisions(void);
-	//bool checkIfCollisionExists(const GameObject *f, const MISSILE *s);
-
-	//float offsetFromCenterY,offsetFromCenterX;
-
+class PhysicsManager {
 public:
+  static PhysicsManager& instance();
+
+  PhysicsManager(const PhysicsManager&) = delete;
+  PhysicsManager& operator= (const PhysicsManager) = delete;
+
   void updateWorldPhysics(float dt);
   void renderWorld(HDC bhdc);
   
   void createPlayer(float x, float y);
   void createBlock(float x, float y, float w, float h);
+
+  void deposeObjects(float dx, float dy);
   //void createNPC(float x, float y);
   //void createProjectile(float x, float y);
 
@@ -128,4 +104,37 @@ public:
 	//int getBlocksCount();
 	//int getRoadsCount();
 	//int getShellsCount();
+
+private:
+  PhysicsManager() = default;
+
+  std::vector<std::shared_ptr<GameObject>> gos; //strong pointers
+
+  //std::vector<std::weak_ptr<GameObject>>   _enemies;
+  //std::vector<std::weak_ptr<GameObject>>   _projectiles;
+  //std::weak_ptr<GameObject>                _player;
+
+	//Player *playerPtr;
+	//FX_MANAGER *fxPtr;
+
+	//HPEN *penPtr;
+	//HPEN *noisePenPtr;
+	//HPEN *roadPenPtr;
+
+	//int dx[4], dy[4];
+
+
+	//std::list<COLLISION> collisionsList;
+	//std::list<ENEMY> *enemiesList;
+
+	//std::list<ROAD> roadsList;
+	//std::list<BLOCK> blocksList;
+	//std::vector<NOISE> noisesVector;
+
+	//void checkCollisions(void);
+	//void processNewCollisions(void);
+	//void deleteOldCollisions(void);
+	//bool checkIfCollisionExists(const GameObject *f, const MISSILE *s);
+
+	//float offsetFromCenterY,offsetFromCenterX;
 };

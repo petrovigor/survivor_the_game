@@ -93,11 +93,11 @@ void GameObject::draw(HDC bhdc) {
 
 	switch(visualType) {
   case GameObjectVisualType::Ellipse:
-		Ellipse(bhdc, newX-s, newY-s, newX+s, newY+s);
+		Ellipse(bhdc, newX - s, newY - s, newX + s, newY + s);
 		break;
 
 	case GameObjectVisualType::Square:
-		Rectangle(bhdc, newX-s, newY-s, newX+s, newY+s);
+		Rectangle(bhdc, newX - s, newY - s, newX + s, newY + s);
 		break;
 	}
 

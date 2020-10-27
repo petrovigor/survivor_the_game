@@ -56,7 +56,7 @@
 //		}
 //	}
 //
-//	void addBlood(float newX, float newY, float newAngle, float newRadius, float newSpeed, const int newVisualType/*, PHYSICS_MANAGER *pptr*/) {
+//	void addBlood(float newX, float newY, float newAngle, float newRadius, float newSpeed, const int newVisualType/*, PhysicsManager *pptr*/) {
 //		if(DEBUGVAR_INCLUDE_FXS) {
 //			int offsetAngleMax = 20.0;
 //		

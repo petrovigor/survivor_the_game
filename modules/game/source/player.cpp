@@ -1,6 +1,9 @@
 //#include <windows.h>
 //#include <math.h>
 #include "player.h"
+#include "physicsManager.h"
+
+#include <iostream>
 //#include "weaponManager.h"
 ////
 ////Player::Player() {
@@ -142,4 +145,34 @@ void Player::processPhysics(float dt) {
     x -= proection;
     y += proection;
 	}
+
+  //when hero going out of last 10% of the map
+  //we need to depose all game objects render coordinates
+  //to imitate infinite map
+
+  const float map_bounds_percent = 0.1f;
+
+  const float window_width = 800.0f;
+  const float window_height = 600.0f;
+
+  const float lastX = (window_width * map_bounds_percent);
+  const float lastY = (window_height * map_bounds_percent);
+
+  const float boundsX = window_width - lastX;
+  const float boundsY = window_height - lastY;
+
+  auto& phys = PhysicsManager::instance();
+
+  if(x > boundsX) {
+    phys.deposeObjects( boundsX - x, 0.f );
+  }
+  if(y > boundsY) {
+    phys.deposeObjects( 0.f, boundsY - y );
+  }
+  if(x < lastX) {
+    phys.deposeObjects( lastX - x, 0.f );
+  }
+  if(y < lastY) {
+    phys.deposeObjects( 0.f, lastY - y );
+  }
 }

@@ -16,18 +16,20 @@ void Engine::initWindow( int width, int height ) {
 	srand((unsigned)time(NULL));
   timer.init();
 
-  physicsManager.createPlayer( 400.f, 300.f );
+  auto& phys = PhysicsManager::instance();
+
+  phys.createPlayer( 400.f, 300.f );
 
 	//eventMan.addEvent(EVENT_TYPE_INFINITE, EVENT_ACTION_SPAWN_ENEMY, 3); //1.5
 	//eventMan.addEvent(EVENT_TYPE_INFINITE, EVENT_ACTION_INCREASE_ENEMY_MULTIPLIER, 30.0);
 
 	//if(DEBUGVAR_INCLUDE_BLOCKS) {
-		physicsManager.createBlock(320,120,200,20);
-		physicsManager.createBlock(50,200,25,50);
-		physicsManager.createBlock(75,400,75,75);
-		physicsManager.createBlock(200,300,200,75);
-		physicsManager.createBlock(600,420,30,80);
-		physicsManager.createBlock(550,300,200,100);
+		phys.createBlock(320, 120, 200, 20);
+		phys.createBlock(50, 200, 25, 50);
+		phys.createBlock(75, 400, 75, 75);
+		phys.createBlock(200, 300, 200, 75);
+		phys.createBlock(600, 420, 30, 80);
+		phys.createBlock(550, 300, 200, 100);
 	//}
 }
 
@@ -72,7 +74,8 @@ void Engine::mainLoop(void) {
 		  timer.update();
 		  deltaTime = timer.getDelta();
 
-      physicsManager.updateWorldPhysics(deltaTime);
+      auto& phys = PhysicsManager::instance();
+      phys.updateWorldPhysics(deltaTime);
 
 		  //if(keys.isPressed('1') && !player.isReloading()) {
 			 // player.setWeapon(weaponMan.getWeaponById(WEAPON_PISTOL));
@@ -161,8 +164,9 @@ void Engine::drawFrame() {
 
 	//BitBlt(bhdc, 0, 0, clientRect.right, clientRect.bottom, hdc, 0, 0, SRCCOPY);
 	FillRect(memdc, &clientRect, window->getBrush());
-
-  physicsManager.renderWorld(memdc);
+  
+  auto& phys = PhysicsManager::instance();
+  phys.renderWorld(memdc);
 	//SelectObject(memdc, brushWhite);
 	//SelectObject(memdc, penBlack);
 

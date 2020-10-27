@@ -35,7 +35,7 @@ private:
 	//FX_MANAGER fxMan;
 	////MISSILE_MANAGER mMan;
 	//ENEMY_MANAGER enemyMan;
-	PHYSICS_MANAGER physicsManager;
+	//PhysicsManager physicsManager;
 	//ABILITY_MANAGER abilityMan;
 
 public:
@@ -45,7 +45,7 @@ public:
   //KEYS& getControlManager() { return keys; }
   //CURSOR& getCursor() { return cursor; }
   //Player& getPlayer() { return player; }
-  //PHYSICS_MANAGER& getPhysicsManager() { return physicsMan; }
+  //PhysicsManager& getPhysicsManager() { return physicsMan; }
 
 	void initWindow(int width, int height);
 	void mainLoop();

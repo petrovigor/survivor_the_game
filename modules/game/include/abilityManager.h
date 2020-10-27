@@ -6,13 +6,13 @@
 //class ABILITY_MANAGER {
 //private:
 //	std::vector<ABILITY> list;
-//	PHYSICS_MANAGER *physicsManager;
+//	PhysicsManager *physicsManager;
 //	EVENT_MANAGER *eventMan;
 //	Player *playerPtr;
 //	FX_MANAGER *fx;
 //
 //public:
-//	void init(PHYSICS_MANAGER* ptr, Player *newPlayerPtr, EVENT_MANAGER *eventManPtr, FX_MANAGER *fxManPtr) {
+//	void init(PhysicsManager* ptr, Player *newPlayerPtr, EVENT_MANAGER *eventManPtr, FX_MANAGER *fxManPtr) {
 //		physicsManager=ptr;
 //		playerPtr=newPlayerPtr;
 //		eventMan=eventManPtr;
