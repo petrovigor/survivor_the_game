@@ -19,7 +19,7 @@ void ENEMY_MANAGER::process(float deltaTime) {
 					x=it->getX();
 					y=it->getY();
 					a=abc(x,y,playerPtr->getX(),playerPtr->getY());
-					it->getMissileManagerPtr()->addMissile(x,y,a,600.0,MISSILE_VISUAL_TYPE_SQUARE,MISSILE_TARGET_TYPE_HERO,2.0,1,0,0);
+					it->getMissileManagerPtr()->addMissile(x,y,a,600.0,MISSILE_TARGET_TYPE_HERO,2.0,1,0,0);
 				} else {
 					it->reloadingProcess(deltaTime);
 				}

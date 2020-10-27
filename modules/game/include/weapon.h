@@ -35,14 +35,13 @@ private:
 	MISSILE_MANAGER *ptr;
 
 public:
-	WEAPON(const int newId, const int newAttackType, const int newTargetType, const int newMissileVisualType, int newMissilesCountPerAttack,
+	WEAPON(const int newId, const int newAttackType, const int newTargetType, int newMissilesCountPerAttack,
 		float newWaitingTime, float newMinDamage, float newMaxDamage, float newMissileSpeed,
 		float newReloadTime, int newMaxAmmo, float newMissileSize, int newPenCount, float newNoiseRadius, MISSILE_MANAGER *newMissileManagerPtr) {
 			id=newId;
 			ammo=maxAmmo=newMaxAmmo;
 			attackType=newAttackType;
 			targetType=newTargetType;
-			missileVisualType=newMissileVisualType;
 			missilesCountPerAttack=newMissilesCountPerAttack;
 			reloadTime=newReloadTime;
 			minDamage=newMinDamage;
@@ -77,7 +76,7 @@ public:
 					}
 				}
 
-				ptr->addMissile(fromX, fromY, angle, missileSpeed, damage, missileVisualType, targetType, missileSize, penCount, b, p);
+				ptr->addMissile(fromX, fromY, angle, missileSpeed, damage, targetType, missileSize, penCount, b, p);
 			}
 		}
 	}
@@ -85,7 +84,6 @@ public:
 	float getWaitingTime(void) {return waitingTime;}
 	int getMissilesCountPerAttack(void) {return missilesCountPerAttack;}
 	float getMissileSpeed(void) {return missileSpeed;}
-	int getMissileVisualType(void) {return missileVisualType;}
 	float getMissileSize(void) {return missileSize;}
 	int getAmmo(void) {return ammo;}
 	int getMaxAmmo(void) {return maxAmmo;}
