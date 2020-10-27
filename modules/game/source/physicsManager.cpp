@@ -1191,3 +1191,95 @@ void PHYSICS_MANAGER::cleanUpMissiles(void) {
 //		}
 //	}
 //}
+
+void PHYSICS_MANAGER::drawBlocks(HDC bhdc) {
+	for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
+		i->draw(bhdc);
+	}
+}
+
+void PHYSICS_MANAGER::computeShadows(HDC bhdc, float x, float y) {
+	for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
+		i->computeShadows(bhdc, x, y);
+	}
+}
+
+void PHYSICS_MANAGER::processCollisions(void) {
+	checkCollisions();
+	processNewCollisions();
+	deleteOldCollisions();
+}
+
+void PHYSICS_MANAGER::setGOheight(float h) {
+	playerPtr->setHeight(h);
+	for(std::list<MISSILE>::iterator i=missilesList->begin(); i!=missilesList->end(); ++i) {
+		i->setHeight(h);
+	}
+	for(std::list<ENEMY>::iterator i=enemiesList->begin(); i!=enemiesList->end(); ++i) {
+		i->setHeight(h);
+	}
+	for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
+		i->setHeight(h);
+	}
+}
+
+int PHYSICS_MANAGER::getCollisionsCount() {return collisionsList.size();}
+int PHYSICS_MANAGER::getBlocksCount() {return blocksList.size();}
+int PHYSICS_MANAGER::getRoadsCount() {return roadsList.size();}
+int PHYSICS_MANAGER::getShellsCount() {return fxPtr->getShellsList()->size();}
+
+void PHYSICS_MANAGER::removeBlocks() {blocksList.clear();}
+
+void PHYSICS_MANAGER::placeBlock(float newX, float newY, float newW, float newH) {
+	if(DEBUGVAR_INCLUDE_BLOCKS) blocksList.push_back(BLOCK(newX,newY,newW,newH,penPtr));
+}
+
+void PHYSICS_MANAGER::drawNoises(HDC bhdc) {
+	for(std::vector<NOISE>::iterator i=noisesVector.begin(); i!=noisesVector.end(); ++i) {
+		i->draw(bhdc);
+	}
+}
+
+void PHYSICS_MANAGER::drawRoads(HDC bhdc) {
+	for(std::list<ROAD>::iterator i=roadsList.begin(); i!=roadsList.end(); ++i) {
+	}
+}
+
+void PHYSICS_MANAGER::deposeNoises(float X, float Y) {
+	for(std::vector<NOISE>::iterator i=noisesVector.begin(); i!=noisesVector.end(); ++i) {
+		i->depose(X, Y);
+	}
+}
+
+float PHYSICS_MANAGER::getCameraOffsetX() {return offsetFromCenterX;}
+float PHYSICS_MANAGER::getCameraOffsetY() {return offsetFromCenterY;}
+
+void PHYSICS_MANAGER::createNoise(int newX, int newY, int newRadius) {
+	noisesVector.push_back(NOISE(newX,newY,newRadius,noisePenPtr));
+}
+
+void PHYSICS_MANAGER::createRoad(float ax,float ay,float bx,float by,float cx,float cy,float dx,float dy) {
+	if(DEBUGVAR_INCLUDE_ROADS) roadsList.push_back(ROAD(ax,ay,bx,by,cx,cy,dx,dy,roadPenPtr));
+}
+
+void PHYSICS_MANAGER::init(std::list<ENEMY> *e, std::list<MISSILE> *m, Player *p, FX_MANAGER *f, HPEN *ptr, HPEN *newNoisePenPtr, HPEN *newRoadPenPtr) {
+	playerPtr = p;
+	enemiesList = e;
+	missilesList = m;
+	fxPtr = f;
+	penPtr = ptr;
+	roadPenPtr = newRoadPenPtr;
+	noisePenPtr = newNoisePenPtr;
+	offsetFromCenterX = 0;
+	offsetFromCenterY = 0;
+	dx[0] = -1;
+	dy[0] = 0;
+	dx[1] = 0;
+	dy[1] = -1;
+	dx[2] = 1;
+	dy[2] = 0;
+	dx[3] = 0;
+	dy[3] = 1;
+}
+
+std::list<BLOCK> *PHYSICS_MANAGER::getBlocksListPtr() {return &blocksList;}
