@@ -36,8 +36,6 @@ void WindowCallback::OnMouseMove(int x, int y) {
 		int dx = (cx - x) / CAMERA_DISTANCE_RATE;
 		int dy = (cy - y) / CAMERA_DISTANCE_RATE;
 
-		_engine->getCamera().setXY(dx, dy);
-
     _engine->getPhysicsManager().setCameraOffsetValue(dx, dy);
 
 //		pointer->physicsMan.setCameraOffsetValue(dx, dy);

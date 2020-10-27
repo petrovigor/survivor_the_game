@@ -19,7 +19,6 @@
 #include "enemyManager.h"
 #include "physicsManager.h"
 #include "abilityManager.h"
-#include "camera.h"
 
 class Engine {
 private:
@@ -38,7 +37,6 @@ private:
 	ENEMY_MANAGER enemyMan;
 	PHYSICS_MANAGER physicsMan;
 	ABILITY_MANAGER abilityMan;
-	CAMERA camera;
 
 	bool debugMode;
 	float timeFactor;
@@ -50,7 +48,6 @@ public:
   KEYS& getControlManager() { return keys; }
   CURSOR& getCursor() { return cursor; }
   Player& getPlayer() { return player; }
-  CAMERA& getCamera() { return camera; }
   PHYSICS_MANAGER& getPhysicsManager() { return physicsMan; }
 
 	void initWindow(int width, int height);
