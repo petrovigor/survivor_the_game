@@ -1,45 +1,52 @@
 #include "defines.h"
 #include "keys.h"
 
-int KEYS::getPlayerDirection() {
-	int v, h;
-	v = h = 0;
-
-	if(isPressed(KEY_MOVE_LEFT)) {
-		--h;
+Keyboard::Keyboard() {
+	for(int i = 0; i < 256; i++) {
+		keys[i] = false;
 	}
 
-	if(isPressed(KEY_MOVE_RIGHT)) {
-		++h;
-	}
+	lmb = false;
+	rmb = false;
+}
 
-	if(isPressed(KEY_MOVE_UP)) {
-		--v;
-	}
+Keyboard& Keyboard::instance() {
+  static Keyboard instance;
+  return instance;
+}
 
-	if(isPressed(KEY_MOVE_DOWN)) {
-		++v;
-	}
+bool Keyboard::isLMBpressed() const noexcept {
+  return lmb;
+}
 
-	if(!v && !h) {
-		return PLAYER_DIRECTION_NO_MOVE;
-	}
+bool Keyboard::isRMBpressed() const noexcept {
+  return rmb;
+}
 
-	if(!v && h<0) {
-		return PLAYER_DIRECTION_W;
-	} else if(!v && h>0) {
-		return PLAYER_DIRECTION_E;
-	} else if(!h && v<0) {
-		return PLAYER_DIRECTION_N;
-	} else if(!h && v>0) {
-		return PLAYER_DIRECTION_S;
-	} else if(h > 0 && v > 0) {
-		return PLAYER_DIRECTION_SE;
-	} else if(h > 0 && v < 0) {
-		return PLAYER_DIRECTION_NE;
-	} else if(h < 0 && v < 0) {
-		return PLAYER_DIRECTION_NW;
-	} else if(h < 0 && v > 0) {
-		return PLAYER_DIRECTION_WS;
-	}
+bool Keyboard::isPressed(const char c) const noexcept {
+	return keys[c];
+}
+
+void Keyboard::keyDown(const char c) {
+  keys[c] = true;
+}
+
+void Keyboard::keyUp(const char c) {
+  keys[c] = false;
+}
+
+void Keyboard::leftMouseButtonDown() {
+  lmb = true;
+}
+
+void Keyboard::leftMouseButtonUp() {
+  lmb = false;
+}
+
+void Keyboard::rightMouseButtonDown() {
+  rmb = true;
+}
+
+void Keyboard::rightMouseButtonUp() {
+  rmb = false;
 }

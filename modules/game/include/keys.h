@@ -1,41 +1,35 @@
 #pragma once
 
-const int KEYS_COUNT = 256;
 const char KEY_MOVE_UP = 'W';
 const char KEY_MOVE_DOWN = 'S';
 const char KEY_MOVE_LEFT = 'A';
 const char KEY_MOVE_RIGHT = 'D';
 
-class KEYS {
+class Keyboard {
+public:
+  Keyboard(const Keyboard&) = delete;
+  Keyboard& operator= (const Keyboard) = delete;
+
+  static Keyboard& instance();
+
+	bool isLMBpressed() const noexcept;
+	bool isRMBpressed() const noexcept;
+
+	bool isPressed(const char c) const noexcept;
+
+	void keyDown(const char c);
+	void keyUp(const char c);
+
+	void leftMouseButtonDown();
+	void leftMouseButtonUp();
+	void rightMouseButtonDown();
+	void rightMouseButtonUp();
+
 private:
+	Keyboard();
+
 	bool lmb;
 	bool rmb;
 	bool keys[256];
 
-public:
-	KEYS() {
-		for(int i=0; i<KEYS_COUNT; i++) {
-			keys[i] = false;
-		}
-
-		lmb = false;
-		rmb = false;
-	}
-
-	int getPlayerDirection();
-
-	bool isLMBpressed(void) {return lmb;}
-	bool isRMBpressed(void) {return rmb;}
-
-	bool isPressed(const char c) {
-		return keys[c];
-	}
-
-	void keyDown(const char c) {keys[c] = true;}
-	void keyUp(const char c) {keys[c] = false;}
-
-	void leftMouseButtonDown(void) {lmb = true;}
-	void leftMouseButtonUp(void) {lmb = false;}
-	void rightMouseButtonDown(void) {rmb = true;}
-	void rightMouseButtonUp(void) {rmb = false;}
 };

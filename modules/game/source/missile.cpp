@@ -1,34 +1,48 @@
-#include "missile.h"
-
-void MISSILE::draw(HDC bhdc) {
-	//const float size = 5.0;
-	//HPEN pen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
-	//HBRUSH brush = CreateSolidBrush(RGB(255, 255, 255));
-	//SelectObject(bhdc, pen );
-	//SelectObject(bhdc, brush );
-
-	//SelectObject(bhdc, *br);
-	//SelectObject(bhdc, *pn);
-
-	const float s = size * height;
-	float newX = x+cameraOffsetX;
-	float newY = y+cameraOffsetY;
-
-	switch(visualType) {
-	case MISSILE_VISUAL_TYPE_ELLIPSE:
-		Ellipse(bhdc, newX-s, newY-s, newX+s, newY+s);
-		break;
-
-	case MISSILE_VISUAL_TYPE_SQUARE:
-		Rectangle(bhdc, newX-s, newY-s, newX+s, newY+s);
-		break;
-	}
-
-	//if(!flag) {
-	//	Rectangle(bhdc, x-size*2, y-size*2, x+size*2, y+size*2);
-	//}
-
-	//DeleteObject(pen);
-	//DeleteObject(brush);
-	//SelectObject(bhdc, NULL);
-}
+//#include "missile.h"
+//#include <math.h>
+//
+//MISSILE::MISSILE(float newX, float newY, float newSpeed, float newDamage, float newAngle, const int newTargetType, float newMissileSize, int newPenCount, HBRUSH *newBrush, HPEN *newPen) {
+//	x = newX;
+//	y = newY;
+//	speed = newSpeed;
+//	angle = newAngle;
+//	size = newMissileSize;
+//	targetType = newTargetType;
+//	damage = newDamage;
+//	penCount = newPenCount;
+//	flag = true;
+//	br=newBrush;
+//	pn=newPen;
+//}
+//
+//void MISSILE::pen() {
+//  penCount--;
+//}
+//
+//int MISSILE::getPenCount() {
+//  return penCount;
+//}
+//
+//void MISSILE::setMissileUnused() {
+//	flag = false;
+//}
+//
+//bool MISSILE::isUnused() {
+//	return !flag;
+//}
+//
+//float MISSILE::getX() {
+//  return x;
+//}
+//
+//float MISSILE::getY() {
+//  return y;
+//}
+//
+//float MISSILE::getDamage() {
+//  return damage;
+//}
+//
+//int MISSILE::getTargetType() {
+//  return targetType;
+//}

@@ -1,165 +1,142 @@
 #pragma once
 
-#include <list>
-#include "enemy.h"
-#include "missile.h"
-#include "collision.h"
-#include "player.h"
-#include "fxManager.h"
-#include "block.h"
-#include "noise.h"
-#include "road.h"
+//#include <list>
+//#include "enemy.h"
+//#include "collision.h"
+//#include "player.h"
+//#include "fxManager.h"
+//#include "block.h"
+//#include "noise.h"
+//#include "road.h"
 
-class PHYSICS_MANAGER {
-private:
-	Player *playerPtr;
-	FX_MANAGER *fxPtr;
+//#include <Windows.h>
+//#include <vector>
+//#include <list>
 
-	HPEN *penPtr;
-	HPEN *noisePenPtr;
-	HPEN *roadPenPtr;
+#include <windows.h>
+#include <vector>
+#include <memory>
 
-	int dx[4], dy[4];
+class GameObject;
 
-	std::list<COLLISION> collisionsList;
-	std::list<MISSILE> *missilesList;
-	std::list<ENEMY> *enemiesList;
-
-	std::list<ROAD> roadsList;
-	std::list<BLOCK> blocksList;
-	std::vector<NOISE> noisesVector;
-
-	void checkCollisions(void);
-	void processNewCollisions(void);
-	void deleteOldCollisions(void);
-	bool checkIfCollisionExists(const GameObject *f, const MISSILE *s);
-
-	float offsetFromCenterY,offsetFromCenterX;
-
+class PhysicsManager {
 public:
-	void init(std::list<ENEMY> *e, std::list<MISSILE> *m, Player *p, FX_MANAGER *f, HPEN *ptr, HPEN *newNoisePenPtr, HPEN *newRoadPenPtr) {
-		playerPtr = p;
-		enemiesList = e;
-		missilesList = m;
-		fxPtr = f;
-		penPtr = ptr;
-		roadPenPtr = newRoadPenPtr;
-		noisePenPtr = newNoisePenPtr;
-		offsetFromCenterX = 0;
-		offsetFromCenterY = 0;
-		dx[0] = -1;
-		dy[0] = 0;
-		dx[1] = 0;
-		dy[1] = -1;
-		dx[2] = 1;
-		dy[2] = 0;
-		dx[3] = 0;
-		dy[3] = 1;
-	}
+  static PhysicsManager& instance();
 
-	std::list<BLOCK> *getBlocksListPtr() {return &blocksList;}
+  PhysicsManager(const PhysicsManager&) = delete;
+  PhysicsManager& operator= (const PhysicsManager) = delete;
 
-	bool col(float,float,float,float,float,float,float,float);
+  void updateWorldPhysics(float dt);
+  void renderWorld(HDC bhdc);
+  
+  void createPlayer(float x, float y);
+  void createBlock(float x, float y, float w, float h);
 
-	void createRoad(float ax,float ay,float bx,float by,float cx,float cy,float dx,float dy) {
-		if(DEBUGVAR_INCLUDE_ROADS) roadsList.push_back(ROAD(ax,ay,bx,by,cx,cy,dx,dy,roadPenPtr));
-	}
+  void deposeObjects(float dx, float dy);
+  void setCameraOffset(float offsetX, float offsetY);
 
-	void setCameraOffsetValue(float X, float Y);
-	float getCameraOffsetX() {return offsetFromCenterX;}
-	float getCameraOffsetY() {return offsetFromCenterY;}
+  //void createNPC(float x, float y);
+  //void createProjectile(float x, float y);
 
-	void createNoise(int newX, int newY, int newRadius) {
-		noisesVector.push_back(NOISE(newX,newY,newRadius,noisePenPtr));
-	}
+	//void addMissile(float newX, float newY, float newAngle, float newSpeed, float newDamage, const int newTargetType, float newMissileSize, int newPenCount);
 
-	void processNoises(float deltaTime);
+	//void init(std::list<ENEMY> *e, Player *p, FX_MANAGER *f, HPEN *ptr, HPEN *newNoisePenPtr, HPEN *newRoadPenPtr);
 
-	void drawNoises(HDC bhdc) {
-		for(std::vector<NOISE>::iterator i=noisesVector.begin(); i!=noisesVector.end(); ++i) {
-			i->draw(bhdc);
-		}
-	}
+	//std::list<Block> *getBlocksListPtr();
 
-	void drawRoads(HDC bhdc) {
-		for(std::list<ROAD>::iterator i=roadsList.begin(); i!=roadsList.end(); ++i) {
-		}
-	}
+	//bool col(float,float,float,float,float,float,float,float);
 
-	void deposeNoises(float X, float Y) {
-		for(std::vector<NOISE>::iterator i=noisesVector.begin(); i!=noisesVector.end(); ++i) {
-			i->depose(X, Y);
-		}
-	}
+	//void createRoad(float ax,float ay,float bx,float by,float cx,float cy,float dx,float dy);
 
-	void removeNoises();
+	//void setCameraOffsetValue(float X, float Y);
+	//float getCameraOffsetX();
+	//float getCameraOffsetY();
 
-	void setGOheight(float h) {
-		playerPtr->setHeight(h);
-		for(std::list<MISSILE>::iterator i=missilesList->begin(); i!=missilesList->end(); ++i) {
-			i->setHeight(h);
-		}
-		for(std::list<ENEMY>::iterator i=enemiesList->begin(); i!=enemiesList->end(); ++i) {
-			i->setHeight(h);
-		}
-		for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
-			i->setHeight(h);
-		}
-	}
+	//void createNoise(int newX, int newY, int newRadius);
 
-	void computeRandomPointToPatrol(std::list<ENEMY>::iterator);
-	void enemyMoveTo(std::list<ENEMY>::iterator,float,float,float);
-	void placeBlockByPlayerDirection(const int);
-	void placeRoadByPlayerDirection(const int);
-	void removeFarBlocks(float,float,float);
-	void deposeGameObjects(float offsetX, float offsetY);
-	
-	
-	void deposeGameObjectsFromCenter();
+	//void processNoises(float deltaTime);
+
+	//void drawNoises(HDC bhdc);
+
+	//void drawRoads(HDC bhdc);
+
+	//void deposeNoises(float X, float Y);
+
+	//void removeNoises();
+
+	//void setGOheight(float h);
+
+	//void computeRandomPointToPatrol(std::list<ENEMY>::iterator);
+	//void enemyMoveTo(std::list<ENEMY>::iterator,float,float,float);
+	//void placeBlockByPlayerDirection(const int);
+	//void placeRoadByPlayerDirection(const int);
+	//void removeFarBlocks(float,float,float);
+	//void deposeGameObjects(float offsetX, float offsetY);
+	//
+	//
+	//void deposeGameObjectsFromCenter();
 
 
-	bool checkForPlacementCollision(float,float,float,float);
-	void correctPlayerPlacement(const int playerDir, float deltaTime);
-	void movePlayer(float deltaTime, const int playerDir);
-	void processEnemies(float deltaTime);
-	void moveMissiles(float deltaTime);
-	void moveAll(float deltaTime, const int playerDir);
-	bool checkForPlacementCollision(GameObject *go);
-	bool isPointFree(float X, float Y, float R);
+	//bool checkForPlacementCollision(float,float,float,float);
+	//void correctPlayerPlacement(const int playerDir, float deltaTime);
+	//void movePlayer(float deltaTime, const int playerDir);
+	//void processEnemies(float deltaTime);
+	//void moveAll(float deltaTime, const int playerDir);
+	//bool checkForPlacementCollision(GameObject *go);
+	//bool isPointFree(float X, float Y, float R);
 
-	void removeBlocks() {blocksList.clear();}
+	//void removeBlocks();
 
-	void placeBlock(float newX, float newY, float newW, float newH) {
-		if(DEBUGVAR_INCLUDE_BLOCKS) blocksList.push_back(BLOCK(newX,newY,newW,newH,penPtr));
-	}
+	//void placeBlock(float newX, float newY, float newW, float newH);
 
-	int isVisionSmart(GameObject *A, GameObject *B, float *coords, int *count);
-	bool isVision(GameObject *A, GameObject *B);
+	//int isVisionSmart(GameObject *A, GameObject *B, float *coords, int *count);
+	//bool isVision(GameObject *A, GameObject *B);
 
-	void drawBlocks(HDC bhdc) {
-		for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
-			i->draw(bhdc);
-		}
-	}
+	//void drawBlocks(HDC bhdc);
 
-	void computeShadows(HDC bhdc, float x, float y) {
-		for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
-			i->computeShadows(bhdc, x, y);
-		}
-	}
+	//void computeShadows(HDC bhdc, float x, float y);
 
-	void processCollisions(void) {
-		checkCollisions();
-		processNewCollisions();
-		deleteOldCollisions();
-	}
+	//void processCollisions(void);
 
-	void correctEnemies();
+	//void correctEnemies();
 
-	void cleanUpMissiles();
+	//void cleanUpMissiles();
 
-	int getCollisionsCount(void) {return collisionsList.size();}
-	int getBlocksCount(void) {return blocksList.size();}
-	int getRoadsCount(void) {return roadsList.size();}
-	int getShellsCount(void) {return fxPtr->getShellsList()->size();}
+	//int getCollisionsCount();
+	//int getBlocksCount();
+	//int getRoadsCount();
+	//int getShellsCount();
+
+private:
+  PhysicsManager() = default;
+
+  std::vector<std::shared_ptr<GameObject>> gos; //strong pointers
+
+  //std::vector<std::weak_ptr<GameObject>>   _enemies;
+  //std::vector<std::weak_ptr<GameObject>>   _projectiles;
+  //std::weak_ptr<GameObject>                _player;
+
+	//Player *playerPtr;
+	//FX_MANAGER *fxPtr;
+
+	//HPEN *penPtr;
+	//HPEN *noisePenPtr;
+	//HPEN *roadPenPtr;
+
+	//int dx[4], dy[4];
+
+
+	//std::list<COLLISION> collisionsList;
+	//std::list<ENEMY> *enemiesList;
+
+	//std::list<ROAD> roadsList;
+	//std::list<Block> blocksList;
+	//std::vector<NOISE> noisesVector;
+
+	//void checkCollisions(void);
+	//void processNewCollisions(void);
+	//void deleteOldCollisions(void);
+	//bool checkIfCollisionExists(const GameObject *f, const MISSILE *s);
+
+	//float offsetFromCenterY,offsetFromCenterX;
 };

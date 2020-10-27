@@ -11,7 +11,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
   }
 
-	engine.initWindow(RESOLUTION_X, RESOLUTION_Y);
+	engine.initWindow(800, 600);
 	engine.mainLoop();
 
 	return 0;

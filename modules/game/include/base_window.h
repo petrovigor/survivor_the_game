@@ -1,6 +1,7 @@
 #pragma once
 
 #include <windows.h>
+#include <string>
 
 class BaseWindowCallback {
 public:
@@ -17,10 +18,10 @@ public:
 class BaseWindow : public BaseWindowCallback {
 public:
   BaseWindow();
-  BaseWindow(int width, int height);
+  BaseWindow(int width, int height, const std::string& classname);
   virtual ~BaseWindow();
   
-  bool createWindow(int width, int height);
+  bool createWindow(int width, int height, const std::string& classname);
   void destroyWindow();
 
   HWND getHWND() const noexcept { return _hWnd; }

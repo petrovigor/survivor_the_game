@@ -1,5 +1,6 @@
 #include "window.h"
 #include "engine.h"
+#include "keys.h"
 
 #include <iostream>
 
@@ -20,41 +21,29 @@ void WindowCallback::OnDestroy() {
 void WindowCallback::OnMouseClick(int x, int y, bool click) {
   if(!_engine) return;
 
-  click ? _engine->getControlManager().leftMouseButtonDown( ) :
-          _engine->getControlManager().leftMouseButtonUp( );
+  //click ? _engine->getControlManager().leftMouseButtonDown( ) :
+  //        _engine->getControlManager().leftMouseButtonUp( );
 
   std::cout << (click ? "click " : "release ") << x << " " << y << std::endl;
 }
 
 void WindowCallback::OnMouseMove(int x, int y) {
-	float cx = RESOLUTION_X / 2;
-	float cy = RESOLUTION_Y / 2;
+  const float cx = 800.f / 2.f;
+  const float cy = 600.f / 2.f;
+  const float dx = (cx - x) / 1.f;
+  const float dy = (cy - y) / 1.f;
 
-  _engine->getCursor().setXY(x, y);
-
-	if(ATTACH_CAMERA_TO_CURSOR) {
-		int dx = (cx - x) / CAMERA_DISTANCE_RATE;
-		int dy = (cy - y) / CAMERA_DISTANCE_RATE;
-
-		_engine->getCamera().setXY(dx, dy);
-
-    _engine->getPhysicsManager().setCameraOffsetValue(dx, dy);
-
-//		pointer->physicsMan.setCameraOffsetValue(dx, dy);
-		//pointer->physicsMan.deposeGameObjectsFromCenter();
-		//pointer->player.faceTo();
-    _engine->getPlayer().faceTo(_engine->getCursor().getX() - dx, _engine->getCursor().getY() - dy);
-
-	} else {
-	  _engine->getPlayer().faceTo(x, y);
-	}
+  auto& phys = PhysicsManager::instance();
+  phys.setCameraOffset(dx, dy);
 }
 
 void WindowCallback::OnKeyboard(int key, bool press) {
   if(!_engine) return;
 
-  press ? _engine->getControlManager().keyDown( key ) :
-          _engine->getControlManager().keyUp( key );
+  auto& keyboard = Keyboard::instance();
+
+  press ? keyboard.keyDown( key ) :
+          keyboard.keyUp( key );
 
   std::cout << "key " << (press ? " pressed " : " released ") << key << std::endl;
 
