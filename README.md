@@ -8,8 +8,11 @@ Player will explore the world fully automatically procedurally generated.
 # Controls
 
 Movement: WASD
+
 Primary weapon: LMB
+
 Secondary weapon/special ability: RMB
+
 Change primary weapon: digits in range [1, 6]
 
 # Technology
@@ -24,4 +27,4 @@ Later code may be modified to extend WinAPI window and event system with Linux o
 
 # Build
 
-$ mkdir build && cd build && cmake ..
+`$ mkdir build && cd build && cmake ..`
