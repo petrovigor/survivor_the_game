@@ -9,13 +9,13 @@
 
 #include "game_object.h"
 
-class BLOCK : public GameObject {
+class Block final : public GameObject {
 private:
   float w, h;
 	float bx[4], by[4];
 
 public:
-	BLOCK(float newX, float newY, float newW, float newH);
+	Block(float newX, float newY, float newW, float newH);
 
   void draw(HDC bhdc) override;
 	void depose(float x, float y) override;

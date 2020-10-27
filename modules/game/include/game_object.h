@@ -25,8 +25,8 @@ public:
 
 	//GameObject *itSelf(void);
 
-	float getX() const noexcept;
-	float getY() const noexcept;
+	//float getX() const noexcept;
+	//float getY() const noexcept;
 	//void setXY(float x, float y);
 	//void setSpeed(float newSpeed);
 	//float getSpeed(void);

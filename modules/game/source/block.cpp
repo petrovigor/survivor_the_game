@@ -3,7 +3,7 @@
 
 static const float _PI = 3.14f;
 
-BLOCK::BLOCK(float newX, float newY, float newW, float newH) {
+Block::Block(float newX, float newY, float newW, float newH) {
 
 	
 
@@ -29,7 +29,7 @@ BLOCK::BLOCK(float newX, float newY, float newW, float newH) {
 	h=newH;
 }
 
-void BLOCK::draw(HDC bhdc) {
+void Block::draw(HDC bhdc) {
 	for(int i=0; i<4; i++) {
 		MoveToEx(bhdc, bx[i] + cameraOffsetX, by[i] + cameraOffsetY, 0);
 
@@ -40,7 +40,7 @@ void BLOCK::draw(HDC bhdc) {
 	}
 }
 
-void BLOCK::depose(float X, float Y) {
+void Block::depose(float X, float Y) {
 	for(int i=0;i<4;i++) {
 		bx[i]=bx[i]+X;
 		by[i]=by[i]+Y;
@@ -51,7 +51,7 @@ void BLOCK::depose(float X, float Y) {
 
 
 //
-//bool BLOCK::checkForVisibility() {
+//bool Block::checkForVisibility() {
 //	int k=0,j;
 //	for(int i=0; i<4; i++) {
 //		vis[i]=false;
@@ -66,7 +66,7 @@ void BLOCK::depose(float X, float Y) {
 //	return false;
 //}
 //
-//void BLOCK::draw(HDC bhdc) {
+//void Block::draw(HDC bhdc) {
 //	if(checkForVisibility()) {
 //		//SelectObject(bhdc, *penPtr);
 //		for(int i=0; i<4; i++) {
@@ -80,7 +80,7 @@ void BLOCK::depose(float X, float Y) {
 //	}
 //}
 //
-//void BLOCK::offset(std::list<ENEMY>::iterator it) {
+//void Block::offset(std::list<ENEMY>::iterator it) {
 //	float X=it->getX();
 //	float Y=it->getY();
 //	float S=it->getSize();
@@ -115,7 +115,7 @@ void BLOCK::depose(float X, float Y) {
 //	it->setXY(X,Y);
 //}
 //
-//bool BLOCK::isGOinBlock(GameObject *go) {
+//bool Block::isGOinBlock(GameObject *go) {
 //	// check for 8 points of circle?
 //	float X = go->getX();
 //	float Y = go->getY();
@@ -125,18 +125,18 @@ void BLOCK::depose(float X, float Y) {
 //	//return false;
 //}
 //
-//bool BLOCK::rectCollision(float X, float Y, float W, float H) {
+//bool Block::rectCollision(float X, float Y, float W, float H) {
 //	return X-W<x+w/2 && Y-H<y+h/2 && X+W>x-w/2 && Y+H>y-h/2;
 //}
 //
-//bool BLOCK::isCoordInBlock(float X, float Y, float R) {
+//bool Block::isCoordInBlock(float X, float Y, float R) {
 //	return X-R<x+w/2
 //		&& Y-R<y+h/2
 //		&& X+R>x-w/2
 //		&& Y+R>y-h/2;
 //}
 //
-////void BLOCK::draw(HDC bhdc) {
+////void Block::draw(HDC bhdc) {
 ////	SelectObject(bhdc, *penPtr);
 ////	//float xx[4],yy[4];
 ////

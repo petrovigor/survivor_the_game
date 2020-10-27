@@ -33,6 +33,8 @@ public:
   void createBlock(float x, float y, float w, float h);
 
   void deposeObjects(float dx, float dy);
+  void setCameraOffset(float offsetX, float offsetY);
+
   //void createNPC(float x, float y);
   //void createProjectile(float x, float y);
 
@@ -40,7 +42,7 @@ public:
 
 	//void init(std::list<ENEMY> *e, Player *p, FX_MANAGER *f, HPEN *ptr, HPEN *newNoisePenPtr, HPEN *newRoadPenPtr);
 
-	//std::list<BLOCK> *getBlocksListPtr();
+	//std::list<Block> *getBlocksListPtr();
 
 	//bool col(float,float,float,float,float,float,float,float);
 
@@ -128,7 +130,7 @@ private:
 	//std::list<ENEMY> *enemiesList;
 
 	//std::list<ROAD> roadsList;
-	//std::list<BLOCK> blocksList;
+	//std::list<Block> blocksList;
 	//std::vector<NOISE> noisesVector;
 
 	//void checkCollisions(void);

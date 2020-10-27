@@ -28,25 +28,13 @@ void WindowCallback::OnMouseClick(int x, int y, bool click) {
 }
 
 void WindowCallback::OnMouseMove(int x, int y) {
-//	float cx = RESOLUTION_X / 2;
-//	float cy = RESOLUTION_Y / 2;
-//
-//  _engine->getCursor().setXY(x, y);
-//
-//	if(ATTACH_CAMERA_TO_CURSOR) {
-//		int dx = (cx - x) / CAMERA_DISTANCE_RATE;
-//		int dy = (cy - y) / CAMERA_DISTANCE_RATE;
-//
-//    _engine->getPhysicsManager().setCameraOffsetValue(dx, dy);
-//
-////		pointer->physicsMan.setCameraOffsetValue(dx, dy);
-//		//pointer->physicsMan.deposeGameObjectsFromCenter();
-//		//pointer->player.faceTo();
-//    _engine->getPlayer().faceTo(_engine->getCursor().getX() - dx, _engine->getCursor().getY() - dy);
-//
-//	} else {
-//	  _engine->getPlayer().faceTo(x, y);
-//	}
+  const float cx = 800.f / 2.f;
+  const float cy = 600.f / 2.f;
+  const float dx = (cx - x) / 1.f;
+  const float dy = (cy - y) / 1.f;
+
+  auto& phys = PhysicsManager::instance();
+  phys.setCameraOffset(dx, dy);
 }
 
 void WindowCallback::OnKeyboard(int key, bool press) {

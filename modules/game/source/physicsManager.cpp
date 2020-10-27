@@ -28,7 +28,7 @@ void PhysicsManager::createPlayer(float x, float y) {
 }
 
 void PhysicsManager::createBlock(float x, float y, float w, float h) {
-  const auto ptr = std::shared_ptr<GameObject>(new BLOCK(x, y, w, h));
+  const auto ptr = std::shared_ptr<GameObject>(new Block(x, y, w, h));
 
   gos.emplace_back( ptr );
 }
@@ -36,6 +36,12 @@ void PhysicsManager::createBlock(float x, float y, float w, float h) {
 void PhysicsManager::deposeObjects(float dx, float dy) {
   for(auto &go : gos) {
     go->depose(dx, dy);
+  }
+}
+
+void PhysicsManager::setCameraOffset(float offsetX, float offsetY) {
+  for(auto &go : gos) {
+    go->setCameraOffset(offsetX, offsetY);
   }
 }
 
@@ -57,7 +63,7 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 ////bool PhysicsManager::checkForPlacementCollision(float X,float Y,float W,float H) {
 ////	bool free=true;
 ////
-////	for(std::list<BLOCK>::iterator it=blocksList.begin(); it!=blocksList.end(); ++it) {
+////	for(std::list<Block>::iterator it=blocksList.begin(); it!=blocksList.end(); ++it) {
 ////		if(it->rectCollision(X,Y,W,H)) {
 ////			free=false;
 ////		}
@@ -68,7 +74,7 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 ////		float y = i->getY();
 ////		float w = i->getSize();
 ////		float h = i->getSize();
-////		//bool BLOCK::rectCollision(float X, float Y, float W, float H) {
+////		//bool Block::rectCollision(float X, float Y, float W, float H) {
 ////		//return ;
 ////		//}
 ////
@@ -100,7 +106,7 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 ////	}
 ////	
 ////	if(checkForBlocksCollision) {
-////		for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
+////		for(std::list<Block>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
 ////			if(i->isCoordInBlock(go->getX(),go->getY(),go->getSize())) {
 ////				return(true);
 ////			}
@@ -177,7 +183,7 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 //		}
 //	}
 //
-//	for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
+//	for(std::list<Block>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
 //		if(i->isCoordInBlock(X,Y,R)) {
 //			r = false;
 //		}
@@ -192,7 +198,7 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 //	float bx = B->getX();
 //	float by = B->getY();
 //	
-//	for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
+//	for(std::list<Block>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
 //		if(i->checkForIntersection(ax,ay,bx,by)) {
 //			return(true);
 //		}
@@ -210,7 +216,7 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 //	float bx = B->getX();
 //	float by = B->getY();
 //	
-//	for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
+//	for(std::list<Block>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
 //
 //		//if() {
 //			
@@ -227,7 +233,7 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 //	//return vis;
 //}
 //
-////void PhysicsManager::offset(std::list<BLOCK>::iterator it) {
+////void PhysicsManager::offset(std::list<Block>::iterator it) {
 ////
 ////}
 //
@@ -237,7 +243,7 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 //	
 //	it->move(deltaTime, X, Y);
 //
-//	//for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
+//	//for(std::list<Block>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
 //	//	i->offset(it);
 //	//}
 //
@@ -395,7 +401,7 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 //
 ////bool PhysicsManager::isRectCollision(float X, float Y, float W, float H) {
 ////	bool b = false;
-////	for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
+////	for(std::list<Block>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
 ////		float x = i->getX();
 ////		float y = i->getY();
 ////		b = X-W<x+w/2 && Y-H<y+h/2 && X+W>x-w/2 && Y+H>y-h/2
@@ -598,13 +604,13 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 //}
 //
 //void PhysicsManager::removeFarBlocks(float X, float Y, float d) {
-//	for(std::list<BLOCK>::iterator it=blocksList.begin(); it!=blocksList.end(); ++it) {
+//	for(std::list<Block>::iterator it=blocksList.begin(); it!=blocksList.end(); ++it) {
 //		if(dbc(X,Y,it->getX(),it->getY())>d) {
 //			it->toDelete();
 //		}
 //	}
 //
-//	std::list<BLOCK>::iterator it=blocksList.begin();
+//	std::list<Block>::iterator it=blocksList.begin();
 //	while(it!=blocksList.end()) {
 //		if(it->isToDelete()) {
 //			blocksList.erase(it); it=blocksList.begin();
@@ -636,7 +642,7 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 //	float offsetX1 = offsetFromCenterX,
 //		     offsetY1 = offsetFromCenterY;
 //
-//	for(std::list<BLOCK>::iterator it=blocksList.begin(); it!=blocksList.end(); ++it) {
+//	for(std::list<Block>::iterator it=blocksList.begin(); it!=blocksList.end(); ++it) {
 //		it->setCameraOffset(offsetX1,offsetY1);
 //	}
 //	for(std::list<ENEMY>::iterator it=enemiesList->begin(); it!=enemiesList->end(); ++it) {
@@ -656,7 +662,7 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 //}
 //
 //void PhysicsManager::deposeGameObjects(float X, float Y) {
-//	for(std::list<BLOCK>::iterator it=blocksList.begin(); it!=blocksList.end(); ++it) {
+//	for(std::list<Block>::iterator it=blocksList.begin(); it!=blocksList.end(); ++it) {
 //		it->depose(X, Y);
 //	}
 //
@@ -680,7 +686,7 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 //	float rx[4]={x1,x2,x3,x4};
 //	float ry[4]={y1,y2,y3,y4};
 //
-//	for(std::list<BLOCK>::iterator it=blocksList.begin();it!=blocksList.end();++it) {
+//	for(std::list<Block>::iterator it=blocksList.begin();it!=blocksList.end();++it) {
 //
 //		//for(int i=0;i<4;i++) {
 //		//	if(isIntersection(rx[i],ry[i],rx[j],ry[j],) {
@@ -1052,7 +1058,7 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 //	//			}
 //	//			break;
 //	//	}
-//	//	for(std::list<BLOCK>::iterator idBlock=blocksList.begin(); idBlock!=blocksList.end(); ++idBlock) {
+//	//	for(std::list<Block>::iterator idBlock=blocksList.begin(); idBlock!=blocksList.end(); ++idBlock) {
 //	//		if(idBlock->isCoordInBlock(idMissile->getX(), idMissile->getY(), idMissile->getSize())) {
 //	//			idMissile->setMissileUnused();
 //	//		}
@@ -1245,13 +1251,13 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 ////}
 //
 //void PhysicsManager::drawBlocks(HDC bhdc) {
-//	for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
+//	for(std::list<Block>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
 //		i->draw(bhdc);
 //	}
 //}
 //
 //void PhysicsManager::computeShadows(HDC bhdc, float x, float y) {
-//	for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
+//	for(std::list<Block>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
 //		i->computeShadows(bhdc, x, y);
 //	}
 //}
@@ -1270,7 +1276,7 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 //	for(std::list<ENEMY>::iterator i=enemiesList->begin(); i!=enemiesList->end(); ++i) {
 //		i->setHeight(h);
 //	}
-//	for(std::list<BLOCK>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
+//	for(std::list<Block>::iterator i=blocksList.begin(); i!=blocksList.end(); ++i) {
 //		i->setHeight(h);
 //	}
 //}
@@ -1283,7 +1289,7 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 //void PhysicsManager::removeBlocks() {blocksList.clear();}
 //
 //void PhysicsManager::placeBlock(float newX, float newY, float newW, float newH) {
-//	if(DEBUGVAR_INCLUDE_BLOCKS) blocksList.push_back(BLOCK(newX,newY,newW,newH,penPtr));
+//	if(DEBUGVAR_INCLUDE_BLOCKS) blocksList.push_back(Block(newX,newY,newW,newH,penPtr));
 //}
 //
 //void PhysicsManager::drawNoises(HDC bhdc) {
@@ -1333,4 +1339,4 @@ void PhysicsManager::deposeObjects(float dx, float dy) {
 //	dy[3] = 1;
 //}
 //
-//std::list<BLOCK> *PhysicsManager::getBlocksListPtr() {return &blocksList;}
+//std::list<Block> *PhysicsManager::getBlocksListPtr() {return &blocksList;}

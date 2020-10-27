@@ -3,7 +3,6 @@
 #include "player.h"
 #include "physicsManager.h"
 
-#include <iostream>
 //#include "weaponManager.h"
 ////
 ////Player::Player() {
