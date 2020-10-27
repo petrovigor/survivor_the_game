@@ -94,6 +94,52 @@
 ////	}
 ////}
 
+#include "keys.h"
+
 void Player::processPhysics(float dt) {
-  //move by keys
+  const auto& keys = Keyboard::instance();
+
+	int v, h;
+	v = h = 0;
+
+	if(keys.isPressed(KEY_MOVE_LEFT)) {
+		--h;
+	}
+
+	if(keys.isPressed(KEY_MOVE_RIGHT)) {
+		++h;
+	}
+
+	if(keys.isPressed(KEY_MOVE_UP)) {
+		--v;
+	}
+
+	if(keys.isPressed(KEY_MOVE_DOWN)) {
+		++v;
+	}
+
+  float dist = speed * dt;
+  float proection = dist / sqrt(float(2));
+
+	if(!v && h < 0) {
+    x -= dist;
+	} else if(!v && h > 0) {
+    x += dist;
+	} else if(!h && v < 0) {
+    y -= dist;
+	} else if(!h && v > 0) {
+    y += dist;
+	} else if(h > 0 && v > 0) {
+    x += proection;
+    y += proection;
+	} else if(h > 0 && v < 0) {
+    x += proection;
+    y -= proection;
+	} else if(h < 0 && v < 0) {
+    x -= proection;
+    y -= proection;
+	} else if(h < 0 && v > 0) {
+    x -= proection;
+    y += proection;
+	}
 }

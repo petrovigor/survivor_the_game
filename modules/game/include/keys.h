@@ -1,41 +1,31 @@
 #pragma once
 
-const int KEYS_COUNT = 256;
+#include "singleton.h"
+
 const char KEY_MOVE_UP = 'W';
 const char KEY_MOVE_DOWN = 'S';
 const char KEY_MOVE_LEFT = 'A';
 const char KEY_MOVE_RIGHT = 'D';
 
-class KEYS {
+class Keyboard : public Singleton<Keyboard> {
 private:
 	bool lmb;
 	bool rmb;
 	bool keys[256];
 
 public:
-	KEYS() {
-		for(int i=0; i<KEYS_COUNT; i++) {
-			keys[i] = false;
-		}
+	Keyboard();
 
-		lmb = false;
-		rmb = false;
-	}
+	bool isLMBpressed() const noexcept;
+	bool isRMBpressed() const noexcept;
 
-	int getPlayerDirection();
+	bool isPressed(const char c) const noexcept;
 
-	bool isLMBpressed(void) {return lmb;}
-	bool isRMBpressed(void) {return rmb;}
+	void keyDown(const char c);
+	void keyUp(const char c);
 
-	bool isPressed(const char c) {
-		return keys[c];
-	}
-
-	void keyDown(const char c) {keys[c] = true;}
-	void keyUp(const char c) {keys[c] = false;}
-
-	void leftMouseButtonDown(void) {lmb = true;}
-	void leftMouseButtonUp(void) {lmb = false;}
-	void rightMouseButtonDown(void) {rmb = true;}
-	void rightMouseButtonUp(void) {rmb = false;}
+	void leftMouseButtonDown();
+	void leftMouseButtonUp();
+	void rightMouseButtonDown();
+	void rightMouseButtonUp();
 };

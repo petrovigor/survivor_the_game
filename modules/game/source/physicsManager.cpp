@@ -16,7 +16,7 @@ void PHYSICS_MANAGER::renderWorld(HDC bhdc) {
 }
 
 void PHYSICS_MANAGER::createPlayer(float x, float y) {
-  const auto ptr = std::shared_ptr<GameObject>(new Player(x, y, 20.f));
+  const auto ptr = std::shared_ptr<GameObject>(new Player(x, y, 80.f));
 
   gos.emplace_back( ptr );
   _player = ptr;

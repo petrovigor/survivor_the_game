@@ -1,47 +1,47 @@
 #include "defines.h"
 #include "keys.h"
 
-int KEYS::getPlayerDirection() {
-	//int v, h;
-	//v = h = 0;
+Keyboard::Keyboard() {
+	for(int i = 0; i < 256; i++) {
+		keys[i] = false;
+	}
 
-	//if(isPressed(KEY_MOVE_LEFT)) {
-	//	--h;
-	//}
+	lmb = false;
+	rmb = false;
+}
 
-	//if(isPressed(KEY_MOVE_RIGHT)) {
-	//	++h;
-	//}
+bool Keyboard::isLMBpressed() const noexcept {
+  return lmb;
+}
 
-	//if(isPressed(KEY_MOVE_UP)) {
-	//	--v;
-	//}
+bool Keyboard::isRMBpressed() const noexcept {
+  return rmb;
+}
 
-	//if(isPressed(KEY_MOVE_DOWN)) {
-	//	++v;
-	//}
+bool Keyboard::isPressed(const char c) const noexcept {
+	return keys[c];
+}
 
-	//if(!v && !h) {
-	//	return PLAYER_DIRECTION_NO_MOVE;
-	//}
+void Keyboard::keyDown(const char c) {
+  keys[c] = true;
+}
 
-	//if(!v && h<0) {
-	//	return PLAYER_DIRECTION_W;
-	//} else if(!v && h>0) {
-	//	return PLAYER_DIRECTION_E;
-	//} else if(!h && v<0) {
-	//	return PLAYER_DIRECTION_N;
-	//} else if(!h && v>0) {
-	//	return PLAYER_DIRECTION_S;
-	//} else if(h > 0 && v > 0) {
-	//	return PLAYER_DIRECTION_SE;
-	//} else if(h > 0 && v < 0) {
-	//	return PLAYER_DIRECTION_NE;
-	//} else if(h < 0 && v < 0) {
-	//	return PLAYER_DIRECTION_NW;
-	//} else if(h < 0 && v > 0) {
-	//	return PLAYER_DIRECTION_WS;
-	//}
+void Keyboard::keyUp(const char c) {
+  keys[c] = false;
+}
 
-  return 0;
+void Keyboard::leftMouseButtonDown() {
+  lmb = true;
+}
+
+void Keyboard::leftMouseButtonUp() {
+  lmb = false;
+}
+
+void Keyboard::rightMouseButtonDown() {
+  rmb = true;
+}
+
+void Keyboard::rightMouseButtonUp() {
+  rmb = false;
 }

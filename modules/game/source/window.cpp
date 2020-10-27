@@ -1,5 +1,6 @@
 #include "window.h"
 #include "engine.h"
+#include "keys.h"
 
 #include <iostream>
 
@@ -51,8 +52,10 @@ void WindowCallback::OnMouseMove(int x, int y) {
 void WindowCallback::OnKeyboard(int key, bool press) {
   if(!_engine) return;
 
-  //press ? _engine->getControlManager().keyDown( key ) :
-  //        _engine->getControlManager().keyUp( key );
+  auto& keyboard = Keyboard::instance();
+
+  press ? keyboard.keyDown( key ) :
+          keyboard.keyUp( key );
 
   std::cout << "key " << (press ? " pressed " : " released ") << key << std::endl;
 
