@@ -1,168 +1,115 @@
 #pragma once
 
-#include <windows.h>
-#include <math.h>
-#include <list>
-#include "enemy.h"
-#include "defines.h"
-#include "misc.h"
+//#include <windows.h>
+//#include <math.h>
+//#include <list>
+//#include "enemy.h"
+//#include "defines.h"
+//#include "misc.h"
 
-class BLOCK {
+#include "game_object.h"
+
+class BLOCK : public GameObject {
 private:
-	bool toDeleteVar;
-	bool vis[4];
-	float height;
-	float x,y,w,h;
+  float w,h;
 	float bx[4],by[4];
 
-	HPEN *penPtr;
-	float cameraOffsetX, cameraOffsetY;
-
 public:
-	BLOCK(float newX, float newY, float newW, float newH, HPEN *newPenPtr) {
-		toDeleteVar=false;
+	BLOCK(float newX, float newY, float newW, float newH);
 
-		height = (rand()%75+25)/100.0;
+  void draw(HDC bhdc) override;
+	void depose(float x, float y) override;
 
-		penPtr=newPenPtr;
-		float _x,_y;
-		vis[0]=vis[1]=vis[2]=vis[3]=true;
+	//void deposeByCenter(float X, float Y) {
+	//	float cx = RESOLUTION_X/2;
+	//	float cy = RESOLUTION_Y/2;
 
-		_x=newX+newW/2*cos(_PI);
-		_y=newY+newW/2*sin(_PI);
-		bx[0]=_x+newH/2*cos(_PI/2);
-		by[0]=_y+newH/2*sin(_PI/2);
-		bx[3]=_x+newH/2*cos(_PI*3/2);
-		by[3]=_y+newH/2*sin(_PI*3/2);
-		_x=newX+newW/2*cos(0.00);
-		_y=newY+newW/2*sin(0.00);
-		bx[1]=_x+newH/2*cos(_PI/2);
-		by[1]=_y+newH/2*sin(_PI/2);
-		bx[2]=_x+newH/2*cos(_PI*3/2);
-		by[2]=_y+newH/2*sin(_PI*3/2);
+	//	for(int i=0;i<4;i++) {
+	//		bx[i]=cx+X;
+	//		by[i]=cy+Y;
+	//	}
+	//	x=cx+X;
+	//	y=cy+Y;
+	//}
 
-		x=newX;
-		y=newY;
-		w=newW;
-		h=newH;
+	//bool isCoordInBlock(float x, float y, float r);
+	//bool isGOinBlock(GameObject *go);
 
-		cameraOffsetX=cameraOffsetY=0.0;
-	}
+	//bool checkForIntersection(float aX,float aY,float bX,float bY) {
+	//	for(int i=0; i<4; i++) {
+	//		int j=i+1;
+	//		if(j>3) j=0;
+	//		if(isIntersection(aX,aY,bX,bY,bx[i],by[i],bx[j],by[j])) {
+	//			return(true);
+	//		}
+	//	}
+	//	return(false);
+	//}
 
-	void toDelete(void) {toDeleteVar=true;}
-	bool isToDelete(void) {return toDeleteVar;}
+	//int checkForIntersection(float aX,float aY,float bX,float bY,float *coords,int *count) {
+	//	int intersected = -1;
 
-	bool checkForVisibility(void);
-	void setCameraOffset(float X,float Y){cameraOffsetX=X;cameraOffsetY=Y;}
-	bool rectCollision(float,float,float,float);
+	//	for(int i=0; i<4; i++) {
+	//		int j=i+1;
+	//		if(j>3) j=0;
 
-	void offset(std::list<ENEMY>::iterator it);
+	//		if(isIntersection(aX,aY,bX,bY,bx[i],by[i],bx[j],by[j])) {
 
-	void depose(float X, float Y) {
-		for(int i=0;i<4;i++) {
-			bx[i]=bx[i]+X;
-			by[i]=by[i]+Y;
-		}
-		x=x+X;
-		y=y+Y;
-	}
+	//			if(*count*4+3 < DEBUGVAR_INTERSECTS_COUNT_MAX) {
 
-	void deposeByCenter(float X, float Y) {
-		float cx = RESOLUTION_X/2;
-		float cy = RESOLUTION_Y/2;
+	//				coords[(*count)*4      ] = bx[i];
+	//				coords[(*count)*4   +1 ] = by[i];
+	//				coords[(*count)*4   +2 ] = bx[j];
+	//				coords[(*count)*4   +3 ] = by[j];
+	//				*count=*count+1;
 
-		for(int i=0;i<4;i++) {
-			bx[i]=cx+X;
-			by[i]=cy+Y;
-		}
-		x=cx+X;
-		y=cy+Y;
-	}
+	//				intersected = i;
 
-	bool isCoordInBlock(float x, float y, float r);
-	bool isGOinBlock(GameObject *go);
-	void draw(HDC bhdc);
+	//			}
+	//		}
+	//	}
 
-	bool checkForIntersection(float aX,float aY,float bX,float bY) {
-		for(int i=0; i<4; i++) {
-			int j=i+1;
-			if(j>3) j=0;
-			if(isIntersection(aX,aY,bX,bY,bx[i],by[i],bx[j],by[j])) {
-				return(true);
-			}
-		}
-		return(false);
-	}
+	//	return intersected;
+	//}
 
-	int checkForIntersection(float aX,float aY,float bX,float bY,float *coords,int *count) {
-		int intersected = -1;
+	//void computeShadows(HDC bhdc, float X, float Y) {
+	//	if(DEBUGVAR_SHOW_SHADOWS) {
+	//		float nx[4], ny[4];
+	//		for(int i=0; i<4; i++) {
+	//			float a = abc(X, Y, bx[i], by[i]);
+	//			float d = dbc(X, Y, bx[i], by[i])*height;
+	//			nx[i] = bx[i] + d * cos(a);
+	//			ny[i] = by[i] + d * sin(a);
+	//		}
 
-		for(int i=0; i<4; i++) {
-			int j=i+1;
-			if(j>3) j=0;
+	//		for(int i=0; i<4; i++) {
+	//			float a = abc(X, Y, bx[i], by[i]);
+	//			float d = dbc(X, Y, bx[i], by[i])*height;
 
-			if(isIntersection(aX,aY,bX,bY,bx[i],by[i],bx[j],by[j])) {
+	//			MoveToEx(bhdc, bx[i]+cameraOffsetX, by[i]+cameraOffsetY, 0);
+	//			LineTo(bhdc, bx[i] + d * cos(a)+cameraOffsetX, by[i] + d * sin(a)+cameraOffsetY);
 
-				if(*count*4+3 < DEBUGVAR_INTERSECTS_COUNT_MAX) {
+	//			if(DEBUGVAR_ALPHA_ROOFS) {
+	//				MoveToEx(bhdc, nx[i]+cameraOffsetX, ny[i]+cameraOffsetY, 0);
 
-					coords[(*count)*4      ] = bx[i];
-					coords[(*count)*4   +1 ] = by[i];
-					coords[(*count)*4   +2 ] = bx[j];
-					coords[(*count)*4   +3 ] = by[j];
-					*count=*count+1;
+	//				int j=i+1;
+	//				if(j>3) j=0;
 
-					intersected = i;
+	//				LineTo(bhdc, nx[j]+cameraOffsetX, ny[j]+cameraOffsetY);
+	//			}
+	//		}
 
-				}
-			}
-		}
+	//		if(!DEBUGVAR_ALPHA_ROOFS) {
 
-		return intersected;
-	}
+	//			HBRUSH b = CreateSolidBrush(RGB(255,255,255));
 
-	void setHeight(float h) {height = h;}
+	//			SelectObject(bhdc, b);
+	//			Rectangle(bhdc, nx[0]+cameraOffsetX, ny[0]+cameraOffsetY, nx[2]+cameraOffsetX, ny[2]+cameraOffsetY);
 
-	void computeShadows(HDC bhdc, float X, float Y) {
-		if(DEBUGVAR_SHOW_SHADOWS) {
-			float nx[4], ny[4];
-			for(int i=0; i<4; i++) {
-				float a = abc(X, Y, bx[i], by[i]);
-				float d = dbc(X, Y, bx[i], by[i])*height;
-				nx[i] = bx[i] + d * cos(a);
-				ny[i] = by[i] + d * sin(a);
-			}
+	//			DeleteObject(b);
+	//			b = 0;
 
-			for(int i=0; i<4; i++) {
-				float a = abc(X, Y, bx[i], by[i]);
-				float d = dbc(X, Y, bx[i], by[i])*height;
-
-				MoveToEx(bhdc, bx[i]+cameraOffsetX, by[i]+cameraOffsetY, 0);
-				LineTo(bhdc, bx[i] + d * cos(a)+cameraOffsetX, by[i] + d * sin(a)+cameraOffsetY);
-
-				if(DEBUGVAR_ALPHA_ROOFS) {
-					MoveToEx(bhdc, nx[i]+cameraOffsetX, ny[i]+cameraOffsetY, 0);
-
-					int j=i+1;
-					if(j>3) j=0;
-
-					LineTo(bhdc, nx[j]+cameraOffsetX, ny[j]+cameraOffsetY);
-				}
-			}
-
-			if(!DEBUGVAR_ALPHA_ROOFS) {
-
-				HBRUSH b = CreateSolidBrush(RGB(255,255,255));
-
-				SelectObject(bhdc, b);
-				Rectangle(bhdc, nx[0]+cameraOffsetX, ny[0]+cameraOffsetY, nx[2]+cameraOffsetX, ny[2]+cameraOffsetY);
-
-				DeleteObject(b);
-				b = 0;
-
-			}
-		}
-	}
-
-	float getX(void) {return x;}
-	float getY(void) {return y;}
+	//		}
+	//	}
+	//}
 };

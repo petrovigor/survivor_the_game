@@ -9,45 +9,44 @@ enum class GameObjectVisualType {
 
 class GameObject {
 protected:
-	bool alive;
 	float x, y;
-	float oldX, oldY;
-	float size;
-	float maxSize;
 	float speed;
 	float angle;
-	float height;
 
   GameObjectVisualType visualType;
 	float cameraOffsetX, cameraOffsetY;
 
 public:
 	GameObject();
+  GameObject(float x, float y, float speed, float angle, GameObjectVisualType vt);
   virtual ~GameObject();
 
-  GameObject(int _x, int _y, int _size, int _speed, int _angle);
+  //GameObject(int _x, int _y, int _size, int _speed, int _angle);
 
-	GameObject *itSelf(void);
+	//GameObject *itSelf(void);
 
-	float getX(void);
-	float getY(void);
-	void setXY(float newX, float newY);
-	void setSpeed(float newSpeed);
-	float getSpeed(void);
-	float getSize(void);
-	void setSize(float value);
-	float getAngle(void);
-	void setHeight(float h);
-	void setCameraOffset(float X,float Y);
+	float getX() const noexcept;
+	float getY() const noexcept;
+	//void setXY(float x, float y);
+	//void setSpeed(float newSpeed);
+	//float getSpeed(void);
+	//float getSize(void);
+	//void setSize(float value);
+	//float getAngle(void);
 
-	void backupXY(void);
-	void restoreXY(void);
+	//void backupXY(void);
+	//void restoreXY(void);
 
-	float distance(GameObject *obj);
+	//float distance(GameObject *obj);
 
-	float getAngleAt(GameObject *obj);
+	//float getAngleAt(GameObject *obj);
 
+  void setCameraOffset(float x, float y);
+  virtual void depose(float dx, float dy);
+  virtual void processPhysics(float dt);
   virtual void draw(HDC bhdc);
 
-	virtual void takeDamage(float damage);
+	//virtual void takeDamage(float damage);
 };
+
+

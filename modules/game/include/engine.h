@@ -1,54 +1,51 @@
 #pragma once
 
 #include <memory>
-
+//
 #include "window.h"
-#include "physics_man.h"
-
-#include "defines.h"
-#include "misc.h"
-#include "keys.h"
+//#include "physics_man.h"
+//
+//#include "defines.h"
+//#include "misc.h"
+//#include "keys.h"
 #include "timer.h"
-#include "fxManager.h"
-
-#include "weaponManager.h"
-#include "eventManager.h"
-#include "player.h"
-#include "cursor.h"
-#include "missileManager.h"
-#include "enemyManager.h"
+//#include "fxManager.h"
+//
+//#include "weaponManager.h"
+//#include "eventManager.h"
+//#include "player.h"
+//#include "cursor.h"
+//#include "missileManager.h"
+//#include "enemyManager.h"
 #include "physicsManager.h"
-#include "abilityManager.h"
+//#include "abilityManager.h"
 
 class Engine {
 private:
   std::unique_ptr<Window>         window;
   std::unique_ptr<WindowCallback> callback;
 
-	CURSOR cursor;
+	//CURSOR cursor;
 	TIMER timer;
-	EVENT_MANAGER eventMan;
-	Player player;
-	WEAPON_MANAGER weaponMan;
-	KEYS keys;
-	HBRUSH windowCleanerBrush;
-	FX_MANAGER fxMan;
-	MISSILE_MANAGER mMan;
-	ENEMY_MANAGER enemyMan;
-	PHYSICS_MANAGER physicsMan;
-	ABILITY_MANAGER abilityMan;
-
-	bool debugMode;
-	float timeFactor;
+	//EVENT_MANAGER eventMan;
+	//Player player;
+	//WEAPON_MANAGER weaponMan;
+	//KEYS keys;
+	//HBRUSH windowCleanerBrush;
+	//FX_MANAGER fxMan;
+	////MISSILE_MANAGER mMan;
+	//ENEMY_MANAGER enemyMan;
+	PHYSICS_MANAGER physicsManager;
+	//ABILITY_MANAGER abilityMan;
 
 public:
 	Engine();
   ~Engine();
 
-  KEYS& getControlManager() { return keys; }
-  CURSOR& getCursor() { return cursor; }
-  Player& getPlayer() { return player; }
-  PHYSICS_MANAGER& getPhysicsManager() { return physicsMan; }
+  //KEYS& getControlManager() { return keys; }
+  //CURSOR& getCursor() { return cursor; }
+  //Player& getPlayer() { return player; }
+  //PHYSICS_MANAGER& getPhysicsManager() { return physicsMan; }
 
 	void initWindow(int width, int height);
 	void mainLoop();

@@ -1,107 +1,131 @@
 #pragma once
 
-#include <list>
-#include "enemy.h"
-#include "missile.h"
-#include "collision.h"
-#include "player.h"
-#include "fxManager.h"
-#include "block.h"
-#include "noise.h"
-#include "road.h"
+//#include <list>
+//#include "enemy.h"
+//#include "collision.h"
+//#include "player.h"
+//#include "fxManager.h"
+//#include "block.h"
+//#include "noise.h"
+//#include "road.h"
+
+//#include <Windows.h>
+//#include <vector>
+//#include <list>
+
+#include <windows.h>
+#include <vector>
+#include <memory>
+
+class GameObject;
 
 class PHYSICS_MANAGER {
 private:
-	Player *playerPtr;
-	FX_MANAGER *fxPtr;
+  std::vector<std::shared_ptr<GameObject>> gos; //strong pointers
 
-	HPEN *penPtr;
-	HPEN *noisePenPtr;
-	HPEN *roadPenPtr;
+  std::vector<std::weak_ptr<GameObject>>   _enemies;
+  std::vector<std::weak_ptr<GameObject>>   _projectiles;
+  std::weak_ptr<GameObject>                _player;
 
-	int dx[4], dy[4];
+	//Player *playerPtr;
+	//FX_MANAGER *fxPtr;
 
-	std::list<COLLISION> collisionsList;
-	std::list<MISSILE> *missilesList;
-	std::list<ENEMY> *enemiesList;
+	//HPEN *penPtr;
+	//HPEN *noisePenPtr;
+	//HPEN *roadPenPtr;
 
-	std::list<ROAD> roadsList;
-	std::list<BLOCK> blocksList;
-	std::vector<NOISE> noisesVector;
+	//int dx[4], dy[4];
 
-	void checkCollisions(void);
-	void processNewCollisions(void);
-	void deleteOldCollisions(void);
-	bool checkIfCollisionExists(const GameObject *f, const MISSILE *s);
 
-	float offsetFromCenterY,offsetFromCenterX;
+	//std::list<COLLISION> collisionsList;
+	//std::list<ENEMY> *enemiesList;
+
+	//std::list<ROAD> roadsList;
+	//std::list<BLOCK> blocksList;
+	//std::vector<NOISE> noisesVector;
+
+	//void checkCollisions(void);
+	//void processNewCollisions(void);
+	//void deleteOldCollisions(void);
+	//bool checkIfCollisionExists(const GameObject *f, const MISSILE *s);
+
+	//float offsetFromCenterY,offsetFromCenterX;
 
 public:
-	void init(std::list<ENEMY> *e, std::list<MISSILE> *m, Player *p, FX_MANAGER *f, HPEN *ptr, HPEN *newNoisePenPtr, HPEN *newRoadPenPtr);
+  void updateWorldPhysics(float dt);
+  void renderWorld(HDC bhdc);
+  
+  void createPlayer(float x, float y);
+  void createBlock(float x, float y, float w, float h);
+  //void createNPC(float x, float y);
+  //void createProjectile(float x, float y);
 
-	std::list<BLOCK> *getBlocksListPtr();
+	//void addMissile(float newX, float newY, float newAngle, float newSpeed, float newDamage, const int newTargetType, float newMissileSize, int newPenCount);
 
-	bool col(float,float,float,float,float,float,float,float);
+	//void init(std::list<ENEMY> *e, Player *p, FX_MANAGER *f, HPEN *ptr, HPEN *newNoisePenPtr, HPEN *newRoadPenPtr);
 
-	void createRoad(float ax,float ay,float bx,float by,float cx,float cy,float dx,float dy);
+	//std::list<BLOCK> *getBlocksListPtr();
 
-	void setCameraOffsetValue(float X, float Y);
-	float getCameraOffsetX();
-	float getCameraOffsetY();
+	//bool col(float,float,float,float,float,float,float,float);
 
-	void createNoise(int newX, int newY, int newRadius);
+	//void createRoad(float ax,float ay,float bx,float by,float cx,float cy,float dx,float dy);
 
-	void processNoises(float deltaTime);
+	//void setCameraOffsetValue(float X, float Y);
+	//float getCameraOffsetX();
+	//float getCameraOffsetY();
 
-	void drawNoises(HDC bhdc);
+	//void createNoise(int newX, int newY, int newRadius);
 
-	void drawRoads(HDC bhdc);
+	//void processNoises(float deltaTime);
 
-	void deposeNoises(float X, float Y);
+	//void drawNoises(HDC bhdc);
 
-	void removeNoises();
+	//void drawRoads(HDC bhdc);
 
-	void setGOheight(float h);
+	//void deposeNoises(float X, float Y);
 
-	void computeRandomPointToPatrol(std::list<ENEMY>::iterator);
-	void enemyMoveTo(std::list<ENEMY>::iterator,float,float,float);
-	void placeBlockByPlayerDirection(const int);
-	void placeRoadByPlayerDirection(const int);
-	void removeFarBlocks(float,float,float);
-	void deposeGameObjects(float offsetX, float offsetY);
-	
-	
-	void deposeGameObjectsFromCenter();
+	//void removeNoises();
+
+	//void setGOheight(float h);
+
+	//void computeRandomPointToPatrol(std::list<ENEMY>::iterator);
+	//void enemyMoveTo(std::list<ENEMY>::iterator,float,float,float);
+	//void placeBlockByPlayerDirection(const int);
+	//void placeRoadByPlayerDirection(const int);
+	//void removeFarBlocks(float,float,float);
+	//void deposeGameObjects(float offsetX, float offsetY);
+	//
+	//
+	//void deposeGameObjectsFromCenter();
 
 
-	bool checkForPlacementCollision(float,float,float,float);
-	void correctPlayerPlacement(const int playerDir, float deltaTime);
-	void movePlayer(float deltaTime, const int playerDir);
-	void processEnemies(float deltaTime);
-	void moveMissiles(float deltaTime);
-	void moveAll(float deltaTime, const int playerDir);
-	bool checkForPlacementCollision(GameObject *go);
-	bool isPointFree(float X, float Y, float R);
+	//bool checkForPlacementCollision(float,float,float,float);
+	//void correctPlayerPlacement(const int playerDir, float deltaTime);
+	//void movePlayer(float deltaTime, const int playerDir);
+	//void processEnemies(float deltaTime);
+	//void moveAll(float deltaTime, const int playerDir);
+	//bool checkForPlacementCollision(GameObject *go);
+	//bool isPointFree(float X, float Y, float R);
 
-	void removeBlocks();
+	//void removeBlocks();
 
-	void placeBlock(float newX, float newY, float newW, float newH);
+	//void placeBlock(float newX, float newY, float newW, float newH);
 
-	int isVisionSmart(GameObject *A, GameObject *B, float *coords, int *count);
-	bool isVision(GameObject *A, GameObject *B);
+	//int isVisionSmart(GameObject *A, GameObject *B, float *coords, int *count);
+	//bool isVision(GameObject *A, GameObject *B);
 
-	void drawBlocks(HDC bhdc);
+	//void drawBlocks(HDC bhdc);
 
-	void computeShadows(HDC bhdc, float x, float y);
+	//void computeShadows(HDC bhdc, float x, float y);
 
-	void processCollisions(void);
+	//void processCollisions(void);
 
-	void correctEnemies();
+	//void correctEnemies();
 
-	void cleanUpMissiles();
+	//void cleanUpMissiles();
 
-	int getCollisionsCount();
-	int getBlocksCount();
-	int getRoadsCount();
-	int getShellsCount();
+	//int getCollisionsCount();
+	//int getBlocksCount();
+	//int getRoadsCount();
+	//int getShellsCount();
 };
