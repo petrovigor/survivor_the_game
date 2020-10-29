@@ -1,6 +1,6 @@
 #include "window.h"
 #include "engine.h"
-#include "keys.h"
+#include "controller.h"
 
 #include <iostream>
 
@@ -20,9 +20,11 @@ void WindowCallback::OnDestroy() {
 
 void WindowCallback::OnMouseClick(int x, int y, bool click) {
   if(!_engine) return;
+  
+  auto& keyboard = Controller::instance();
 
-  //click ? _engine->getControlManager().leftMouseButtonDown( ) :
-  //        _engine->getControlManager().leftMouseButtonUp( );
+  click ? keyboard.leftMouseButtonDown( ) :
+          keyboard.leftMouseButtonUp( );
 
   std::cout << (click ? "click " : "release ") << x << " " << y << std::endl;
 }
@@ -35,12 +37,13 @@ void WindowCallback::OnMouseMove(int x, int y) {
 
   auto& phys = PhysicsManager::instance();
   phys.setCameraOffset(dx, dy);
+  phys.setMouseAt(dx, dy);
 }
 
 void WindowCallback::OnKeyboard(int key, bool press) {
   if(!_engine) return;
 
-  auto& keyboard = Keyboard::instance();
+  auto& keyboard = Controller::instance();
 
   press ? keyboard.keyDown( key ) :
           keyboard.keyUp( key );

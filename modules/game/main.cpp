@@ -1,5 +1,4 @@
 #include "engine.h"
-#include "defines.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	Engine engine;

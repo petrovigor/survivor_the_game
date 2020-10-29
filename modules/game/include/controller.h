@@ -5,12 +5,12 @@ const char KEY_MOVE_DOWN = 'S';
 const char KEY_MOVE_LEFT = 'A';
 const char KEY_MOVE_RIGHT = 'D';
 
-class Keyboard {
+class Controller {
 public:
-  Keyboard(const Keyboard&) = delete;
-  Keyboard& operator= (const Keyboard) = delete;
+  Controller(const Controller&) = delete;
+  Controller& operator= (const Controller) = delete;
 
-  static Keyboard& instance();
+  static Controller& instance();
 
 	bool isLMBpressed() const noexcept;
 	bool isRMBpressed() const noexcept;
@@ -26,7 +26,7 @@ public:
 	void rightMouseButtonUp();
 
 private:
-	Keyboard();
+	Controller();
 
 	bool lmb;
 	bool rmb;
