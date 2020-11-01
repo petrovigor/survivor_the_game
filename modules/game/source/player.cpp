@@ -4,6 +4,7 @@
 #include "controller.h"
 
 #include <iostream>
+#include <math.h>
 
 Player::Player(float _x, float _y, float _speed)
   : GameObject(_x, _y, _speed, 0.f, GameObjectVisualType::Ellipse)
