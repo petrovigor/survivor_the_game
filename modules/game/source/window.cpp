@@ -1,8 +1,9 @@
-#include "window.h"
+﻿#include "window.h"
 #include "engine.h"
 #include "controller.h"
 
 #include <iostream>
+#include <wingdi.h>
 
 WindowCallback::WindowCallback() : _engine(nullptr) { }
 WindowCallback::~WindowCallback() { }
@@ -20,7 +21,7 @@ void WindowCallback::OnDestroy() {
 
 void WindowCallback::OnMouseClick(int x, int y, bool click) {
   if(!_engine) return;
-  
+
   auto& keyboard = Controller::instance();
 
   click ? keyboard.leftMouseButtonDown( ) :
@@ -62,7 +63,37 @@ void Window::SetCallback( WindowCallback* ptr ) {
   _cb = ptr;
 }
 
+// struct GDIRelease {
+//   typedef HDC *pointer;
+
+//   void operator()(HDC *p) {
+//     ReleaseDC(0, p);
+//   }
+// };
+
+        //struct ReleaseDCFunctor {
+        //  using my_hdc = void*;
+        //  void operator()(my_hdc hdc) {
+        //    ReleaseDC(0, static_cast<HDC>(hdc));
+        //  }
+        //};
+
+//using Gdi_Smart_Pointer = std::unique_ptr<HDC, ReleaseDCFunctor>();
+
+// template <typename GDIObj>
+// void ReleaseHDC(GDIObj obj_ptr) {
+//   std::cout << "Releasing DC: " << ReleaseDC(0, static_cast<GDIObj>(obj_ptr)) << std::endl;
+// }
+
+
+
 void Window::OnCreate() {
+
+  _hDC = GetDC(_hWnd);
+
+  auto my = GetDC(0);
+
+
   _hDC = GetDC(_hWnd);
   _hMemDC = CreateCompatibleDC(_hDC);
   GetClientRect(_hWnd, &_clientRect);

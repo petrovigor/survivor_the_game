@@ -1,14 +1,13 @@
-#pragma once
+﻿#pragma once
 
 #include <windows.h>
 #include <vector>
 #include <memory>
-#include <mutex>
 
 class GameObject;
 class Player;
 
-class PhysicsManager {
+class PhysicsManager final {
 public:
   static PhysicsManager& instance();
 
@@ -17,7 +16,7 @@ public:
 
   void updateWorldPhysics(float dt);
   void renderWorld(HDC bhdc);
-  
+
   void createPlayer(float x, float y);
   void createBlock(float x, float y, float w, float h);
   void createProjectile(float x, float y, float speed, float angle);
@@ -31,9 +30,10 @@ public:
   float getMouseWorldY() const noexcept;
 
 private:
-  PhysicsManager() = default;
+  PhysicsManager();
 
+private:
   float mouseWorldX, mouseWorldY;
 
-  std::vector<std::shared_ptr<GameObject>> gos; //strong pointers
+  std::vector<std::unique_ptr<GameObject>> gos; //strong pointers
 };

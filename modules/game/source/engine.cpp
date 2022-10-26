@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <time.h>
 #include "engine.h"
 #include "controller.h"
@@ -15,7 +15,6 @@ void Engine::initWindow( int width, int height ) {
   window->SetCallback( callback.get() );
   window->createWindow( width, height, "myClassNameSurvivor" );
 
-	srand((unsigned)time(NULL));
   timer.init();
 
   auto& phys = PhysicsManager::instance();
@@ -36,19 +35,19 @@ void Engine::processController() {
   auto& phys = PhysicsManager::instance();
 
 	if(keyboard.isLMBpressed()) {
-    static float dt = 0.f;
+    // static float dt = 0.f;
 
-    if(dt <= 0.f) {
-      const auto player = phys.getPlayer( );
-      const float targetX = phys.getMouseWorldX();
-      const float targetY = phys.getMouseWorldY();
+    // if(dt <= 0.f) {
+    //   const auto player = phys.getPlayer( );
+    //   const float targetX = phys.getMouseWorldX();
+    //   const float targetY = phys.getMouseWorldY();
 
-      Player* pl = reinterpret_cast<Player*>(&*player);
-      pl->attack( targetX, targetY );
-      phys.createProjectile(0.f, 0.f, 1.f, 0.f);
-    } else {
-      dt -= 0.01f;
-    }
+    //   Player* pl = reinterpret_cast<Player*>(&*player);
+    //   pl->attack( targetX, targetY );
+    //   phys.createProjectile(0.f, 0.f, 1.f, 0.f);
+    // } else {
+    //   dt -= 0.01f;
+    // }
 	}
 }
 
@@ -77,12 +76,18 @@ void Engine::mainLoop() {
 }
 
 void Engine::drawFrame() {
+  if(!window)
+    return;
+
+  if(!window->getDC())
+    return;
+
   const HDC  dc     = window->getDC( );
   const HDC  memdc  = window->getMemDC( );
 
   const RECT clientRect = window->getClientRect();
 	FillRect(memdc, &clientRect, window->getBrush());
-  
+
   auto& phys = PhysicsManager::instance();
   phys.renderWorld(memdc);
 

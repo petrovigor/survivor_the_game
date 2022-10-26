@@ -1,4 +1,4 @@
-# Survivor
+﻿# Survivor
 
 A simple minimalism shooter game.
 Main idea is to create sandbox environment like GTA or Dishonored games have.
@@ -27,4 +27,4 @@ Later code may be modified to extend WinAPI window and event system with Linux o
 
 # Build
 
-`$ mkdir build && cd build && cmake ..`
+now build via .sln

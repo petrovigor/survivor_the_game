@@ -1,6 +1,7 @@
-#pragma once
+﻿#pragma once
 
 #include "base_window.h"
+#include <memory>
 
 class Engine;
 
@@ -22,6 +23,9 @@ protected:
 };
 
 class Window final : public BaseWindow {
+private:
+  friend class Engine;
+
 public:
   Window();
   ~Window();
@@ -33,21 +37,26 @@ public:
   void OnMouseClick(int x, int y, bool click) override;
   void OnMouseMove(int x, int y) override;
   void OnKeyboard(int key, bool press) override;
-  
-  HDC getDC() const noexcept { return _hDC; }
-  HDC getMemDC() const noexcept { return _hMemDC; }
-  HBITMAP getMemMap() const noexcept { return _hMemMap; }
+
+  HDC const& getDC() const noexcept { return _hDC; }
+  HDC const& getMemDC() const noexcept { return _hMemDC; }
+  HBITMAP const& getMemMap() const noexcept { return _hMemMap; }
+  HBRUSH const& getBrush() const noexcept { return _brush; }
+  HPEN const& getPen() const noexcept { return _pen; }
   RECT getClientRect() const noexcept { return _clientRect; }
-  HBRUSH getBrush() const noexcept { return _brush; }
-  HPEN getPen() const noexcept { return _pen; }
 
 private:
   WindowCallback* _cb;
+  //std::unique_ptr<HDC>             _hDC;
+  //std::unique_ptr<HDC>             _hMemDC;
+  //std::unique_ptr<HBITMAP>         _hMemMap;
+  //std::unique_ptr<HBRUSH>          _brush;
+  //std::unique_ptr<HPEN>            _pen;
   HDC             _hDC;
   HDC             _hMemDC;
   HBITMAP         _hMemMap;
-  RECT            _clientRect;
   HBRUSH          _brush;
   HPEN            _pen;
+  RECT            _clientRect;
 
 };
