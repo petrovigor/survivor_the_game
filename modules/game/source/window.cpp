@@ -1,6 +1,7 @@
 ﻿#include "window.h"
 #include "engine.h"
 #include "controller.h"
+#include "point.h"
 
 #include <iostream>
 #include <wingdi.h>
@@ -31,14 +32,20 @@ void WindowCallback::OnMouseClick(int x, int y, bool click) {
 }
 
 void WindowCallback::OnMouseMove(int x, int y) {
-  const float cx = 800.f / 2.f;
-  const float cy = 600.f / 2.f;
-  const float dx = (cx - x) / 1.f;
-  const float dy = (cy - y) / 1.f;
+  const screenPoint screenPoint { x, y };
+  std::cout << "Screen " << screenPoint.p.x << " and " << screenPoint.p.y; // << std::endl;
 
   auto& phys = PhysicsManager::instance();
+  const worldPoint wp = phys.screenToWorld(screenPoint, 800, 600);
+
+  const float view_distance = 1.0f;
+  const float cx = 800.f / 2.f;
+  const float cy = 600.f / 2.f;
+  const float dx = (cx - x) / view_distance;
+  const float dy = (cy - y) / view_distance;
+
   phys.setCameraOffset(dx, dy);
-  phys.setMouseAt(dx, dy);
+  phys.setMouseAt(wp);
 }
 
 void WindowCallback::OnKeyboard(int key, bool press) {

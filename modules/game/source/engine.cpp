@@ -3,6 +3,7 @@
 #include "engine.h"
 #include "controller.h"
 #include "player.h"
+#include "point.h"
 
 Engine::Engine() { }
 Engine::~Engine() { }
@@ -26,7 +27,10 @@ void Engine::initWindow( int width, int height ) {
 		//phys.createBlock( 200.f, 300.f, 200.f, 75.f );
 		//phys.createBlock( 600.f, 420.f, 30.f, 80.f );
 		//phys.createBlock( 550.f, 300.f, 200.f, 100.f );
-  phys.createPlayer( 400.f, 300.f );
+  phys.createPlayer( worldPoint(0.f, 0.f) );
+
+  phys.createBlock(worldPoint(200.0, 0.f), 200, 150);
+
 	//}
 }
 

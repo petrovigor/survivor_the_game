@@ -1,5 +1,7 @@
-#pragma once
+﻿#pragma once
 
+#include "types.h"
+#include "point.h"
 #include <Windows.h>
 
 enum class GameObjectVisualType {
@@ -9,21 +11,26 @@ enum class GameObjectVisualType {
 
 class GameObject {
 protected:
-	float x, y;
-	float speed;
-	float angle;
+  worldPoint p;
+  float32 speed;
+  float32 angle;
 
   GameObjectVisualType visualType;
 	float cameraOffsetX, cameraOffsetY;
 
 public:
 	GameObject();
-  GameObject(float x, float y, float speed, float angle, GameObjectVisualType vt);
+  GameObject(worldPoint _p, float32 speed, float32 angle, GameObjectVisualType vt);
+  GameObject(float32 x, float32 y, float32 speed, float32 angle, GameObjectVisualType vt);
   virtual ~GameObject();
 
-  void setCameraOffset(float x, float y);
-  virtual void depose(float dx, float dy);
-  virtual void processPhysics(float dt);
+  float32 getX() const noexcept;
+  float32 getY() const noexcept;
+  worldPoint getP() const noexcept;
+
+  void setCameraOffset(float32 x, float32 y);
+  virtual void depose(float32 dx, float32 dy);
+  virtual void processPhysics(float32 dt);
   virtual void draw(HDC bhdc);
 
 };

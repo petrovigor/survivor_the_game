@@ -1,16 +1,18 @@
-#pragma once
+﻿#pragma once
 
+#include "types.h"
 #include "game_object.h"
 
 class Block final : public GameObject {
 private:
-  float w, h;
-	float bx[4], by[4];
+  float32 width, height;
+	//float32 bx[4], by[4];
+
 
 public:
-	Block(float newX, float newY, float newW, float newH);
+	Block(float32 newX, float32 newY, float32 newW, float32 newH);
 
   void draw(HDC bhdc) override;
-	void depose(float x, float y) override;
+	//void depose(float32 x, float32 y) override;
 
 };

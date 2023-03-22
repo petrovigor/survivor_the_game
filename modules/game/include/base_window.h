@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <windows.h>
 #include <string>
@@ -20,7 +20,7 @@ public:
   BaseWindow();
   BaseWindow(int width, int height, const std::string& classname);
   virtual ~BaseWindow();
-  
+
   bool createWindow(int width, int height, const std::string& classname);
   void destroyWindow();
 

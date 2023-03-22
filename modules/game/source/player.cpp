@@ -1,4 +1,4 @@
-#include "player.h"
+﻿#include "player.h"
 #include "physicsManager.h"
 #include "utils.h"
 #include "controller.h"
@@ -49,25 +49,25 @@ void Player::processPhysics(float dt) {
   float proection = dist / sqrt(float(2));
 
 	if(!v && h < 0) {
-    x -= dist;
+    p.p.x -= dist;
 	} else if(!v && h > 0) {
-    x += dist;
+    p.p.x += dist;
 	} else if(!h && v < 0) {
-    y -= dist;
+    p.p.y -= dist;
 	} else if(!h && v > 0) {
-    y += dist;
+    p.p.y += dist;
 	} else if(h > 0 && v > 0) {
-    x += proection;
-    y += proection;
+    p.p.x += proection;
+    p.p.y += proection;
 	} else if(h > 0 && v < 0) {
-    x += proection;
-    y -= proection;
+    p.p.x += proection;
+    p.p.y -= proection;
 	} else if(h < 0 && v < 0) {
-    x -= proection;
-    y -= proection;
+    p.p.x -= proection;
+    p.p.y -= proection;
 	} else if(h < 0 && v > 0) {
-    x -= proection;
-    y += proection;
+    p.p.x -= proection;
+    p.p.y += proection;
 	}
 
   //when hero going out of last 10% of the map
@@ -87,17 +87,17 @@ void Player::processPhysics(float dt) {
 
   auto& phys = PhysicsManager::instance();
 
-  if(x > boundsX) {
-    phys.deposeObjects( boundsX - x, 0.f );
+  if(p.p.x > boundsX) {
+    phys.deposeObjects( boundsX - p.p.x, 0.f );
   }
-  if(y > boundsY) {
-    phys.deposeObjects( 0.f, boundsY - y );
+  if(p.p.y > boundsY) {
+    phys.deposeObjects( 0.f, boundsY - p.p.y );
   }
-  if(x < lastX) {
-    phys.deposeObjects( lastX - x, 0.f );
+  if(p.p.x < lastX) {
+    phys.deposeObjects( lastX - p.p.x, 0.f );
   }
-  if(y < lastY) {
-    phys.deposeObjects( 0.f, lastY - y );
+  if(p.p.y < lastY) {
+    phys.deposeObjects( 0.f, lastY - p.p.y );
   }
 
   //process player attacking mechanism
@@ -110,9 +110,9 @@ void Player::processPhysics(float dt) {
   }
 
   if(attacking) {
-    
+
     std::cout << "attacking" << std::endl;
-    phys.createProjectile(x, y, 50.f, abc(x, y, attackTargetX, attackTargetY));
+    phys.createProjectile(p, 50.f, abc(p.p.x, p.p.y, attackTargetX, attackTargetY));
 
     attacking = false;
     cooldown = 1.5f;
