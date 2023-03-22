@@ -38,6 +38,10 @@ void PhysicsManager::deposeObjects(float32 dx, float32 dy) {
   for(auto& go : gos) {
     go->depose(dx, dy);
   }
+  if(debug_ray)
+  {
+    debug_ray->depose(dx, dy);
+  }
 }
 
 void PhysicsManager::setCameraOffset(float32 offsetX, float32 offsetY) {
@@ -129,6 +133,9 @@ void PhysicsManager::setMouseAt(worldPoint _where) {
     debug_ray->y1 = pl.getY();
     debug_ray->x2 = _where.p.x;
     debug_ray->y2 = _where.p.y;
-    std::cout << "ray world x2 y2: " << debug_ray->x2 << "     " << debug_ray->y2 << gos.size() << std::endl;
+
+    std::cout << "World x=" << debug_ray->x2 << " / y=" << debug_ray->y2 << std::endl;
+
+    //std::cout << "ray world x2 y2: " << debug_ray->x2 << "     " << debug_ray->y2 << "       " << gos.size() << std::endl;
   }
 }

@@ -18,6 +18,7 @@ struct ray
 		, coy(0.0)
 	{ }
 
+	void depose(float32 dx, float32 dy);
 	void setCameraOffset(float32 x, float32 y);
 	void draw(HDC bhdc);
 };

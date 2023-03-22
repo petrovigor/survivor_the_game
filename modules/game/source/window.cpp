@@ -33,7 +33,7 @@ void WindowCallback::OnMouseClick(int x, int y, bool click) {
 
 void WindowCallback::OnMouseMove(int x, int y) {
   const screenPoint screenPoint { x, y };
-  std::cout << "Screen " << screenPoint.p.x << " and " << screenPoint.p.y; // << std::endl;
+  std::cout << "Screen x=" << screenPoint.p.x << " / y=" << screenPoint.p.y << std::endl;
 
   auto& phys = PhysicsManager::instance();
   const worldPoint wp = phys.screenToWorld(screenPoint, 800, 600);

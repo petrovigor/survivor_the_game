@@ -44,10 +44,12 @@ public:
     const int screenX = sp.p.x;
     const int screenY = sp.p.y;
 
-    const float32 widthHalf = (static_cast<float32>(screenWidth) / 2.0f);
-    const float32 heightHalf = (static_cast<float32>(screenHeight) / 2.0f);
+    //const float32 widthHalf = (static_cast<float32>(screenWidth) / 2.0f);
+    //const float32 heightHalf = (static_cast<float32>(screenHeight) / 2.0f);
 
-    return { static_cast<float32>(screenX) + widthHalf, static_cast<float32>(screenY) + heightHalf };
+    return { static_cast<float32>(screenX), static_cast<float32>(screenY) };
+
+    //return { static_cast<float32>(screenX) + widthHalf, static_cast<float32>(screenY) + heightHalf };
 
     //return {
     //  static_cast<float32>(screenX - widthHalf) + widthHalf,

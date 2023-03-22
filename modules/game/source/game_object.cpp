@@ -54,12 +54,13 @@ worldPoint GameObject::getP() const noexcept { return p; }
 
 
 void GameObject::draw(HDC bhdc) {
-	const float32 ratio = 600.0f / 800.0f;
-	const float32 worldCenterOffsetWidth = 800;// / 2.0f;
-	const float32 worldCenterOffsetHeight = 600 ;/// 2.0f;
-	const float32 s = 15.0f;
-	const float32 newX = p.p.x + cameraOffsetX + worldCenterOffsetWidth*ratio;
-	const float32 newY = p.p.y + cameraOffsetY + worldCenterOffsetHeight;
+	constexpr float32 s = 15.0f;
+
+	//const float32 ratio = 600.0f / 800.0f;
+	const float32 worldCenterOffsetWidth = 800.0f / 2.0f;
+	const float32 worldCenterOffsetHeight = 600.0f / 2.0f;
+	const float32 newX = worldCenterOffsetWidth - (s / 2.0f); //p.p.x + cameraOffsetX + worldCenterOffsetWidth*ratio;
+	const float32 newY = worldCenterOffsetHeight - (s / 2.0f); //p.p.y + cameraOffsetY + worldCenterOffsetHeight;
 
 	switch(visualType) {
   case GameObjectVisualType::Ellipse:
