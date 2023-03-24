@@ -21,7 +21,7 @@ struct grid
 	grid() = default;
 
 	void create(uint32_t cells_width, uint32_t cells_height, world_units_t cell_size);
-	void draw(HDC bhdc, const worldPoint &playerPos, float32 cox, float32 coy);
+	void draw(HDC bhdc, worldPoint playerPos);
 
 	cell_indices find_cell(worldPoint p);
 	//uint32_t find_normalized_idx(worldPoint p);

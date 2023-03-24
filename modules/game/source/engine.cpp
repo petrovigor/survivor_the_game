@@ -27,12 +27,13 @@ void Engine::initWindow( int width, int height ) {
 		//phys.createBlock( 200.f, 300.f, 200.f, 75.f );
 		//phys.createBlock( 600.f, 420.f, 30.f, 80.f );
 		//phys.createBlock( 550.f, 300.f, 200.f, 100.f );
+  phys.create_grid(5, 5, 50.0f);
   phys.createPlayer( worldPoint(0.f, 0.f) );
 
   phys.createBlock(worldPoint(200.0, 0.f), 200, 150);
-  phys.createBlock(worldPoint(-300.0, -200.f), 100, 450);
+  //phys.createBlock(worldPoint(-300.0, -200.f), 100, 450);
 
-  phys.create_grid(5, 5, 50.0f);
+  phys.createCar({0, 0}, {4, 0}, 40.0f);
 	//}
 }
 

@@ -5,6 +5,7 @@
 #include "projectile.h"
 #include "utils.h"
 #include "ray.h"
+#include "car.h"
 
 #include <iostream>
 
@@ -58,16 +59,16 @@ void PhysicsManager::renderWorld(HDC bhdc) {
 
 
   SelectObject(bhdc, gray_pen);
-  cells.draw(bhdc, playerPos, cameraOffsetX, cameraOffsetY);
+  cells.draw(bhdc, playerPos);
 
 
   SelectObject(bhdc, black_pen);
   for(auto& go : gos) {
-    go->draw(bhdc, playerPos, cameraOffsetX, cameraOffsetY);
+    go->draw(bhdc, playerPos);
   }
   if(debug_ray)
   {
-    debug_ray->draw(bhdc, playerPos, cameraOffsetX, cameraOffsetY);
+    debug_ray->draw(bhdc, playerPos);
   }
 }
 //
@@ -110,6 +111,18 @@ void PhysicsManager::left_mouse_click()
   std::cout << "indices: " << idx.first << ", " << idx.second << std::endl;
 
 }
+
+
+worldPoint PhysicsManager::getCenterOfCell(cell_indices cell)
+{
+  worldPoint p;
+
+  p.p.x = cells.min_x + cell.first * cells.cell_size + cells.cell_size / 2.0f;
+  p.p.y = cells.min_y + cell.second * cells.cell_size + cells.cell_size / 2.0f;
+
+  return p;
+}
+
 
 worldPoint PhysicsManager::getPlayerPos()
 {
@@ -186,6 +199,17 @@ void PhysicsManager::createBlock(worldPoint _where, float32 w, float32 h) {
   std::cout << "goes total: " << gos.size() << std::endl;
 }
 
+void PhysicsManager::createCar(cell_indices cell_from, cell_indices cell_to, float32 speed)
+{
+  GameObject* car = new Car(cell_from, cell_to, speed);
+
+  std::unique_ptr<GameObject> carPtr{ car };
+
+  gos.emplace_back(std::move(carPtr));
+
+  std::cout << "goes total: " << gos.size() << std::endl;
+}
+
 void PhysicsManager::createProjectile(worldPoint _where, float32 speed, float32 angle) {
 
   GameObject* proj = new Projectile(_where.p.x, _where.p.y, speed, angle);
@@ -209,7 +233,15 @@ GameObject* PhysicsManager::rayCast(worldPoint _whereFrom, float32 distance, flo
   return ans;
 }
 
-worldPoint PhysicsManager::screenToWorld(const screenPoint &sp, const worldPoint &playerPos, int screenWidth, int screenHeight)
+screenPoint PhysicsManager::worldToScreen(worldPoint wp, worldPoint playerPos)
+{
+  return {
+    static_cast<int>(wp.p.x + 400.0 - playerPos.p.x + cameraOffsetX),
+    static_cast<int>(wp.p.y + 300.0 - playerPos.p.y + cameraOffsetY)
+  };
+}
+
+worldPoint PhysicsManager::screenToWorld(screenPoint sp, worldPoint playerPos, int screenWidth, int screenHeight)
 {
   const int screenX = sp.p.x;
   const int screenY = sp.p.y;
@@ -238,7 +270,7 @@ void PhysicsManager::moveMouseWorldSpace(worldPoint _where) {
 
   if(!debug_ray.get())
   {
-    debug_ray = std::make_unique<ray>(0, 0, 0, 0);
+    debug_ray = std::make_unique<ray>();
   }
   if(!gos.empty())
   {
@@ -246,10 +278,8 @@ void PhysicsManager::moveMouseWorldSpace(worldPoint _where) {
     if(!player)
       return;
 
-    debug_ray->x1 = player->getX();
-    debug_ray->y1 = player->getY();
-    debug_ray->x2 = _where.p.x;
-    debug_ray->y2 = _where.p.y;
+    debug_ray->from = player->getP();
+    debug_ray->to = _where;
 
 
 

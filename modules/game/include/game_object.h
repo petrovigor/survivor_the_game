@@ -37,7 +37,7 @@ public:
   //void setCameraOffset(float32 x, float32 y);
   //virtual void depose(float32 dx, float32 dy);
   virtual void processPhysics(float32 dt);
-  virtual void draw(HDC bhdc, const worldPoint &playerPosition, float32 cox, float32 coy);
+  virtual void draw(HDC bhdc, worldPoint playerPosition);
 
 };
 

@@ -1,27 +1,36 @@
 ﻿#include "grid.h"
 #include <iostream>
+#include "physicsManager.h"
 
-void grid::draw(HDC bhdc, const worldPoint &playerPosition, float32 cox, float32 coy) {
-	const float32 grid_size_width = (cells_hor * cell_size);
-	const float32 grid_size_height = (cells_ver * cell_size);
+void grid::draw(HDC bhdc, worldPoint playerPosition) {
+	const int grid_size_width = static_cast<int>(cells_hor * cell_size);
+	const int grid_size_height = static_cast<int>(cells_ver * cell_size);
 
-	const float32 x = (400.0f - playerPosition.p.x + cox) - grid_size_width/2;
-	const float32 y = (300.0f - playerPosition.p.y + coy) - grid_size_height/2;
 
-	float32 offset = 0;
-	for(int i = 0; i < cells_ver + 1; ++i)
+
+	auto &phys = PhysicsManager::instance();
+	const auto gridScreenPoint = phys.worldToScreen(worldPoint{min_x, min_y}, playerPosition);
+
+	//const float32 x = (400.0f - playerPosition.p.x + cox) - grid_size_width/2;
+	//const float32 y = (300.0f - playerPosition.p.y + coy) - grid_size_height/2;
+
+	const int x = gridScreenPoint.p.x - static_cast<int>(grid_size_width / 2);
+	const int y = gridScreenPoint.p.y - static_cast<int>(grid_size_height / 2);
+
+	int offset = 0;
+	for(uint32_t i = 0; i < cells_ver + 1; ++i)
 	{
 		MoveToEx(bhdc, x, y + offset, 0);
 		LineTo(bhdc, x + grid_size_width, y + offset);
-		offset += cell_size;
+		offset += static_cast<int>(cell_size);
 	}
 
 	offset = 0;
-	for(int i = 0; i < cells_hor + 1; ++i)
+	for(uint32_t i = 0; i < cells_hor + 1; ++i)
 	{
 		MoveToEx(bhdc, x + offset, y , 0);
 		LineTo(bhdc, x + offset, y + grid_size_height);
-		offset += cell_size;
+		offset += static_cast<int>(cell_size);
 	}
 }
 
@@ -60,12 +69,12 @@ cell_indices grid::find_cell(worldPoint p)
 	float32 _min_y = min_y;
 	float32 _max_y = min_y + cell_size;
 
-	for(int i = 0; i < cells_hor; ++i)
+	for(uint32_t i = 0; i < cells_hor; ++i)
 	{
 		float32 _min_x = min_x;
 		float32 _max_x = min_x + cell_size;
 
-		for(int j = 0; j < cells_ver; ++j)
+		for(uint32_t j = 0; j < cells_ver; ++j)
 		{
 			if(x >= _min_x && x <= _max_x && y >= _min_y && y <= _max_y)
 			{

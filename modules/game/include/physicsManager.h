@@ -23,6 +23,7 @@ public:
 
   void createPlayer(worldPoint _where);
   void createBlock(worldPoint _where, float32 w, float32 h);
+  void createCar(cell_indices cell_from, cell_indices cell_to, float32 speed);
   void createProjectile(worldPoint _where, float32 speed, float32 angle);
 
   //void deposeObjects(float32 dx, float32 dy);
@@ -36,6 +37,7 @@ public:
 
   worldPoint getPlayerPos();
 
+  worldPoint getCenterOfCell(cell_indices cell);
 
   void left_mouse_click();
 
@@ -49,7 +51,11 @@ public:
   //в пространство мира, так, как если бы он не двигался камерой (cameraOffset)
   // то есть от [-400,-300] / [400/300]
   //пространство мира начинается в центре и должно совпадать с (0,0) - точка спавна игрока
-  worldPoint screenToWorld(const screenPoint &sp, const worldPoint &playerPos, int screenWidth, int screenHeight);
+  worldPoint screenToWorld(screenPoint sp, worldPoint playerPos, int screenWidth, int screenHeight);
+
+  //функция используется для рисования, чтоб перевести из мировых координат в экранные
+  //если камера обращена на объект в мире, мы его нарисуем (он будет в диапазоне [0,800]x[0,600])
+  screenPoint worldToScreen(worldPoint wp, worldPoint playerPos);
 
   uint32_t generateUniqueGameObjectId();
   void create_grid(uint32_t cells_width, uint32_t cells_height, world_units_t cell_size);

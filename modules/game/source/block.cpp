@@ -1,7 +1,7 @@
 ﻿#include "block.h"
 #include <math.h>
 #include <Windows.h>
-
+#include "physicsManager.h"
 
 //x/y 0,0 is left-top corner
 //x/y max,0 is right-top corner
@@ -26,17 +26,18 @@ Block::Block(float32 newX, float32 newY, float32 newW, float32 newH) {
 	height=newH;
 }
 
-void Block::draw(HDC bhdc, const worldPoint &playerPos, float32 cox, float32 coy)
+void Block::draw(HDC bhdc, worldPoint playerPos)
 {
 	//const float32 worldCenterOffsetWidth = 800 / 2;
 	//const float32 worldCenterOffsetHeight = 600 / 2;
 	//float32 nx = p.p.x + cameraOffsetX + worldCenterOffsetWidth;
 	//float32 ny = p.p.y + cameraOffsetY + worldCenterOffsetHeight;
 
+	auto &phys = PhysicsManager::instance();
+	const auto screenPointOffset = phys.worldToScreen(p, playerPos);
 
-
-	const float32 x = (p.p.x - playerPos.p.x + cox);
-	const float32 y = (p.p.y - playerPos.p.y + coy);
+	const float32 x = screenPointOffset.p.x; //(p.p.x - playerPos.p.x + cox);
+	const float32 y = screenPointOffset.p.y; //(p.p.y - playerPos.p.y + coy);
 
 
 

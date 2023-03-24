@@ -1,6 +1,7 @@
 ﻿#include "game_object.h"
 #include <math.h>
 #include <Windows.h>
+#include "physicsManager.h"
 
 GameObject::GameObject()
 	: p(0, 0)
@@ -11,7 +12,7 @@ GameObject::GameObject()
 	//cameraOffsetX = cameraOffsetY = 0.0f;
 }
 
-GameObject::GameObject(uint32_t _id, worldPoint _p, float _speed, float _angle, GameObjectVisualType _vt) :
+GameObject::GameObject(uint32_t _id, worldPoint _p, float32 _speed, float32 _angle, GameObjectVisualType _vt) :
 	id(_id),
 	p(_p),
 	speed(_speed),
@@ -57,8 +58,13 @@ uint32_t GameObject::getId() const noexcept { return id; }
 worldPoint GameObject::getP() const noexcept { return p; }
 
 
-void GameObject::draw(HDC bhdc, const worldPoint &playerPosition, float32 cox, float32 coy) {
-	constexpr float32 s = 15.0f;
+void GameObject::draw(HDC bhdc, worldPoint playerPosition) {
+	constexpr float32 size = 15.0f;
+
+
+	auto &phys = PhysicsManager::instance();
+	const auto goDrawPoint = phys.worldToScreen(p, playerPosition);
+
 
 	//const float32 ratio = 600.0f / 800.0f;
 	//const float32 worldCenterOffsetWidth = 800.0f / 2.0f;
@@ -67,16 +73,16 @@ void GameObject::draw(HDC bhdc, const worldPoint &playerPosition, float32 cox, f
 	//const float32 newY = worldCenterOffsetHeight - (s / 2.0f); //p.p.y + cameraOffsetY + worldCenterOffsetHeight;
 
 
-	const float32 newX = (p.p.x - playerPosition.p.x + cox) - (s / 2.0f);
-	const float32 newY = (p.p.y - playerPosition.p.y + coy) - (s / 2.0f);
+	const float32 newX = goDrawPoint.p.x - (size / 2.0f);
+	const float32 newY = goDrawPoint.p.y - (size / 2.0f);
 
 	switch(visualType) {
   case GameObjectVisualType::Ellipse:
-		Ellipse(bhdc, newX - s, newY - s, newX + s, newY + s);
+		Ellipse(bhdc, newX - size, newY - size, newX + size, newY + size);
 		break;
 
 	case GameObjectVisualType::Square:
-		Rectangle(bhdc, newX - s, newY - s, newX + s, newY + s);
+		Rectangle(bhdc, newX - size, newY - size, newX + size, newY + size);
 		break;
 	}
 }

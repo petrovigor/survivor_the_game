@@ -6,20 +6,18 @@
 
 struct ray
 {
-	float32 x1, y1;
-	float32 x2, y2;
-	float32 cox, coy;
+	worldPoint from, to;
+	//float32 x1, y1;
+	//float32 x2, y2;
+	//float32 cox, coy;
 
-	ray(float32 _x1, float32 _y1, float32 _x2, float32 _y2)
-		: x1(_x1)
-		, y1(_y1)
-		, x2(_x2)
-		, y2(_y2)
-		, cox(0.0)
-		, coy(0.0)
+	ray() = default;
+	ray(worldPoint _from, worldPoint _to)
+		: from(_from)
+		, to(_to)
 	{ }
 
-	void setCameraOffset(float32 x, float32 y);
-	void draw(HDC bhdc, const worldPoint &wp, float32 cox, float32 coy);
+	//void setCameraOffset(float32 x, float32 y);
+	void draw(HDC bhdc, worldPoint playerPos);
 
 };

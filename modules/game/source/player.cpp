@@ -25,10 +25,17 @@ void Player::attack(float targetX, float targetY) {
 }
 
 
-void Player::draw(HDC bhdc, const worldPoint &playerPosition, float32 cox, float32 coy) {
-  constexpr float32 s = 15.0f;
-  const float32 newX = 400+ cox;// + (p.p.x + cameraOffsetX) - (s / 2.0f);
-  const float32 newY = 300+ coy;// + (p.p.y + cameraOffsetY) - (s / 2.0f);
+void Player::draw(HDC bhdc, worldPoint playerPosition) {
+  auto &phys = PhysicsManager::instance();
+  const auto playerDrawPoint = phys.worldToScreen(p, worldPoint{});
+
+  //std::cout << "
+
+  constexpr int s = 15;
+  const int newX = playerDrawPoint.p.x; //400 - 0+ cox;// + (p.p.x + cameraOffsetX) - (s / 2.0f);
+  const int newY = playerDrawPoint.p.y; //300 - 0+ coy;// + (p.p.y + cameraOffsetY) - (s / 2.0f);
+
+  std::cout << "player xy: " << newX << ", " << newY << std::endl;
 
   switch(visualType) {
   case GameObjectVisualType::Ellipse:
