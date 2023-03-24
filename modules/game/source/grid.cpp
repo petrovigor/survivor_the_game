@@ -1,4 +1,5 @@
 ﻿#include "grid.h"
+#include <iostream>
 
 void grid::draw(HDC bhdc, const worldPoint &playerPosition, float32 cox, float32 coy) {
 	const float32 grid_size_width = (cells_hor * cell_size);
@@ -34,10 +35,10 @@ void grid::create(uint32_t _cells_width, uint32_t _cells_height, world_units_t _
 	width = cells_hor * cell_size;
 	height = cells_ver * cell_size;
 
-	min_x = center.p.x - width / 2;
-	min_y = center.p.y - height / 2;
-	max_x = center.p.x + width / 2;
-	max_y = center.p.y + height / 2;
+	min_x = center.p.x - cell_size - width / 2;
+	min_y = center.p.y - cell_size - height / 2;
+	max_x = center.p.x - cell_size + width / 2;
+	max_y = center.p.y - cell_size + height / 2;
 }
 
 
@@ -47,14 +48,39 @@ cell_indices grid::find_cell(worldPoint p)
 	const float32 &x = p.p.x;
 	const float32 &y = p.p.y;
 
+	//std::cout << "wp: " << p.p.x << " / " << p.p.y << std::endl;
 	if(x < min_x || y < min_y || x > max_x || y > max_y)
 	{
 		//world point passed is out of grid field
-		return { 33, 33 };
+		return { -1, -1 };
 	}
 
-	const uint32_t hor_idx = width / (width - x + min_x);
-	const uint32_t ver_idx = height / (height - x + min_y);
+	//optimize it please====================================
 
-	return { hor_idx, ver_idx };
+	float32 _min_y = min_y;
+	float32 _max_y = min_y + cell_size;
+
+	for(int i = 0; i < cells_hor; ++i)
+	{
+		float32 _min_x = min_x;
+		float32 _max_x = min_x + cell_size;
+
+		for(int j = 0; j < cells_ver; ++j)
+		{
+			if(x >= _min_x && x <= _max_x && y >= _min_y && y <= _max_y)
+			{
+				return { j, i };
+			}
+
+			_min_x += cell_size;
+			_max_x += cell_size;
+		}
+
+		_min_y += cell_size;
+		_max_y += cell_size;
+	}
+	//=====================================================
+
+	//should be never called
+	return { -1, -1 };
 }
