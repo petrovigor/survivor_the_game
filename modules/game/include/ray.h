@@ -20,6 +20,6 @@ struct ray
 	{ }
 
 	void setCameraOffset(float32 x, float32 y);
-	void draw(HDC bhdc, const worldPoint &wp);
+	void draw(HDC bhdc, const worldPoint &wp, float32 cox, float32 coy);
 
 };

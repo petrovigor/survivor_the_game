@@ -2,8 +2,11 @@
 
 #include "types.h"
 #include "point.h"
-#include <cstdint>
 #include <Windows.h>
+//#include "hdc_declaration.h"
+
+//#include <cstdint>
+//#include <Windows.h>
 
 enum class GameObjectVisualType {
   Square  = 1,
@@ -18,7 +21,7 @@ protected:
   float32 angle;
 
   GameObjectVisualType visualType;
-	float cameraOffsetX, cameraOffsetY;
+	//float cameraOffsetX, cameraOffsetY;
 
 public:
 	GameObject();
@@ -31,10 +34,10 @@ public:
   worldPoint getP() const noexcept;
   uint32_t getId() const noexcept;
 
-  void setCameraOffset(float32 x, float32 y);
+  //void setCameraOffset(float32 x, float32 y);
   //virtual void depose(float32 dx, float32 dy);
   virtual void processPhysics(float32 dt);
-  virtual void draw(HDC bhdc, const worldPoint &playerPosition);
+  virtual void draw(HDC bhdc, const worldPoint &playerPosition, float32 cox, float32 coy);
 
 };
 

@@ -1,6 +1,9 @@
 ﻿#pragma once
 
-#include <windows.h>
+//#include <windows.h>
+#include <Windows.h>
+//#include <minwindef.h> //lightweight version of windows.h
+
 #include <string>
 
 class BaseWindowCallback {

@@ -5,7 +5,7 @@
 #include "game_object.h"
 
 #include <iostream>
-#include <wingdi.h>
+#include <Windows.h>
 
 WindowCallback::WindowCallback() : _engine(nullptr) { }
 WindowCallback::~WindowCallback() { }
@@ -29,7 +29,10 @@ void WindowCallback::OnMouseClick(int x, int y, bool click) {
   click ? keyboard.leftMouseButtonDown( ) :
           keyboard.leftMouseButtonUp( );
 
-  std::cout << (click ? "click " : "release ") << x << " " << y << std::endl;
+  auto& phys = PhysicsManager::instance();
+  phys.left_mouse_click();
+
+  //std::cout << (click ? "click " : "release ") << x << " " << y << std::endl;
 }
 
 void WindowCallback::OnMouseMove(int x, int y) {
@@ -44,17 +47,11 @@ void WindowCallback::OnMouseMove(int x, int y) {
   const float dy = (cy - y) / view_distance;
   phys.setCameraOffset(dx, dy);
 
-  const GameObject* player = phys.getPlayerAsGO();
-  if(!player)
-  {
-    return;
-  }
-
-  const worldPoint &playerPos = player->getP();
+  const worldPoint playerPos = phys.getPlayerPos();
   const worldPoint wp = phys.screenToWorld(screenPoint, playerPos, 800, 600);
 
 
-  std::cout << "Screen x = " << screenPoint.p.x << " / y = " << screenPoint.p.y << " Player x " << playerPos.p.x << " y = " << playerPos.p.y << " World x " << wp.p.x << " y = " << wp.p.y << std::endl;
+  //std::cout << "Screen x = " << screenPoint.p.x << " / y = " << screenPoint.p.y << " Player x " << playerPos.p.x << " y = " << playerPos.p.y << " World x " << wp.p.x << " y = " << wp.p.y << std::endl;
   phys.moveMouseWorldSpace(wp);
 }
 
@@ -66,7 +63,7 @@ void WindowCallback::OnKeyboard(int key, bool press) {
   press ? keyboard.keyDown( key ) :
           keyboard.keyUp( key );
 
-  std::cout << "key " << (press ? " pressed " : " released ") << key << std::endl;
+  //std::cout << "key " << (press ? " pressed " : " released ") << key << std::endl;
 
   if( key == 27 ) {
     _engine->closeApp( );

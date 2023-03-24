@@ -1,5 +1,6 @@
 ﻿#include "game_object.h"
 #include <math.h>
+#include <Windows.h>
 
 GameObject::GameObject()
 	: p(0, 0)
@@ -7,7 +8,7 @@ GameObject::GameObject()
 {
   visualType = GameObjectVisualType::Square;
 	angle = speed = 0.0f;
-	cameraOffsetX = cameraOffsetY = 0.0f;
+	//cameraOffsetX = cameraOffsetY = 0.0f;
 }
 
 GameObject::GameObject(uint32_t _id, worldPoint _p, float _speed, float _angle, GameObjectVisualType _vt) :
@@ -15,9 +16,9 @@ GameObject::GameObject(uint32_t _id, worldPoint _p, float _speed, float _angle, 
 	p(_p),
 	speed(_speed),
 	angle(_angle),
-	visualType(_vt),
-	cameraOffsetX(0.f),
-	cameraOffsetY(0.f)
+	visualType(_vt)
+	//cameraOffsetX(0.f),
+	//cameraOffsetY(0.f)
 { }
 
 GameObject::GameObject(uint32_t _id, float32 _x, float32 _y, float32 _speed, float32 _angle, GameObjectVisualType _vt) :
@@ -25,9 +26,9 @@ GameObject::GameObject(uint32_t _id, float32 _x, float32 _y, float32 _speed, flo
 	p(_x, _y),
 	speed(_speed),
 	angle(_angle),
-	visualType(_vt),
-	cameraOffsetX(0.f),
-	cameraOffsetY(0.f)
+	visualType(_vt)
+	//cameraOffsetX(0.f),
+	//cameraOffsetY(0.f)
 { }
 
 GameObject::~GameObject() {};
@@ -37,10 +38,10 @@ void GameObject::processPhysics(float32 dt) {
 	p.p.y += speed * sin(angle) * dt;
 }
 
-void GameObject::setCameraOffset(float32 x, float32 y) {
-  cameraOffsetX = x;
-  cameraOffsetY = y;
-}
+//void GameObject::setCameraOffset(float32 x, float32 y) {
+//  cameraOffsetX = x;
+//  cameraOffsetY = y;
+//}
 
 
 
@@ -56,7 +57,7 @@ uint32_t GameObject::getId() const noexcept { return id; }
 worldPoint GameObject::getP() const noexcept { return p; }
 
 
-void GameObject::draw(HDC bhdc, const worldPoint &playerPosition) {
+void GameObject::draw(HDC bhdc, const worldPoint &playerPosition, float32 cox, float32 coy) {
 	constexpr float32 s = 15.0f;
 
 	//const float32 ratio = 600.0f / 800.0f;
@@ -66,8 +67,8 @@ void GameObject::draw(HDC bhdc, const worldPoint &playerPosition) {
 	//const float32 newY = worldCenterOffsetHeight - (s / 2.0f); //p.p.y + cameraOffsetY + worldCenterOffsetHeight;
 
 
-	const float32 newX = (p.p.x - playerPosition.p.x + cameraOffsetX) - (s / 2.0f);
-	const float32 newY = (p.p.y - playerPosition.p.y + cameraOffsetY) - (s / 2.0f);
+	const float32 newX = (p.p.x - playerPosition.p.x + cox) - (s / 2.0f);
+	const float32 newY = (p.p.y - playerPosition.p.y + coy) - (s / 2.0f);
 
 	switch(visualType) {
   case GameObjectVisualType::Ellipse:

@@ -1,7 +1,8 @@
 ﻿#include "ray.h"
 #include <iostream>
+#include <Windows.h>
 
-void ray::draw(HDC bhdc, const worldPoint &pp)
+void ray::draw(HDC bhdc, const worldPoint &pp, float32 cox, float32 coy)
 {
 	//constexpr float32 s = 0.0f;
 

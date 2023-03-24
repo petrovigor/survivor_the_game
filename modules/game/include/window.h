@@ -1,6 +1,8 @@
 ﻿#pragma once
 
 #include "base_window.h"
+
+#include <Windows.h>
 #include <memory>
 
 class Engine;

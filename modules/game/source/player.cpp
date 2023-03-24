@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <math.h>
+#include <Windows.h>
 
 Player::Player(float _x, float _y, float _speed)
   : GameObject(0u, _x, _y, _speed, 0.f, GameObjectVisualType::Ellipse)
@@ -24,10 +25,10 @@ void Player::attack(float targetX, float targetY) {
 }
 
 
-void Player::draw(HDC bhdc, const worldPoint &playerPosition) {
+void Player::draw(HDC bhdc, const worldPoint &playerPosition, float32 cox, float32 coy) {
   constexpr float32 s = 15.0f;
-  const float32 newX = 400+ cameraOffsetX;// + (p.p.x + cameraOffsetX) - (s / 2.0f);
-  const float32 newY = 300+ cameraOffsetY;// + (p.p.y + cameraOffsetY) - (s / 2.0f);
+  const float32 newX = 400+ cox;// + (p.p.x + cameraOffsetX) - (s / 2.0f);
+  const float32 newY = 300+ coy;// + (p.p.y + cameraOffsetY) - (s / 2.0f);
 
   switch(visualType) {
   case GameObjectVisualType::Ellipse:

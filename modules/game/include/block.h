@@ -13,7 +13,7 @@ private:
 public:
 	Block(float32 newX, float32 newY, float32 newW, float32 newH);
 
-  void draw(HDC bhdc, const worldPoint &wp) override;
+  void draw(HDC bhdc, const worldPoint &wp, float32 cox, float32 coy) override;
 	//void depose(float32 x, float32 y) override;
 
 };

@@ -1,5 +1,6 @@
 ﻿#include "block.h"
 #include <math.h>
+#include <Windows.h>
 
 
 //x/y 0,0 is left-top corner
@@ -25,7 +26,7 @@ Block::Block(float32 newX, float32 newY, float32 newW, float32 newH) {
 	height=newH;
 }
 
-void Block::draw(HDC bhdc, const worldPoint &playerPos)
+void Block::draw(HDC bhdc, const worldPoint &playerPos, float32 cox, float32 coy)
 {
 	//const float32 worldCenterOffsetWidth = 800 / 2;
 	//const float32 worldCenterOffsetHeight = 600 / 2;
@@ -34,8 +35,8 @@ void Block::draw(HDC bhdc, const worldPoint &playerPos)
 
 
 
-	const float32 x = (p.p.x - playerPos.p.x + cameraOffsetX);
-	const float32 y = (p.p.y - playerPos.p.y + cameraOffsetY);
+	const float32 x = (p.p.x - playerPos.p.x + cox);
+	const float32 y = (p.p.y - playerPos.p.y + coy);
 
 
 

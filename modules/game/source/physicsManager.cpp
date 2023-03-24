@@ -13,7 +13,27 @@ PhysicsManager::PhysicsManager()
   , cameraOffsetY(0)
 {
   movable_camera = true;
+
+
+  black_pen = CreatePen(PS_SOLID, 1, 0);
+  gray_pen = CreatePen(PS_SOLID, 1, RGB(190, 190, 190));
+
+
 }
+
+PhysicsManager::~PhysicsManager()
+{
+  if(gray_pen)
+  {
+    DeleteObject(gray_pen);
+  }
+  if(black_pen)
+  {
+    DeleteObject(black_pen);
+  }
+}
+
+
 
 PhysicsManager& PhysicsManager::instance() {
   static PhysicsManager instance;
@@ -26,17 +46,28 @@ void PhysicsManager::updateWorldPhysics(float32 dt) {
   }
 }
 
+void PhysicsManager::create_grid(uint32_t cells_width, uint32_t cells_height, world_units_t cell_size)
+{
+  cells.create(cells_width, cells_height, cell_size);
+}
+
 void PhysicsManager::renderWorld(HDC bhdc) {
   const worldPoint playerPos = getPlayerPos();
 
   //std::cout << "renderWorld: " << static_cast<float>(playerPos.p.x) << " & " << static_cast<float>(playerPos.p.y) << std::endl;
 
+
+  SelectObject(bhdc, gray_pen);
+  cells.draw(bhdc, playerPos, cameraOffsetX, cameraOffsetY);
+
+
+  SelectObject(bhdc, black_pen);
   for(auto& go : gos) {
-    go->draw(bhdc, playerPos);
+    go->draw(bhdc, playerPos, cameraOffsetX, cameraOffsetY);
   }
   if(debug_ray)
   {
-    debug_ray->draw(bhdc, playerPos);
+    debug_ray->draw(bhdc, playerPos, cameraOffsetX, cameraOffsetY);
   }
 }
 //
@@ -59,13 +90,25 @@ void PhysicsManager::setCameraOffset(float32 offsetX, float32 offsetY) {
   cameraOffsetX = offsetX;
   cameraOffsetY = offsetY;
 
-  for(auto& go : gos) {
-    go->setCameraOffset(offsetX, offsetY);
-  }
-  if(debug_ray)
-  {
-    debug_ray->setCameraOffset(offsetX, offsetY);
-  }
+  //for(auto& go : gos) {
+  //  go->setCameraOffset(offsetX, offsetY);
+  //}
+  //if(debug_ray)
+  //{
+  //  debug_ray->setCameraOffset(offsetX, offsetY);
+  //}
+}
+
+void PhysicsManager::left_mouse_click()
+{
+
+  const auto idx = cells.find_cell( mouseWorldPoint );
+
+
+
+
+  std::cout << "indices: " << idx.first << ", " << idx.second << std::endl;
+
 }
 
 worldPoint PhysicsManager::getPlayerPos()
@@ -115,17 +158,17 @@ Player* PhysicsManager::getPlayer() {
   //return nullptr; //reinterpret_cast<Player*>( gos.front( ).get() );
 }
 
-float PhysicsManager::getMouseWorldX() const noexcept {
-  return mouseWorldX;
-}
-
-float PhysicsManager::getMouseWorldY() const noexcept {
-  return mouseWorldY;
-}
+//float PhysicsManager::getMouseWorldX() const noexcept {
+//  return mouseWorldX;
+//}
+//
+//float PhysicsManager::getMouseWorldY() const noexcept {
+//  return mouseWorldY;
+//}
 
 void PhysicsManager::createPlayer(worldPoint _where) {
 
-  GameObject* player = new Player(_where.p.x, _where.p.y, 80.f);
+  GameObject* player = new Player(_where.p.x, _where.p.y, 280.f);
 
   std::unique_ptr<GameObject> playerPtr{ player };
 
@@ -163,13 +206,36 @@ GameObject* PhysicsManager::rayCast(worldPoint _whereFrom, float32 distance, wor
 GameObject* PhysicsManager::rayCast(worldPoint _whereFrom, float32 distance, float32 angle)
 {
   GameObject* ans = nullptr;
-
-
-
   return ans;
 }
 
+worldPoint PhysicsManager::screenToWorld(const screenPoint &sp, const worldPoint &playerPos, int screenWidth, int screenHeight)
+{
+  const int screenX = sp.p.x;
+  const int screenY = sp.p.y;
+
+  const float32 centerX = static_cast<float32>(screenWidth) / 2.0f;
+  const float32 centerY = static_cast<float32>(screenHeight) / 2.0f;
+
+  //const float32 widthHalf = (static_cast<float32>(screenWidth) / 2.0f);
+  //const float32 heightHalf = (static_cast<float32>(screenHeight) / 2.0f);
+
+  return {
+    static_cast<float32>(screenX - centerX + playerPos.p.x - cameraOffsetX),
+    static_cast<float32>(screenY - centerY + playerPos.p.y - cameraOffsetY)
+  };
+
+  //return { static_cast<float32>(screenX) + widthHalf, static_cast<float32>(screenY) + heightHalf };
+
+  //return {
+  //  static_cast<float32>(screenX - widthHalf) + widthHalf,
+  //  static_cast<float32>(screenY - heightHalf) + heightHalf
+  //};
+}
+
 void PhysicsManager::moveMouseWorldSpace(worldPoint _where) {
+  mouseWorldPoint = _where;
+
   if(!debug_ray.get())
   {
     debug_ray = std::make_unique<ray>(0, 0, 0, 0);
@@ -190,6 +256,6 @@ void PhysicsManager::moveMouseWorldSpace(worldPoint _where) {
     //std::cout << "World x=" << debug_ray->x2 << " / y=" << debug_ray->y2 << std::endl;
 
 
-    std::cout << "ray world: " << debug_ray->x1 << ", " << debug_ray->y1 << " |||| " << debug_ray->x2 << "     " << debug_ray->y2 << std::endl; //<< "       " << gos.size() << std::endl;
+    //std::cout << "ray world: " << debug_ray->x1 << ", " << debug_ray->y1 << " |||| " << debug_ray->x2 << "     " << debug_ray->y2 << std::endl; //<< "       " << gos.size() << std::endl;
   }
 }

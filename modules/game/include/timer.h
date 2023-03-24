@@ -1,6 +1,7 @@
 ﻿#pragma once
 
-#include <windows.h>
+#include <Windows.h>
+//#include <winnt.h> //LARGE_INTEGER
 #include "types.h"
 
 class TIMER {
