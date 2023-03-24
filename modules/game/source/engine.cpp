@@ -30,6 +30,7 @@ void Engine::initWindow( int width, int height ) {
   phys.createPlayer( worldPoint(0.f, 0.f) );
 
   phys.createBlock(worldPoint(200.0, 0.f), 200, 150);
+  phys.createBlock(worldPoint(-300.0, -200.f), 100, 450);
 
 	//}
 }

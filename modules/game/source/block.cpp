@@ -25,18 +25,25 @@ Block::Block(float32 newX, float32 newY, float32 newW, float32 newH) {
 	height=newH;
 }
 
-void Block::draw(HDC bhdc)
+void Block::draw(HDC bhdc, const worldPoint &playerPos)
 {
-	const float32 worldCenterOffsetWidth = 800 / 2;
-	const float32 worldCenterOffsetHeight = 600 / 2;
-	float32 nx = p.p.x + cameraOffsetX + worldCenterOffsetWidth;
-	float32 ny = p.p.y + cameraOffsetY + worldCenterOffsetHeight;
+	//const float32 worldCenterOffsetWidth = 800 / 2;
+	//const float32 worldCenterOffsetHeight = 600 / 2;
+	//float32 nx = p.p.x + cameraOffsetX + worldCenterOffsetWidth;
+	//float32 ny = p.p.y + cameraOffsetY + worldCenterOffsetHeight;
 
-	MoveToEx(bhdc, nx, ny, 0);
-	LineTo(bhdc, nx + width, ny);
-	LineTo(bhdc, nx + width, ny + height);
-	LineTo(bhdc, nx, ny + height);
-	LineTo(bhdc, nx, ny);
+
+
+	const float32 x = (p.p.x - playerPos.p.x + cameraOffsetX);
+	const float32 y = (p.p.y - playerPos.p.y + cameraOffsetY);
+
+
+
+	MoveToEx(bhdc, x, y, 0);
+	LineTo(bhdc, x + width, y);
+	LineTo(bhdc, x + width, y + height);
+	LineTo(bhdc, x, y + height);
+	LineTo(bhdc, x, y);
 
 	//for(int i=0; i<4; i++) {
 	//	MoveToEx(bhdc, bx[i] + cameraOffsetX, by[i] + cameraOffsetY, 0);

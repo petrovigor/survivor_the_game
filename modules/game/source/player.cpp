@@ -7,7 +7,7 @@
 #include <math.h>
 
 Player::Player(float _x, float _y, float _speed)
-  : GameObject(_x, _y, _speed, 0.f, GameObjectVisualType::Ellipse)
+  : GameObject(0u, _x, _y, _speed, 0.f, GameObjectVisualType::Ellipse)
   , attacking(false)
   , isCooldown(false)
   , cooldown(0.f)
@@ -22,6 +22,24 @@ void Player::attack(float targetX, float targetY) {
     attackTargetY = targetY;
   }
 }
+
+
+void Player::draw(HDC bhdc, const worldPoint &playerPosition) {
+  constexpr float32 s = 15.0f;
+  const float32 newX = 400+ cameraOffsetX;// + (p.p.x + cameraOffsetX) - (s / 2.0f);
+  const float32 newY = 300+ cameraOffsetY;// + (p.p.y + cameraOffsetY) - (s / 2.0f);
+
+  switch(visualType) {
+  case GameObjectVisualType::Ellipse:
+    Ellipse(bhdc, newX - s, newY - s, newX + s, newY + s);
+    break;
+
+  case GameObjectVisualType::Square:
+    Rectangle(bhdc, newX - s, newY - s, newX + s, newY + s);
+    break;
+  }
+}
+
 
 void Player::processPhysics(float dt) {
   const auto& keys = Controller::instance();
@@ -87,18 +105,18 @@ void Player::processPhysics(float dt) {
 
   auto& phys = PhysicsManager::instance();
 
-  if(p.p.x > boundsX) {
-    phys.deposeObjects( boundsX - p.p.x, 0.f );
-  }
-  if(p.p.y > boundsY) {
-    phys.deposeObjects( 0.f, boundsY - p.p.y );
-  }
-  if(p.p.x < lastX) {
-    phys.deposeObjects( lastX - p.p.x, 0.f );
-  }
-  if(p.p.y < lastY) {
-    phys.deposeObjects( 0.f, lastY - p.p.y );
-  }
+  //if(p.p.x > boundsX) {
+  //  phys.deposeObjects( boundsX - p.p.x, 0.f );
+  //}
+  //if(p.p.y > boundsY) {
+  //  phys.deposeObjects( 0.f, boundsY - p.p.y );
+  //}
+  //if(p.p.x < lastX) {
+  //  phys.deposeObjects( lastX - p.p.x, 0.f );
+  //}
+  //if(p.p.y < lastY) {
+  //  phys.deposeObjects( 0.f, lastY - p.p.y );
+  //}
 
   //process player attacking mechanism
 

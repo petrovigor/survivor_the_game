@@ -2,6 +2,7 @@
 #include "engine.h"
 #include "controller.h"
 #include "point.h"
+#include "game_object.h"
 
 #include <iostream>
 #include <wingdi.h>
@@ -33,19 +34,28 @@ void WindowCallback::OnMouseClick(int x, int y, bool click) {
 
 void WindowCallback::OnMouseMove(int x, int y) {
   const screenPoint screenPoint { x, y };
-  std::cout << "Screen x=" << screenPoint.p.x << " / y=" << screenPoint.p.y << std::endl;
 
   auto& phys = PhysicsManager::instance();
-  const worldPoint wp = phys.screenToWorld(screenPoint, 800, 600);
 
   const float view_distance = 1.0f;
   const float cx = 800.f / 2.f;
   const float cy = 600.f / 2.f;
   const float dx = (cx - x) / view_distance;
   const float dy = (cy - y) / view_distance;
-
   phys.setCameraOffset(dx, dy);
-  phys.setMouseAt(wp);
+
+  const GameObject* player = phys.getPlayerAsGO();
+  if(!player)
+  {
+    return;
+  }
+
+  const worldPoint &playerPos = player->getP();
+  const worldPoint wp = phys.screenToWorld(screenPoint, playerPos, 800, 600);
+
+
+  std::cout << "Screen x = " << screenPoint.p.x << " / y = " << screenPoint.p.y << " Player x " << playerPos.p.x << " y = " << playerPos.p.y << " World x " << wp.p.x << " y = " << wp.p.y << std::endl;
+  phys.moveMouseWorldSpace(wp);
 }
 
 void WindowCallback::OnKeyboard(int key, bool press) {

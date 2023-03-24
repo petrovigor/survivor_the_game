@@ -9,8 +9,10 @@
 #include <iostream>
 
 PhysicsManager::PhysicsManager()
+  : cameraOffsetX(0)
+  , cameraOffsetY(0)
 {
-  movable_camera = false;
+  movable_camera = true;
 }
 
 PhysicsManager& PhysicsManager::instance() {
@@ -25,28 +27,37 @@ void PhysicsManager::updateWorldPhysics(float32 dt) {
 }
 
 void PhysicsManager::renderWorld(HDC bhdc) {
-  for(auto& go : gos) {
-    go->draw(bhdc);
-  }
-  if(debug_ray)
-  {
-    debug_ray->draw(bhdc);
-  }
-}
+  const worldPoint playerPos = getPlayerPos();
 
-void PhysicsManager::deposeObjects(float32 dx, float32 dy) {
+  //std::cout << "renderWorld: " << static_cast<float>(playerPos.p.x) << " & " << static_cast<float>(playerPos.p.y) << std::endl;
+
   for(auto& go : gos) {
-    go->depose(dx, dy);
+    go->draw(bhdc, playerPos);
   }
   if(debug_ray)
   {
-    debug_ray->depose(dx, dy);
+    debug_ray->draw(bhdc, playerPos);
   }
 }
+//
+//void PhysicsManager::deposeObjects(float32 dx, float32 dy) {
+//#if 0
+//  for(auto& go : gos) {
+//   //go->depose(dx, dy);
+//  }
+//  if(debug_ray)
+//  {
+//    //debug_ray->depose(dx, dy);
+//  }
+//#endif //0
+//}
 
 void PhysicsManager::setCameraOffset(float32 offsetX, float32 offsetY) {
   if(!movable_camera)
     return;
+
+  cameraOffsetX = offsetX;
+  cameraOffsetY = offsetY;
 
   for(auto& go : gos) {
     go->setCameraOffset(offsetX, offsetY);
@@ -57,14 +68,51 @@ void PhysicsManager::setCameraOffset(float32 offsetX, float32 offsetY) {
   }
 }
 
-Player* PhysicsManager::getPlayer() {
-  if(!gos.empty())
+worldPoint PhysicsManager::getPlayerPos()
+{
+  const GameObject* player = getPlayerAsGO();
+
+  if(!player)
   {
-    return nullptr;
-    //return static_cast<
+    return worldPoint(0, 0);
+  }
+  else
+  {
+    return player->getP();
+  }
+}
+
+GameObject* PhysicsManager::getGOById(uint32_t id)
+{
+  for(const auto& go : gos)
+  {
+    if(go->getId() == id)
+      return go.get();
   }
 
-  return nullptr; //reinterpret_cast<Player*>( gos.front( ).get() );
+  return nullptr;
+}
+
+
+uint32_t PhysicsManager::generateUniqueGameObjectId()
+{
+  return ++go_id_generator;
+}
+
+
+GameObject* PhysicsManager::getPlayerAsGO() {
+  return getGOById(0);
+}
+
+Player* PhysicsManager::getPlayer() {
+  return static_cast<Player*>(getPlayerAsGO());
+  //if(!gos.empty())
+  //{
+  //
+  //  //return static_cast<
+  //}
+
+  //return nullptr; //reinterpret_cast<Player*>( gos.front( ).get() );
 }
 
 float PhysicsManager::getMouseWorldX() const noexcept {
@@ -108,7 +156,7 @@ void PhysicsManager::createProjectile(worldPoint _where, float32 speed, float32 
 
 GameObject* PhysicsManager::rayCast(worldPoint _whereFrom, float32 distance, worldPoint _whereTo)
 {
-  const float32 a = abc(_whereFrom, _whereTo);
+  const float32 a = abp(_whereFrom, _whereTo);
   return rayCast(_whereFrom, distance, a);
 }
 
@@ -121,21 +169,27 @@ GameObject* PhysicsManager::rayCast(worldPoint _whereFrom, float32 distance, flo
   return ans;
 }
 
-void PhysicsManager::setMouseAt(worldPoint _where) {
-  if(!debug_ray)
+void PhysicsManager::moveMouseWorldSpace(worldPoint _where) {
+  if(!debug_ray.get())
   {
-    debug_ray = std::make_unique<ray>(0, 0, mouseWorldX, mouseWorldY);
+    debug_ray = std::make_unique<ray>(0, 0, 0, 0);
   }
   if(!gos.empty())
   {
-    GameObject &pl = *gos[0].get();
-    debug_ray->x1 = pl.getX();
-    debug_ray->y1 = pl.getY();
+    GameObject *player = getPlayerAsGO();
+    if(!player)
+      return;
+
+    debug_ray->x1 = player->getX();
+    debug_ray->y1 = player->getY();
     debug_ray->x2 = _where.p.x;
     debug_ray->y2 = _where.p.y;
 
-    std::cout << "World x=" << debug_ray->x2 << " / y=" << debug_ray->y2 << std::endl;
 
-    //std::cout << "ray world x2 y2: " << debug_ray->x2 << "     " << debug_ray->y2 << "       " << gos.size() << std::endl;
+
+    //std::cout << "World x=" << debug_ray->x2 << " / y=" << debug_ray->y2 << std::endl;
+
+
+    std::cout << "ray world: " << debug_ray->x1 << ", " << debug_ray->y1 << " |||| " << debug_ray->x2 << "     " << debug_ray->y2 << std::endl; //<< "       " << gos.size() << std::endl;
   }
 }

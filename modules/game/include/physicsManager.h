@@ -24,11 +24,19 @@ public:
   void createBlock(worldPoint _where, float32 w, float32 h);
   void createProjectile(worldPoint _where, float32 speed, float32 angle);
 
-  void deposeObjects(float32 dx, float32 dy);
+  //void deposeObjects(float32 dx, float32 dy);
   void setCameraOffset(float32 offsetX, float32 offsetY);
-  void setMouseAt(worldPoint _where);
+  void moveMouseWorldSpace(worldPoint _where);
 
   Player* getPlayer();
+  GameObject* getPlayerAsGO();
+
+  GameObject* getGOById(uint32_t id);
+
+  worldPoint getPlayerPos();
+
+
+
   float getMouseWorldX() const noexcept;
   float getMouseWorldY() const noexcept;
 
@@ -39,15 +47,21 @@ public:
   //в пространство мира, так, как если бы он не двигался камерой (cameraOffset)
   // то есть от [-320,320] / [-240/240]
   //пространство мира начинается в центре и должно совпадать с (0,0) - точка спавна игрока
-  inline worldPoint screenToWorld(const screenPoint &sp, int screenWidth, int screenHeight)
+  inline worldPoint screenToWorld(const screenPoint &sp, const worldPoint &playerPos, int screenWidth, int screenHeight)
   {
     const int screenX = sp.p.x;
     const int screenY = sp.p.y;
 
+    const float32 centerX = static_cast<float32>(screenWidth) / 2.0f;
+    const float32 centerY = static_cast<float32>(screenHeight) / 2.0f;
+
     //const float32 widthHalf = (static_cast<float32>(screenWidth) / 2.0f);
     //const float32 heightHalf = (static_cast<float32>(screenHeight) / 2.0f);
 
-    return { static_cast<float32>(screenX), static_cast<float32>(screenY) };
+    return {
+      static_cast<float32>(screenX - centerX + playerPos.p.x - cameraOffsetX),
+      static_cast<float32>(screenY - centerY + playerPos.p.y - cameraOffsetY)
+    };
 
     //return { static_cast<float32>(screenX) + widthHalf, static_cast<float32>(screenY) + heightHalf };
 
@@ -57,11 +71,16 @@ public:
     //};
   }
 
+  uint32_t generateUniqueGameObjectId();
+
 private:
   PhysicsManager();
 
 private:
+  uint32_t go_id_generator;
   float32 mouseWorldX, mouseWorldY;
+  float32 cameraOffsetX, cameraOffsetY;
+
   std::unique_ptr<ray> debug_ray;
 
   std::vector<std::unique_ptr<GameObject>> gos; //strong pointers

@@ -15,6 +15,7 @@ public:
   Player(float32 _x, float32 _y, float32 _speed);
 
   void attack(float32 targetX, float32 targetY);
+  void draw(HDC bhdc, const worldPoint &playerPos);
   void processPhysics(float32 dt) override;
 
 };

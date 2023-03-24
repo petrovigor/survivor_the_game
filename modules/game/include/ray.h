@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "types.h"
+#include "point.h"
 #include <Windows.h>
 
 struct ray
@@ -18,7 +19,7 @@ struct ray
 		, coy(0.0)
 	{ }
 
-	void depose(float32 dx, float32 dy);
 	void setCameraOffset(float32 x, float32 y);
-	void draw(HDC bhdc);
+	void draw(HDC bhdc, const worldPoint &wp);
+
 };
