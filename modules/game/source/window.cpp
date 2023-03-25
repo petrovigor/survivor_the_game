@@ -50,7 +50,6 @@ void WindowCallback::OnMouseMove(int x, int y) {
   const worldPoint playerPos = phys.getPlayerPos();
   const worldPoint wp = phys.screenToWorld(screenPoint, playerPos, 800, 600);
 
-
   //std::cout << "Screen x = " << screenPoint.p.x << " / y = " << screenPoint.p.y << " Player x " << playerPos.p.x << " y = " << playerPos.p.y << " World x " << wp.p.x << " y = " << wp.p.y << std::endl;
   phys.moveMouseWorldSpace(wp);
 }

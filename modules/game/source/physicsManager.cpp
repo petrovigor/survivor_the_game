@@ -45,6 +45,24 @@ void PhysicsManager::updateWorldPhysics(float32 dt) {
   for(auto& go : gos) {
     go->processPhysics(dt);
   }
+
+  const auto pp = getPlayerPos();
+
+  auto it = gos.begin();
+  while(it != gos.end())
+  {
+    const auto &go = *it;
+    const auto p = go->getP();
+
+    if(dbp(p, pp) >= 2000.0f)
+    {
+      it = gos.erase(it);
+    }
+    else
+    {
+      ++it;
+    }
+  }
 }
 
 void PhysicsManager::create_grid(uint32_t cells_width, uint32_t cells_height, world_units_t cell_size)
@@ -100,6 +118,11 @@ void PhysicsManager::setCameraOffset(float32 offsetX, float32 offsetY) {
   //}
 }
 
+worldPoint PhysicsManager::getMouseTargetPoint()
+{
+  return mouseWorldPoint;
+}
+
 void PhysicsManager::left_mouse_click()
 {
 
@@ -117,8 +140,13 @@ worldPoint PhysicsManager::getCenterOfCell(cell_indices cell)
 {
   worldPoint p;
 
-  p.p.x = cells.min_x + cell.first * cells.cell_size + cells.cell_size / 2.0f;
-  p.p.y = cells.min_y + cell.second * cells.cell_size + cells.cell_size / 2.0f;
+  //cells.min_x +
+  //cells.min_y +
+  p.p.x = (cells.min_x) + (cell.first + 1) * cells.cell_size - cells.cell_size / 2.0f;// - cells.cell_size;//cell.first * cells.cell_size + cells.cell_size / 2.0f - cells.width / 2.0f;
+  p.p.y = (cells.min_y) + (cell.second + 1) * cells.cell_size - cells.cell_size / 2.0f;// - cells.cell_size;//cell.second * cells.cell_size + cells.cell_size / 2.0f - cells.height / 2.0f;
+
+  std::cout << "cell " << cell.first << ", " << cell.second << " at: " << p.p.x << ", " << p.p.y << std::endl;
+
 
   return p;
 }

@@ -73,8 +73,8 @@ void GameObject::draw(HDC bhdc, worldPoint playerPosition) {
 	//const float32 newY = worldCenterOffsetHeight - (s / 2.0f); //p.p.y + cameraOffsetY + worldCenterOffsetHeight;
 
 
-	const float32 newX = goDrawPoint.p.x - (size / 2.0f);
-	const float32 newY = goDrawPoint.p.y - (size / 2.0f);
+	const float32 newX = goDrawPoint.p.x;// - (size / 2.0f);
+	const float32 newY = goDrawPoint.p.y;// - (size / 2.0f);
 
 	switch(visualType) {
   case GameObjectVisualType::Ellipse:

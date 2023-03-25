@@ -32,10 +32,10 @@ void Player::draw(HDC bhdc, worldPoint playerPosition) {
   //std::cout << "
 
   constexpr int s = 15;
-  const int newX = playerDrawPoint.p.x; //400 - 0+ cox;// + (p.p.x + cameraOffsetX) - (s / 2.0f);
-  const int newY = playerDrawPoint.p.y; //300 - 0+ coy;// + (p.p.y + cameraOffsetY) - (s / 2.0f);
+  const int newX = playerDrawPoint.p.x - playerPosition.p.x; //playerDrawPoint.p.x; //400 - 0+ cox;// + (p.p.x + cameraOffsetX) - (s / 2.0f);
+  const int newY = playerDrawPoint.p.y - playerPosition.p.y; //playerDrawPoint.p.y; //300 - 0+ coy;// + (p.p.y + cameraOffsetY) - (s / 2.0f);
 
-  std::cout << "player xy: " << newX << ", " << newY << std::endl;
+  //std::cout << "player xy: " << newX << ", " << newY << std::endl;
 
   switch(visualType) {
   case GameObjectVisualType::Ellipse:

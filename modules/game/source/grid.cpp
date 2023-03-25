@@ -14,8 +14,8 @@ void grid::draw(HDC bhdc, worldPoint playerPosition) {
 	//const float32 x = (400.0f - playerPosition.p.x + cox) - grid_size_width/2;
 	//const float32 y = (300.0f - playerPosition.p.y + coy) - grid_size_height/2;
 
-	const int x = gridScreenPoint.p.x - static_cast<int>(grid_size_width / 2);
-	const int y = gridScreenPoint.p.y - static_cast<int>(grid_size_height / 2);
+	const int x = gridScreenPoint.p.x;// - static_cast<int>(grid_size_width / 2);
+	const int y = gridScreenPoint.p.y;// - static_cast<int>(grid_size_height / 2);
 
 	int offset = 0;
 	for(uint32_t i = 0; i < cells_ver + 1; ++i)

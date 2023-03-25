@@ -4,6 +4,7 @@
 #include "controller.h"
 #include "player.h"
 #include "point.h"
+#include "utils.h"
 
 Engine::Engine() { }
 Engine::~Engine() { }
@@ -42,25 +43,36 @@ void Engine::processController() {
   auto& phys = PhysicsManager::instance();
 
 	if(keyboard.isLMBpressed()) {
-    // static float dt = 0.f;
+     static float dt = 0.f;
 
-    // if(dt <= 0.f) {
-    //   const auto player = phys.getPlayer( );
-    //   const float targetX = phys.getMouseWorldX();
-    //   const float targetY = phys.getMouseWorldY();
+     if(dt <= 0.f) {
+       const auto pPos = phys.getPlayerPos( );
+       const auto &targetPos = phys.getMouseTargetPoint();
+       Player* pl = phys.getPlayer();
 
-    //   Player* pl = reinterpret_cast<Player*>(&*player);
-    //   pl->attack( targetX, targetY );
-    //   phys.createProjectile(0.f, 0.f, 1.f, 0.f);
-    // } else {
-    //   dt -= 0.01f;
-    // }
+       if(!pl)
+         return;
+
+       float32 a = abp(pPos, targetPos);
+
+       //pl->attack(targetPos);
+
+       //const float targetX = phys.getMouseWorldX();
+       //const float targetY = phys.getMouseWorldY();
+
+       //pl->attack( targetX, targetY );
+       phys.createProjectile(pPos, 600.0, a);
+
+       dt = 1.0f;
+     } else {
+       dt -= 0.01f;
+     }
 	}
 }
 
 void Engine::mainLoop() {
 	MSG msg;
-	float dt;
+	float32 dt;
 
 	while(true) {
 		if(PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
@@ -89,8 +101,8 @@ void Engine::drawFrame() {
   if(!window->getDC())
     return;
 
-  const HDC  dc     = window->getDC( );
-  const HDC  memdc  = window->getMemDC( );
+  const HDC  &dc     = window->getDC( );
+  const HDC  &memdc  = window->getMemDC( );
 
   const RECT clientRect = window->getClientRect();
 	FillRect(memdc, &clientRect, window->getBrush());

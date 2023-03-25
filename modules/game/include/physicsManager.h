@@ -41,6 +41,8 @@ public:
 
   void left_mouse_click();
 
+  worldPoint getMouseTargetPoint();
+
   //float getMouseWorldX() const noexcept;
   //float getMouseWorldY() const noexcept;
 
