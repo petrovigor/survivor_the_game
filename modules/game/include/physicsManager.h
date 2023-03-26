@@ -24,7 +24,7 @@ public:
   void createPlayer(worldPoint _where);
   void createBlock(worldPoint _where, float32 w, float32 h);
   void createCar(cell_indices cell_from, cell_indices cell_to, float32 speed);
-  void createProjectile(worldPoint _where, float32 speed, float32 angle);
+  void createProjectile(worldPoint _where, float32 speed, float32 angle, float32 size);
 
   //void deposeObjects(float32 dx, float32 dy);
   void setCameraOffset(float32 offsetX, float32 offsetY);

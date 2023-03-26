@@ -13,3 +13,4 @@ float32 dbc(float32 x1, float32 y1, float32 x2, float32 y2);
 
 float32 dbp(worldPoint from, worldPoint to);
 
+worldPoint offsetPoint(const worldPoint &from, float32 dist, float32 angle);

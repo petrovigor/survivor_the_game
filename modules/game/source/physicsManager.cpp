@@ -46,6 +46,10 @@ void PhysicsManager::updateWorldPhysics(float32 dt) {
     go->processPhysics(dt);
   }
 
+
+
+
+
   const auto pp = getPlayerPos();
 
   auto it = gos.begin();
@@ -145,7 +149,7 @@ worldPoint PhysicsManager::getCenterOfCell(cell_indices cell)
   p.p.x = (cells.min_x) + (cell.first + 1) * cells.cell_size - cells.cell_size / 2.0f;// - cells.cell_size;//cell.first * cells.cell_size + cells.cell_size / 2.0f - cells.width / 2.0f;
   p.p.y = (cells.min_y) + (cell.second + 1) * cells.cell_size - cells.cell_size / 2.0f;// - cells.cell_size;//cell.second * cells.cell_size + cells.cell_size / 2.0f - cells.height / 2.0f;
 
-  std::cout << "cell " << cell.first << ", " << cell.second << " at: " << p.p.x << ", " << p.p.y << std::endl;
+  //std::cout << "cell " << cell.first << ", " << cell.second << " at: " << p.p.x << ", " << p.p.y << std::endl;
 
 
   return p;
@@ -238,9 +242,9 @@ void PhysicsManager::createCar(cell_indices cell_from, cell_indices cell_to, flo
   std::cout << "goes total: " << gos.size() << std::endl;
 }
 
-void PhysicsManager::createProjectile(worldPoint _where, float32 speed, float32 angle) {
+void PhysicsManager::createProjectile(worldPoint _where, float32 speed, float32 angle, float32 size) {
 
-  GameObject* proj = new Projectile(_where.p.x, _where.p.y, speed, angle);
+  GameObject* proj = new Projectile(_where.p.x, _where.p.y, speed, angle, size);
 
   std::unique_ptr<GameObject> projPtr{ proj };
 

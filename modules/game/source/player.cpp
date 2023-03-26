@@ -8,7 +8,7 @@
 #include <Windows.h>
 
 Player::Player(float _x, float _y, float _speed)
-  : GameObject(0u, _x, _y, _speed, 0.f, GameObjectVisualType::Ellipse)
+  : GameObject(0u, _x, _y, _speed, 0.f, 15.0f, GameObjectVisualType::Ellipse)
   , attacking(false)
   , isCooldown(false)
   , cooldown(0.f)
@@ -138,7 +138,7 @@ void Player::processPhysics(float dt) {
   if(attacking) {
 
     std::cout << "attacking" << std::endl;
-    phys.createProjectile(p, 50.f, abc(p.p.x, p.p.y, attackTargetX, attackTargetY));
+    phys.createProjectile(p, 50.f, abc(p.p.x, p.p.y, attackTargetX, attackTargetY), 4.0f);
 
     attacking = false;
     cooldown = 1.5f;

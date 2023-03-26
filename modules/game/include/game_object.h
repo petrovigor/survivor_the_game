@@ -19,6 +19,7 @@ protected:
   worldPoint p;
   float32 speed;
   float32 angle;
+  float32 size;
 
   GameObjectVisualType visualType;
 	//float cameraOffsetX, cameraOffsetY;
@@ -26,7 +27,7 @@ protected:
 public:
 	GameObject();
   GameObject(uint32_t id, worldPoint _p, float32 speed, float32 angle, GameObjectVisualType vt);
-  GameObject(uint32_t id, float32 x, float32 y, float32 speed, float32 angle, GameObjectVisualType vt);
+  GameObject(uint32_t id, float32 x, float32 y, float32 speed, float32 angle, float32 size_, GameObjectVisualType vt);
   virtual ~GameObject();
 
   float32 getX() const noexcept;

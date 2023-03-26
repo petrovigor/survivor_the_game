@@ -34,7 +34,3 @@ struct screenPoint
 
 	pointi p;
 };
-
-
-
-

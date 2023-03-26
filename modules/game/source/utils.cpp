@@ -23,3 +23,11 @@ float32 dbp(worldPoint from, worldPoint to)
   return dbc(from.p.x, from.p.y, to.p.x, to.p.y);
 }
 
+worldPoint offsetPoint(const worldPoint &from, float32 dist, float32 angle)
+{
+  return
+  {
+    from.p.x + dist * cosf(angle),
+    from.p.y + dist * sinf(angle),
+  };
+}

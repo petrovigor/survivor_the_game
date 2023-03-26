@@ -28,13 +28,13 @@ void Engine::initWindow( int width, int height ) {
 		//phys.createBlock( 200.f, 300.f, 200.f, 75.f );
 		//phys.createBlock( 600.f, 420.f, 30.f, 80.f );
 		//phys.createBlock( 550.f, 300.f, 200.f, 100.f );
-  phys.create_grid(5, 5, 50.0f);
+  phys.create_grid(24, 14, 50.0f);
   phys.createPlayer( worldPoint(0.f, 0.f) );
 
   phys.createBlock(worldPoint(200.0, 0.f), 200, 150);
   //phys.createBlock(worldPoint(-300.0, -200.f), 100, 450);
 
-  phys.createCar({0, 0}, {4, 0}, 40.0f);
+  phys.createCar({0, 0}, {24, 0}, 40.0f);
 	//}
 }
 
@@ -53,7 +53,7 @@ void Engine::processController() {
        if(!pl)
          return;
 
-       float32 a = abp(pPos, targetPos);
+       const float32 a = abp(pPos, targetPos);
 
        //pl->attack(targetPos);
 
@@ -61,7 +61,7 @@ void Engine::processController() {
        //const float targetY = phys.getMouseWorldY();
 
        //pl->attack( targetX, targetY );
-       phys.createProjectile(pPos, 600.0, a);
+       phys.createProjectile(pPos, 600.0, a, 6.0f);
 
        dt = 1.0f;
      } else {
@@ -101,8 +101,8 @@ void Engine::drawFrame() {
   if(!window->getDC())
     return;
 
-  const HDC  &dc     = window->getDC( );
-  const HDC  &memdc  = window->getMemDC( );
+  const HDC  &dc     = window->getDC();
+  const HDC  &memdc  = window->getMemDC();
 
   const RECT clientRect = window->getClientRect();
 	FillRect(memdc, &clientRect, window->getBrush());
